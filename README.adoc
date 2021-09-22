@@ -10,8 +10,8 @@
 
 This repository is the source code of the
 link:https://hub.docker.com/r/quinngrier/adock[`quinngrier/adock`]
-container image, which extends the
+Docker image, which extends the
 link:https://hub.docker.com/r/asciidoctor/docker-asciidoctor[`asciidoctor/docker-asciidoctor`]
-container image with additional features.
+Docker image with additional features.
 
 //
