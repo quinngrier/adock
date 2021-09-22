@@ -11,7 +11,7 @@
 FROM asciidoctor/docker-asciidoctor
 
 RUN ( \
-  apk add \
+  apk add --no-cache \
     gnuplot \
   || exit $?; \
 )
