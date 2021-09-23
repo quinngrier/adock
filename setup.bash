@@ -1,3 +1,4 @@
+#! /bin/bash -
 #
 # The authors of this file have waived all copyright and
 # related or neighboring rights to the extent permitted by
@@ -8,11 +9,9 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
 
-FROM asciidoctor/docker-asciidoctor AS setup
-COPY setup.bash /
-RUN apk add --no-cache bash
-RUN bash /setup.bash
-RUN rm /setup.bash
+set -E -e -u -o pipefail || exit $?
+trap exit ERR
 
-FROM scratch
-COPY --from=setup / /
+apk add --no-cache \
+  gnuplot \
+;
