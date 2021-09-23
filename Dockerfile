@@ -16,3 +16,4 @@ RUN rm /setup.bash
 
 FROM scratch
 COPY --from=setup / /
+ENTRYPOINT ["asciidoctor"]
