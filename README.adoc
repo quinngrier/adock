@@ -12,7 +12,7 @@
 
 Adock is a link:https://docs.docker.com/[Dockerized] version of
 link:https://docs.asciidoctor.org/asciidoctor/latest/[Asciidoctor] that
-allows you to compile and preview Asciidoctor documents without needing
+lets you compile and preview Asciidoctor documents without installing
 anything but Docker.
 Here's how to get started:
 
