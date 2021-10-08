@@ -28,5 +28,3 @@ npm install -g \
 
 mkdir /adock
 chmod 777 /adock
-
-chmod +x /entrypoint.bash

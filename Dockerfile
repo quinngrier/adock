@@ -9,10 +9,12 @@
 #
 
 FROM asciidoctor/docker-asciidoctor AS build
-COPY build.bash entrypoint.bash /
+COPY build.bash /
 RUN apk add --no-cache bash
 RUN bash /build.bash
 RUN rm /build.bash
+COPY entrypoint.bash /
+RUN chmod +x /entrypoint.bash
 
 FROM scratch
 COPY --from=build / /
