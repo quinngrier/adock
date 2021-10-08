@@ -99,12 +99,6 @@ if [[ "$pwd" == / ]]; then
 fi
 readonly pwd
 
-pwd_hex=
-for ((i = 0; i < ${#pwd}; ++i)); do
-  pwd_hex+=$(printf '\\\\x%02x' "'${pwd:i:1}")
-done
-readonly pwd_hex
-
 while :; do
 
   info "Running asciidoctor"
@@ -121,17 +115,20 @@ while :; do
     -o /adock/out/index.tmp.html \
     "$@" \
   ;
-  xs=$(
-    sed -n '/^open(/ p' /adock/deps | sed -n '
+  xs=$(sed -n '
+    /^open(/ {
       s/open("//
       s/".*//
-      s/^\\x\([^2]\|2[^f]\)/'$pwd_hex'\\x2f&/
-      /^'$pwd_hex'\\x2f/ p
-    '
-  )
+      p
+    }
+  ')
   for x in $xs; do
     printf -v x "$x"
-    deps+=("$x")
+    if [[ "$x" != /* ]]; then
+      deps+=("$pwd/$x")
+    elif [[ "$x" == "$pwd"/* ]]; then
+      deps+=("$x")
+    fi
   done
 
   xs=$(
