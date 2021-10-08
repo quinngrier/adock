@@ -111,7 +111,11 @@ while :; do
     esac
     image=$1=$2
     shift 2
-    set x "$image"
+    case $# in 0)
+      set x "$image"
+    ;; *)
+      set x "$image" "$@"
+    esac
     shift
     continue
   esac
@@ -134,7 +138,11 @@ while :; do
     esac
     name=$1=$2
     shift 2
-    set x "$name"
+    case $# in 0)
+      set x "$name"
+    ;; *)
+      set x "$name" "$@"
+    esac
     shift
     continue
   esac
