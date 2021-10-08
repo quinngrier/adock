@@ -9,7 +9,8 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
 # Usage: adock [--serve[=<address>]] [--detach]
-#              [--name=<name>] [--image=<image>] [<arg>]...
+#              [--name=<name>] [--image=<image>]
+#              [--] [<arg>]...
 #        adock [--image=<image>] --pull
 #
 # Runs a quinngrier/adock Docker container with the given <arg>s. The
@@ -97,6 +98,11 @@ pull=false
 # TODO: Use gatbps_parse_opt for options parsing.
 
 while :; do
+
+  case ${1-} in --)
+    shift
+    break
+  esac
 
   case ${1-} in --detach)
     detach=-d
