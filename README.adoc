@@ -8,10 +8,29 @@
 // <https://creativecommons.org/publicdomain/zero/1.0/>.
 //
 
-This repository is the source code of the
-link:https://hub.docker.com/r/quinngrier/adock[`quinngrier/adock`]
-Docker image, which extends the
-link:https://hub.docker.com/r/asciidoctor/docker-asciidoctor[`asciidoctor/docker-asciidoctor`]
-Docker image with additional features.
+= Adock
+
+Adock is a link:https://docs.docker.com/[Dockerized] version of
+link:https://docs.asciidoctor.org/asciidoctor/latest/[Asciidoctor] that
+allows you to compile and preview Asciidoctor documents without needing
+anything but Docker.
+Here's how to get started:
+
+. {empty}
+Download the link:adock[`adock`] shell script from this repository and
+put it anywhere in your
+link:https://en.wikipedia.org/wiki/PATH_(variable)[`PATH`].
+
+. {empty}
+To compile a document `foo.adoc` into `foo.html`, run `adock foo.adoc`.
+
+. {empty}
+To preview a document `foo.adoc`, run `adock --serve foo.adoc` and open
+`++http://127.0.0.1:8000++` in a browser.
+The page will automatically refresh as you edit the document.
+
+. {empty}
+To update Adock, redownload the link:adock[`adock`] shell script from
+this repository and additionally run `adock --pull`.
 
 //

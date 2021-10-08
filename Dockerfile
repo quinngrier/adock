@@ -8,12 +8,13 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
 
-FROM asciidoctor/docker-asciidoctor AS setup
-COPY setup.bash /
+FROM asciidoctor/docker-asciidoctor AS build
+COPY build.bash entrypoint.bash /
 RUN apk add --no-cache bash
-RUN bash /setup.bash
-RUN rm /setup.bash
+RUN bash /build.bash
+RUN rm /build.bash
 
 FROM scratch
-COPY --from=setup / /
-ENTRYPOINT ["asciidoctor"]
+COPY --from=build / /
+ENTRYPOINT ["/entrypoint.bash"]
+CMD []

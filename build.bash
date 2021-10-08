@@ -14,4 +14,19 @@ trap exit ERR
 
 apk add --no-cache \
   gnuplot \
+  inotify-tools \
+  nodejs \
+  npm \
+  strace \
 ;
+
+npm install -g \
+  http-server \
+  linkedom \
+  livereload \
+;
+
+mkdir /adock
+chmod 777 /adock
+
+chmod +x /entrypoint.bash
