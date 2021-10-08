@@ -114,7 +114,7 @@ while :; do
   # We assume that all non-absolute open() paths are relative to $PWD.
 
   strace \
-    -e open \
+    -e '?open' \
     -o /adock/deps \
     -xx \
     asciidoctor \
