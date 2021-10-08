@@ -13,18 +13,24 @@ on:
     branches:
       - master
   schedule:
-    - cron: '0 0 1 * *'
+    - cron: '0 0 * * 0'
 
 jobs:
   push_to_docker_hub:
     runs-on: ubuntu-latest
     steps:
+      - id: tag
+        run: |
+          tag=`date '+%Y-%m-%d'` || exit $?
+          echo ::set-output name=tag::$tag || exit $?
       - uses: actions/checkout@v2
-      - uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+      - uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      - uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      - uses: docker/build-push-action@v2
         with:
           push: true
-          tags: quinngrier/adock:latest
+          tags: |
+            quinngrier/adock:${{ steps.tag.outputs.tag }}
+            quinngrier/adock:latest
