@@ -115,13 +115,15 @@ while :; do
     -o /adock/out/index.tmp.html \
     "$@" \
   ;
-  xs=$(sed -n '
-    /^open(/ {
-      s/open("//
-      s/".*//
-      p
-    }
-  ')
+  xs=$(
+    sed -n '
+      /^open(/ {
+        s/open("//
+        s/".*//
+        p
+      }
+    ' /adock/deps
+  )
   for x in $xs; do
     printf -v x "$x"
     if [[ "$x" != /* ]]; then
