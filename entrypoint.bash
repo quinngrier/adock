@@ -12,6 +12,13 @@
 set -E -e -u -o pipefail || exit $?
 trap exit ERR
 
+shopt -s \
+  dotglob \
+  extglob \
+  globstar \
+  nullglob \
+;
+
 LC_ALL=C
 readonly LC_ALL
 export LC_ALL
@@ -112,7 +119,7 @@ while :; do
     -o /adock/deps \
     -xx \
     asciidoctor \
-    -o /adock/out/index.tmp.html \
+    -D /adock/out \
     "$@" \
   ;
   xs=$(
@@ -134,28 +141,29 @@ while :; do
   done
 
   xs=$(
+    cd /adock/out
     node -e '
       const fs = require("fs");
       const {parseHTML} = require("linkedom");
-      const file = "/adock/out/index.tmp.html";
-      const data = fs.readFileSync(file, "utf8");
-      const {document} = parseHTML(data);
-      const q = "'\''";
-      const qr = /'\''/g;
-      const qe = q + "\\" + q + q;
-      let paths = [];
-      for (const [tag, attr] of [["a", "href"], ["img", "src"]]) {
-        for (const node of document.getElementsByTagName(tag)) {
-          const path = decodeURI(node.getAttribute(attr));
-          if (!path.includes("://")) {
-            paths.push(path);
+      const paths = new Set();
+      for (const file of process.argv.slice(1)) {
+        const {document} = parseHTML(fs.readFileSync(file, "utf8"));
+        for (const [tag, attr] of [["a", "href"], ["img", "src"]]) {
+          for (const node of document.getElementsByTagName(tag)) {
+            const path = decodeURI(node.getAttribute(attr));
+            if (!path.includes("://")) {
+              paths.add(file.replace(/[^\/]+$/, "") + path);
+            }
           }
         }
       }
-      for (const path of new Set(paths)) {
+      const q = "'\''";
+      const qr = /'\''/g;
+      const qe = q + "\\" + q + q;
+      for (const path of paths) {
         console.log(q + path.replace(qr, qe) + q);
       }
-    '
+    ' **/*.html
   )
   eval xs="($xs)"
   for x in "${xs[@]}"; do
@@ -185,16 +193,19 @@ while :; do
   &
   inotifywait_pid=$!
 
-  sed '
-    /<body/ a\
-      <script>\
-        document.write("<script src=\\"http://"\
-          + (location.host || "localhost").split(":")[0]\
-          + ":'$live_port'/livereload.js?snipver=1\\"></" + "script>");\
-      </script>
-  ' /adock/out/index.tmp.html >/adock/tmp
-
-  mv -f /adock/tmp /adock/out/index.html
+  for x in /adock/out/**/*.html; do
+    sed '
+      s/<\/body>/\
+        <script>\
+          document.write("<script src=\\"http:\/\/"\
+            + (location.host || "localhost").split(":")[0]\
+            + ":'$live_port'\/livereload.js?snipver=1\\">"\
+            + "<" + "\/script>");\
+        <\/script>\
+      &/g
+    ' "$x" >/adock/tmp
+    mv -f /adock/tmp "$x"
+  done
 
   wait $inotifywait_pid
 

@@ -24,8 +24,7 @@
 # of the asciidoctor command. See <https://github.com/quinngrier/adock>
 # for more information.
 #
-# If --serve is given, the implied asciidoctor command is assumed to be
-# outputting an HTML document. Instead of yielding the output files, the
+# If --serve is given, instead of yielding the output files, the
 # container will instead collect them into a temporary directory and run
 # an HTTP server to serve them. The container will also detect when any
 # changes have been made and automatically rebuild the document, and it
