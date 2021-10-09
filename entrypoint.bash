@@ -84,7 +84,7 @@ if [[ ! "$live_port" =~ $r ]] || ((live_port > 65535)); then
   barf "Invalid live_port: $live_port"
 fi
 
-mkdir -p /adock/out
+mkdir /adock/out
 
 pushd /adock/out >/dev/null
 
@@ -112,6 +112,9 @@ while :; do
 
   deps=()
 
+  rm -f -r /adock/tmp1
+  mkdir /adock/tmp1
+
   # We assume that all non-absolute open() paths are relative to $PWD.
 
   strace \
@@ -119,7 +122,7 @@ while :; do
     -o /adock/deps \
     -xx \
     asciidoctor \
-    -D /adock/out \
+    -D /adock/tmp1 \
     "$@" \
   ;
   xs=$(
@@ -141,18 +144,19 @@ while :; do
   done
 
   xs=$(
-    cd /adock/out
+    cd /adock/tmp1
     node -e '
       const fs = require("fs");
       const {parseHTML} = require("linkedom");
       const paths = new Set();
       for (const file of process.argv.slice(1)) {
+        const prefix = file.replace(/[^\/]+$/, "");
         const {document} = parseHTML(fs.readFileSync(file, "utf8"));
         for (const [tag, attr] of [["a", "href"], ["img", "src"]]) {
           for (const node of document.getElementsByTagName(tag)) {
             const path = decodeURI(node.getAttribute(attr));
             if (!path.includes("://")) {
-              paths.add(file.replace(/[^\/]+$/, "") + path);
+              paths.add(prefix + path);
             }
           }
         }
@@ -163,16 +167,16 @@ while :; do
       for (const path of paths) {
         console.log(q + path.replace(qr, qe) + q);
       }
-    ' **/*.html
+    ' -- **/*.html
   )
   eval xs="($xs)"
   for x in "${xs[@]}"; do
+    y=/adock/tmp1/$x
     x=$pwd/$x
     if [[ -f "$x" ]]; then
       deps+=("$x")
-      y=/adock/out/${x#"$pwd/"}
       mkdir -p "${y%/*}"
-      ln -f -s "$x" "$y"
+      cp "$x" "$y"
     fi
   done
 
@@ -182,18 +186,12 @@ while :; do
     esac
   done
 
-  (IFS=$'\n'; sort -u <<<"${deps[*]}" >/adock/deps)
+  (
+    IFS=$'\n'
+    sort -u <<<"${deps[*]}" >/adock/deps
+  )
 
-  inotifywait \
-    --event "$inotifywait_events" \
-    --format '[%T] File modified: %w' \
-    --fromfile /adock/deps \
-    --quiet \
-    --timefmt '%Y-%m-%d %H:%M:%S' \
-  &
-  inotifywait_pid=$!
-
-  for x in /adock/out/**/*.html; do
+  for x in /adock/tmp1/**/*.html; do
     sed '
       s/<\/body>/\
         <script>\
@@ -203,10 +201,24 @@ while :; do
             + "<" + "\/script>");\
         <\/script>\
       &/g
-    ' "$x" >/adock/tmp
-    mv -f /adock/tmp "$x"
+    ' "$x" >/adock/tmp2
+    mv -f /adock/tmp2 "$x"
   done
 
-  wait $inotifywait_pid
+  for x in /adock/tmp1/**/*; do
+    if [[ -f "$x" ]]; then
+      y=/adock/out/${x#/adock/tmp1/}
+      rm -f -r "$y"
+      mv -f "$x" "$y"
+    fi
+  done
+
+  inotifywait \
+    --event "$inotifywait_events" \
+    --format '[%T] File modified: %w' \
+    --fromfile /adock/deps \
+    --quiet \
+    --timefmt '%Y-%m-%d %H:%M:%S' \
+  ;
 
 done
