@@ -10,32 +10,89 @@
 
 = adock(1)
 :doctype: manpage
+:manmanual: Adock
+:mansource: Adock
+
+:subs_source: attributes,specialchars,quotes,macros
 
 == Name
 
-adock - run asciidoctor in a docker container
+adock - Run asciidoctor in a Docker container
 
 == Synopsis
 
-*adock* [<__option__>]... [**--**] [<__argument__>]...
+[source,subs="{subs_source}"]
+----
+**adock** ++[++__option__++]++... ++[++**--**++]++ ++[++__argument__++]++...
+----
 
 == Description
 
-*adock* runs *asciidoctor* inside a Docker container with the given
-<__argument__>s and performs additional processing as specified by the
-<__option__>s.
-The current working directory is mounted into the container and used as
-the current working directory inside the container so that all files
-below the current working directory can be accessed.
-The container runs with the current user ID and group ID so that any
-files it outputs will have the appropriate ownership.
+**adock** runs **asciidoctor** in a Docker container with the given
+__argument__s and performs additional processing as specified by the
+__option__s.
+The current working directory is mounted and used as the current working
+directory in the container so that all files below the current working
+directory can be accessed transparently.
+The container inherits the current user and group IDs so that any output
+files will have the appropriate ownership.
 
 == Options
 
-**--detach**::
-Run the container in the background instead of the foreground.
-This options corresponds to the *-d*/*--detach* option of *docker run*.
+**--**::
+All further arguments will be taken as __argument__s for **asciidoctor**
+instead of being analyzed for __option__s.
 
-**--serve**[**=**<__address__>]::
-Instead of yielding the output files, *adock* will instead collect them
-into a temporary directory and run an HTTP server to serve them.
+**--detach**::
+The Docker container will be run in the background instead of the
+foreground.
+This option corresponds to the **-d**/**--detach** option of
+**docker run**.
+
+**--image=**__image__::
+The __image__ Docker image will be used instead of the default
+**quinngrier/adock:latest** image.
+
+**--name=**__name__::
+The Docker container will be named __name__ instead of a random name.
+This option corresponds to the **--name** option of **docker run**.
+
+**--pull**::
+The latest version of the Docker image will be pulled and no further
+action will be taken.
+All other __option__s (except for a preceding **--image** option) and
+all __argument__s will be ignored.
+
+**--serve**[**=**__address__]::
+Instead of being yielded, the output files will be collected into a
+temporary directory and an HTTP server will be run to serve them.
+The output files will be automatically rebuilt when any changes to the
+source files are detected.
+A LiveReload server will also be run and JavaScript will be injected
+into all HTML output files so that a browser viewing any HTML output
+file will automatically reload the page when a rebuild occurs.
++
+If __address__ is omitted, the HTTP server will listen on
+**0.0.0.0:8000** and the LiveReload server will listen on
+**0.0.0.0:35729**.
+Otherwise, __address__ specifies the hosts and ports the servers will
+listen on.
+The format of __address__ is as follows:
++
+[source,subs="attributes,specialchars,quotes,macros"]
+----
+++[++__http_host__**:**++]++__http_port__++[++**,**++[++__live_host__**:**++]++__live_port__++]++
+----
++
+The following steps are taken to fill in any missing values:
++
+. If __http_host__ is omitted, it is taken to be **0.0.0.0**.
+. If __live_port__ is omitted, it is taken to be **35729**.
+. If __live_host__ is omitted, it is taken to be __http_host__.
+
+== Environment variables
+
+**DOCKER**::
+The command to use to run **docker**.
+The value will be evaluated by the shell.
+If the value is empty or unset, the default value is **docker**.

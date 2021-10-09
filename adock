@@ -8,57 +8,6 @@
 # named <CC0-1.0.txt>. If not, it may be available at
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
-# Usage: adock [--serve[=<address>]] [--detach]
-#              [--name=<name>] [--image=<image>]
-#              [--] [<arg>]...
-#        adock [--image=<image>] --pull
-#
-# Runs a quinngrier/adock Docker container with the given <arg>s. The
-# current working directory will be mounted into and used as the current
-# working directory in the container so that all files below the current
-# working directory are accessible. The container will use the current
-# user ID and group ID so that any files it outputs will have the
-# appropriate ownership.
-#
-# The quinngrier/adock Docker image is essentially a Dockerized version
-# of the asciidoctor command. See <https://github.com/quinngrier/adock>
-# for more information.
-#
-# If --serve is given, instead of yielding the output files, the
-# container will instead collect them into a temporary directory and run
-# an HTTP server to serve them. The container will also detect when any
-# changes have been made and automatically rebuild the document, and it
-# will run a LiveReload server so that a browser viewing the document
-# will automatically refresh when the document is rebuilt.
-#
-# If <address> is omitted with --serve, the HTTP server will listen on
-# 0.0.0.0:8000 and the LiveReload server will listen on 0.0.0.0:35729.
-# Otherwise, <address> specifies the hosts and ports the servers will
-# listen on. The format is as follows:
-#
-#       [<http_host>:]<http_port>[,[<live_host>:]<live_port>]
-#
-# The following steps are taken to fill in any missing values:
-#
-#    1. If <http_host> is omitted, it is taken to be 0.0.0.0.
-#    2. If <live_port> is omitted, it is taken to be 35729.
-#    3. If <live_host> is omitted, it is taken to be <http_host>.
-#
-# If --detach is given, the container will run in the background instead
-# of the foreground.
-#
-# If --name is given, the container will be named <name> instead of
-# letting a random name be generated.
-#
-# If --image is given, the <image> Docker image will be used instead of
-# the quinngrier/adock Docker image.
-#
-# If --pull is given, the latest version of the Docker image will be
-# pulled and no further action will be taken.
-#
-# The docker command can be changed by setting the DOCKER environment
-# variable. The value will be evaluated by the shell.
-#
 # Example 1. Compile README.adoc into README.html.
 #
 #       adock README.adoc
