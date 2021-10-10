@@ -8,29 +8,106 @@
 // <https://creativecommons.org/publicdomain/zero/1.0/>.
 //
 
+:x_subs_normal: attributes,specialchars,quotes,replacements,macros,post_replacements
+:x_subs_source: attributes,specialchars,quotes,macros
+
+ifndef::env-github[]
+ifeval::["{backend}" == "manpage"]
+:x_manpage:
+endif::[]
+endif::[]
+
+ifdef::x_manpage[]
+
 = adock(1)
 :doctype: manpage
 :manmanual: Adock
 :mansource: Adock
 
-:subs_source: attributes,specialchars,quotes,macros
+:x_adock: **adock**
+:x_adock_argument: <__adock_argument__>
+:x_asciidoctor: **asciidoctor**
+:x_asciidoctor_argument: <__asciidoctor_argument__>
+:x_default_http_addr: **0.0.0.0:8000**
+:x_default_http_host: **0.0.0.0**
+:x_default_live_addr: **0.0.0.0:35729**
+:x_default_live_port: **35729**
+:x_docker: **docker**
+:x_docker_d_detach: **-d**/**--detach**
+:x_docker_name: **--name**
+:x_docker_run: **docker run**
+:x_http_host: <__http_host__>
+:x_http_port: <__http_port__>
+:x_image_arg: <__image__>
+:x_image_opt: **--image**
+:x_live_host: <__live_host__>
+:x_live_port: <__live_port__>
+:x_name_arg: <__name__>
+:x_options_terminator: **--**
+:x_quinngrier_adock_latest: **quinngrier/adock:latest**
+:x_serve_arg: <__address__>
+
+endif::[]
+
+ifndef::x_manpage[]
+
+= `adock`
+
+:x_adock: ``adock``
+:x_adock_argument: ``<adock_argument>``
+:x_asciidoctor: ``asciidoctor``
+:x_asciidoctor_argument: ``<asciidoctor_argument>``
+:x_default_http_addr: ``0.0.0.0:8000``
+:x_default_http_host: ``0.0.0.0``
+:x_default_live_addr: ``0.0.0.0:35729``
+:x_default_live_port: ``35729``
+:x_docker: ``docker``
+:x_docker_d_detach: ``-d``/``--detach``
+:x_docker_name: ``--name``
+:x_docker_run: ``docker run``
+:x_http_host: ``<http_host>``
+:x_http_port: ``<http_port>``
+:x_image_arg: ``<image>``
+:x_image_opt: ``--image``
+:x_live_host: ``<live_host>``
+:x_live_port: ``<live_port>``
+:x_name_arg: ``<name>``
+:x_options_terminator: ``--``
+:x_quinngrier_adock_latest: ``quinngrier/adock:latest``
+:x_serve_arg: ``<address>``
+
+endif::[]
 
 == Name
 
+ifdef::x_manpage[]
 adock - Run asciidoctor in a Docker container
+endif::[]
+
+ifndef::x_manpage[]
+[subs="{x_subs_normal}"]
+{x_adock} &#x2014; Run {x_asciidoctor} in a Docker container
+endif::[]
 
 == Synopsis
 
-[source,subs="{subs_source}"]
+ifdef::x_manpage[]
+[subs="{x_subs_normal}"]
+{x_adock} ++[++{x_adock_argument}++]...++ ++[++**--**++]++ ++[++{x_asciidoctor_argument}++]...++
+endif::[]
+
+ifndef::x_manpage[]
 ----
-**adock** ++[++__option__++]++... ++[++**--**++]++ ++[++__argument__++]++...
+adock [<adock_argument>]... [--] [<asciidoctor_argument>]...
 ----
+endif::[]
 
 == Description
 
-**adock** runs **asciidoctor** in a Docker container with the given
-__argument__s and performs additional processing as specified by the
-__option__s.
+[subs="{x_subs_normal}"]
+{x_adock} runs {x_asciidoctor} in a Docker container with the given
+{x_asciidoctor_argument}s and performs additional processing as
+specified by the {x_adock_argument}s.
 The current working directory is mounted and used as the current working
 directory in the container so that all files below the current working
 directory can be accessed transparently.
@@ -39,31 +116,74 @@ files will have the appropriate ownership.
 
 == Options
 
+ifdef::x_manpage[]
 **--**::
-All further arguments will be taken as __argument__s for **asciidoctor**
-instead of being analyzed for __option__s.
+endif::[]
+ifndef::x_manpage[]
+``--``::
+endif::[]
++
+[subs="{x_subs_normal}"]
+All further arguments will be taken as {x_asciidoctor_argument}s instead
+of possibly being taken as {x_adock_argument}s.
 
+ifdef::x_manpage[]
 **--detach**::
+endif::[]
+ifndef::x_manpage[]
+``--detach``::
+endif::[]
++
+[subs="{x_subs_normal}"]
 The Docker container will be run in the background instead of the
 foreground.
-This option corresponds to the **-d**/**--detach** option of
-**docker run**.
+This option corresponds to the {x_docker_d_detach} option of
+{x_docker_run}.
 
-**--image=**__image__::
-The __image__ Docker image will be used instead of the default
-**quinngrier/adock:latest** image.
+ifdef::x_manpage[]
+**--image=**<__image__>::
+endif::[]
+ifndef::x_manpage[]
+``--image=<image>``::
+endif::[]
++
+[subs="{x_subs_normal}"]
+The {x_image_arg} Docker image will be used instead of the default
+{x_quinngrier_adock_latest} image.
 
-**--name=**__name__::
-The Docker container will be named __name__ instead of a random name.
-This option corresponds to the **--name** option of **docker run**.
+ifdef::x_manpage[]
+**--name=**<__name__>::
+endif::[]
+ifndef::x_manpage[]
+``--name=<name>``::
+endif::[]
++
+[subs="{x_subs_normal}"]
+The Docker container will be named {x_name_arg} instead of letting
+Docker generate a random name.
+This option corresponds to the {x_docker_name} option of {x_docker_run}.
 
+ifdef::x_manpage[]
 **--pull**::
+endif::[]
+ifndef::x_manpage[]
+``--pull``::
+endif::[]
++
+[subs="{x_subs_normal}"]
 The latest version of the Docker image will be pulled and no further
 action will be taken.
-All other __option__s (except for a preceding **--image** option) and
-all __argument__s will be ignored.
+All other {x_adock_argument}s (except for the {x_image_opt} option) and
+all {x_asciidoctor_argument}s will be ignored.
 
-**--serve**[**=**__address__]::
+ifdef::x_manpage[]
+**--serve**[**=**<__address__>]::
+endif::[]
+ifndef::x_manpage[]
+``--serve[=<address>]``::
+endif::[]
++
+[subs="{x_subs_normal}"]
 Instead of being yielded, the output files will be collected into a
 temporary directory and an HTTP server will be run to serve them.
 The output files will be automatically rebuilt when any changes to the
@@ -72,27 +192,51 @@ A LiveReload server will also be run and JavaScript will be injected
 into all HTML output files so that a browser viewing any HTML output
 file will automatically reload the page when a rebuild occurs.
 +
-If __address__ is omitted, the HTTP server will listen on
-**0.0.0.0:8000** and the LiveReload server will listen on
-**0.0.0.0:35729**.
-Otherwise, __address__ specifies the hosts and ports the servers will
+[subs="{x_subs_normal}"]
+If {x_serve_arg} is omitted, the HTTP server will listen on
+{x_default_http_addr} and the LiveReload server will listen on
+{x_default_live_addr}.
+Otherwise, {x_serve_arg} specifies the hosts and ports the servers will
 listen on.
-The format of __address__ is as follows:
+The format of {x_serve_arg} is as follows:
 +
-[source,subs="attributes,specialchars,quotes,macros"]
+ifdef::x_manpage[]
+[source,subs="{x_subs_source}"]
 ----
-++[++__http_host__**:**++]++__http_port__++[++**,**++[++__live_host__**:**++]++__live_port__++]++
+++[++<__http_host__>**:**++]++<__http_port__>++[++**,**++[++<__live_host__>**:**++]++<__live_port__>++]++
 ----
+endif::[]
+ifndef::x_manpage[]
+----
+[<http_host>:]<http_port>[,[<live_host>:]<live_port>]
+----
+endif::[]
 +
 The following steps are taken to fill in any missing values:
 +
-. If __http_host__ is omitted, it is taken to be **0.0.0.0**.
-. If __live_port__ is omitted, it is taken to be **35729**.
-. If __live_host__ is omitted, it is taken to be __http_host__.
+. {empty}
++
+[subs="{x_subs_normal}"]
+If {x_http_host} is omitted, it is taken to be {x_default_http_host}.
+. {empty}
++
+[subs="{x_subs_normal}"]
+If {x_live_port} is omitted, it is taken to be {x_default_live_port}.
+. {empty}
++
+[subs="{x_subs_normal}"]
+If {x_live_host} is omitted, it is taken to be {x_http_host}.
 
 == Environment variables
 
+ifdef::x_manpage[]
 **DOCKER**::
-The command to use to run **docker**.
+endif::[]
+ifndef::x_manpage[]
+``DOCKER``::
+endif::[]
++
+[subs="{x_subs_normal}"]
+The command to use to run {x_docker}.
 The value will be evaluated by the shell.
-If the value is empty or unset, the default value is **docker**.
+If the value is empty or unset, the default value is {x_docker}.
