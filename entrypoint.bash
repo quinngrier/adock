@@ -89,7 +89,14 @@ mkdir /adock/out
 pushd /adock/out >/dev/null
 
 info "Starting HTTP server on $http_addr"
-http-server . -p 80 >/dev/null &
+
+http-server \
+  . \
+  --port 80 \
+  --proxy 'http://127.0.0.1:80?' \
+  >/dev/null \
+&
+
 http_server_pid=$!
 readonly http_server_pid
 
@@ -205,21 +212,6 @@ while :; do
     ' "$x" >/adock/tmp2
     mv -f /adock/tmp2 "$x"
   done
-
-  if [[ ! -f /adock/tmp1/404.html ]]; then
-    cat <<<'
-      <!DOCTYPE html>
-      <html lang="en">
-        <head>
-        <meta charset="utf-8">
-          <title>404</title>
-        </head>
-        <body>
-          <h1>404</h1>
-        </body>
-      </html>
-    ' >/adock/tmp1/404.html
-  fi
 
   for x in /adock/tmp1/**/*; do
     if [[ -f "$x" ]]; then
