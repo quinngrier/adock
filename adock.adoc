@@ -24,28 +24,39 @@ ifdef::x_manpage[]
 :manmanual: Adock
 :mansource: Adock
 
-:x_adock: **adock**
-:x_adock_argument: <__adock_argument__>
-:x_asciidoctor: **asciidoctor**
-:x_asciidoctor_argument: <__asciidoctor_argument__>
-:x_default_http_addr: **0.0.0.0:8000**
-:x_default_http_host: **0.0.0.0**
-:x_default_live_addr: **0.0.0.0:35729**
-:x_default_live_port: **35729**
-:x_docker: **docker**
-:x_docker_d_detach: **-d**/**--detach**
-:x_docker_name: **--name**
-:x_docker_run: **docker run**
-:x_http_host: <__http_host__>
-:x_http_port: <__http_port__>
-:x_image_arg: <__image__>
-:x_image_opt: **--image**
-:x_live_host: <__live_host__>
-:x_live_port: <__live_port__>
-:x_name_arg: <__name__>
-:x_options_terminator: **--**
-:x_quinngrier_adock_latest: **quinngrier/adock:latest**
-:x_serve_arg: <__address__>
+:x_adock: pass:n[**adock**]
+:x_adock_argument: pass:n[<__adock_argument__>]
+:x_asciidoctor: pass:n[**asciidoctor**]
+:x_asciidoctor_argument: pass:n[<__asciidoctor_argument__>]
+:x_default_http_addr: pass:n[**0.0.0.0:8000**]
+:x_default_http_host: pass:n[**0.0.0.0**]
+:x_default_live_addr: pass:n[**0.0.0.0:35729**]
+:x_default_live_port: pass:n[**35729**]
+:x_docker: pass:n[**docker**]
+:x_docker_run: pass:n[**docker run**]
+:x_docker_run_d: pass:n[**-d**]
+:x_docker_run_detach: pass:n[**--detach**]
+:x_docker_run_name: pass:n[**--name**]
+:x_http_host: pass:n[<__http_host__>]
+:x_http_port: pass:n[<__http_port__>]
+:x_live_host: pass:n[<__live_host__>]
+:x_live_port: pass:n[<__live_port__>]
+:x_opt_detach_name_arg: pass:n[**--detach**]
+:x_opt_image_arg: pass:n[<__image__>]
+:x_opt_image_name: pass:n[**--image**]
+:x_opt_image_name_arg: pass:n[**--image=**<__image__>]
+:x_opt_name_arg: pass:n[<__name__>]
+:x_opt_name_name: pass:n[**--name**]
+:x_opt_name_name_arg: pass:n[**--name=**<__name__>]
+:x_opt_pull_name: pass:n[**--pull**]
+:x_opt_pull_name_arg: pass:n[**--pull**]
+:x_opt_serve_arg: pass:n[<__address__>]
+:x_opt_serve_name: pass:n[**--serve**]
+:x_opt_serve_name_arg: pass:n[**--serve**[**=**<__address__>]]
+:x_opt_terminator: pass:n[**--**]
+:x_quinngrier_adock_latest: pass:n[**quinngrier/adock:latest**]
+:x_serve_arg: pass:n[<__address__>]
+:x_var_DOCKER: pass:n[**DOCKER**]
 
 endif::[]
 
@@ -53,28 +64,39 @@ ifndef::x_manpage[]
 
 = `adock`
 
-:x_adock: ``adock``
-:x_adock_argument: ``<adock_argument>``
-:x_asciidoctor: ``asciidoctor``
-:x_asciidoctor_argument: ``<asciidoctor_argument>``
-:x_default_http_addr: ``0.0.0.0:8000``
-:x_default_http_host: ``0.0.0.0``
-:x_default_live_addr: ``0.0.0.0:35729``
-:x_default_live_port: ``35729``
-:x_docker: ``docker``
-:x_docker_d_detach: ``-d``/``--detach``
-:x_docker_name: ``--name``
-:x_docker_run: ``docker run``
-:x_http_host: ``<http_host>``
-:x_http_port: ``<http_port>``
-:x_image_arg: ``<image>``
-:x_image_opt: ``--image``
-:x_live_host: ``<live_host>``
-:x_live_port: ``<live_port>``
-:x_name_arg: ``<name>``
-:x_options_terminator: ``--``
-:x_quinngrier_adock_latest: ``quinngrier/adock:latest``
-:x_serve_arg: ``<address>``
+:x_adock: pass:n[``adock``]
+:x_adock_argument: pass:n[``<adock_argument>``]
+:x_asciidoctor: pass:n[link:https://docs.asciidoctor.org/asciidoctor/latest/cli/man1/asciidoctor/[``asciidoctor``]]
+:x_asciidoctor_argument: pass:n[``<asciidoctor_argument>``]
+:x_default_http_addr: pass:n[``0.0.0.0:8000``]
+:x_default_http_host: pass:n[``0.0.0.0``]
+:x_default_live_addr: pass:n[``0.0.0.0:35729``]
+:x_default_live_port: pass:n[``35729``]
+:x_docker: pass:n[link:https://docs.docker.com/engine/reference/commandline/cli/[``docker``]]
+:x_docker_run: pass:n[link:https://docs.docker.com/engine/reference/run/[``docker run``]]
+:x_docker_run_d: pass:n[link:https://docs.docker.com/engine/reference/run/#detached&#x2D;&#x2D;d[``-d``]]
+:x_docker_run_detach: pass:n[link:https://docs.docker.com/engine/reference/run/#detached&#x2D;&#x2D;d[``--detach``]]
+:x_docker_run_name: pass:n[link:https://docs.docker.com/engine/reference/run/#name&#x2D;&#x2D;&#x2D;name[``--name``]]
+:x_http_host: pass:n[``<http_host>``]
+:x_http_port: pass:n[``<http_port>``]
+:x_live_host: pass:n[``<live_host>``]
+:x_live_port: pass:n[``<live_port>``]
+:x_opt_detach_name_arg: pass:n[``--detach``]
+:x_opt_image_arg: pass:n[``<image>``]
+:x_opt_image_name: pass:n[``--image``]
+:x_opt_image_name_arg: pass:n[``--image=<image>``]
+:x_opt_name_arg: pass:n[``<name>``]
+:x_opt_name_name: pass:n[``--name``]
+:x_opt_name_name_arg: pass:n[``--name=<name>``]
+:x_opt_pull_name: pass:n[``--pull``]
+:x_opt_pull_name_arg: pass:n[``--pull``]
+:x_opt_serve_arg: pass:n[``<address>``]
+:x_opt_serve_name: pass:n[``--serve``]
+:x_opt_serve_name_arg: pass:n[``--serve[=<address>]``]
+:x_opt_terminator: pass:n[``--``]
+:x_quinngrier_adock_latest: pass:n[link:https://hub.docker.com/r/quinngrier/adock[``quinngrier/adock:latest``]]
+:x_serve_arg: pass:n[``<address>``]
+:x_var_DOCKER: pass:n[``DOCKER``]
 
 endif::[]
 
@@ -85,14 +107,12 @@ adock - Run asciidoctor in a Docker container
 endif::[]
 
 ifndef::x_manpage[]
-[subs="{x_subs_normal}"]
 {x_adock} &#x2014; Run {x_asciidoctor} in a Docker container
 endif::[]
 
 == Synopsis
 
 ifdef::x_manpage[]
-[subs="{x_subs_normal}"]
 {x_adock} ++[++{x_adock_argument}++]...++ ++[++**--**++]++ ++[++{x_asciidoctor_argument}++]...++
 endif::[]
 
@@ -104,10 +124,10 @@ endif::[]
 
 == Description
 
-[subs="{x_subs_normal}"]
 {x_adock} runs {x_asciidoctor} in a Docker container with the given
 {x_asciidoctor_argument}s and performs additional processing as
 specified by the {x_adock_argument}s.
+
 The current working directory is mounted and used as the current working
 directory in the container so that all files below the current working
 directory can be accessed transparently.
@@ -116,83 +136,41 @@ files will have the appropriate ownership.
 
 == Options
 
-ifdef::x_manpage[]
-**--**::
-endif::[]
-ifndef::x_manpage[]
-``--``::
-endif::[]
-+
-[subs="{x_subs_normal}"]
+{x_opt_terminator}::
 All further arguments will be taken as {x_asciidoctor_argument}s instead
 of possibly being taken as {x_adock_argument}s.
 
-ifdef::x_manpage[]
-**--detach**::
-endif::[]
-ifndef::x_manpage[]
-``--detach``::
-endif::[]
-+
-[subs="{x_subs_normal}"]
+{x_opt_detach_name_arg}::
 The Docker container will be run in the background instead of the
 foreground.
-This option corresponds to the {x_docker_d_detach} option of
-{x_docker_run}.
+This option corresponds to the {x_docker_run_d}/{x_docker_run_detach}
+option of {x_docker_run}.
 
-ifdef::x_manpage[]
-**--image=**<__image__>::
-endif::[]
-ifndef::x_manpage[]
-``--image=<image>``::
-endif::[]
-+
-[subs="{x_subs_normal}"]
-The {x_image_arg} Docker image will be used instead of the default
+{x_opt_image_name_arg}::
+The {x_opt_image_arg} Docker image will be used instead of the default
 {x_quinngrier_adock_latest} image.
 
-ifdef::x_manpage[]
-**--name=**<__name__>::
-endif::[]
-ifndef::x_manpage[]
-``--name=<name>``::
-endif::[]
-+
-[subs="{x_subs_normal}"]
-The Docker container will be named {x_name_arg} instead of letting
+{x_opt_name_name_arg}::
+The Docker container will be named {x_opt_name_arg} instead of letting
 Docker generate a random name.
-This option corresponds to the {x_docker_name} option of {x_docker_run}.
+This option corresponds to the {x_docker_run_name} option of
+{x_docker_run}.
 
-ifdef::x_manpage[]
-**--pull**::
-endif::[]
-ifndef::x_manpage[]
-``--pull``::
-endif::[]
-+
-[subs="{x_subs_normal}"]
+{x_opt_pull_name_arg}::
 The latest version of the Docker image will be pulled and no further
 action will be taken.
-All other {x_adock_argument}s (except for the {x_image_opt} option) and
-all {x_asciidoctor_argument}s will be ignored.
+All other {x_adock_argument}s (except for the {x_opt_image_name} option)
+and all {x_asciidoctor_argument}s will be ignored.
 
-ifdef::x_manpage[]
-**--serve**[**=**<__address__>]::
-endif::[]
-ifndef::x_manpage[]
-``--serve[=<address>]``::
-endif::[]
-+
-[subs="{x_subs_normal}"]
-Instead of being yielded, the output files will be collected into a
-temporary directory and an HTTP server will be run to serve them.
+{x_opt_serve_name_arg}::
+Instead of being output normally, the output files will be collected
+into a temporary directory and an HTTP server will be run to serve them.
 The output files will be automatically rebuilt when any changes to the
 source files are detected.
 A LiveReload server will also be run and JavaScript will be injected
 into all HTML output files so that a browser viewing any HTML output
 file will automatically reload the page when a rebuild occurs.
 +
-[subs="{x_subs_normal}"]
 If {x_serve_arg} is omitted, the HTTP server will listen on
 {x_default_http_addr} and the LiveReload server will listen on
 {x_default_live_addr}.
@@ -214,29 +192,13 @@ endif::[]
 +
 The following steps are taken to fill in any missing values:
 +
-. {empty}
-+
-[subs="{x_subs_normal}"]
-If {x_http_host} is omitted, it is taken to be {x_default_http_host}.
-. {empty}
-+
-[subs="{x_subs_normal}"]
-If {x_live_port} is omitted, it is taken to be {x_default_live_port}.
-. {empty}
-+
-[subs="{x_subs_normal}"]
-If {x_live_host} is omitted, it is taken to be {x_http_host}.
+. If {x_http_host} is omitted, it is taken to be {x_default_http_host}.
+. If {x_live_port} is omitted, it is taken to be {x_default_live_port}.
+. If {x_live_host} is omitted, it is taken to be {x_http_host}.
 
 == Environment variables
 
-ifdef::x_manpage[]
-**DOCKER**::
-endif::[]
-ifndef::x_manpage[]
-``DOCKER``::
-endif::[]
-+
-[subs="{x_subs_normal}"]
+{x_var_DOCKER}::
 The command to use to run {x_docker}.
 The value will be evaluated by the shell.
-If the value is empty or unset, the default value is {x_docker}.
+If the variable is empty or unset, the default value is {x_docker}.
