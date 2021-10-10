@@ -206,6 +206,21 @@ while :; do
     mv -f /adock/tmp2 "$x"
   done
 
+  if [[ ! -f /adock/tmp1/404.html ]]; then
+    cat <<<'
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+        <meta charset="utf-8">
+          <title>404</title>
+        </head>
+        <body>
+          <h1>404</h1>
+        </body>
+      </html>
+    ' >/adock/tmp1/404.html
+  fi
+
   for x in /adock/tmp1/**/*; do
     if [[ -f "$x" ]]; then
       y=/adock/out/${x#/adock/tmp1/}
