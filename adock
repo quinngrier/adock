@@ -193,7 +193,7 @@ readonly g
 pwd=`pwd` || exit $?
 readonly pwd
 
-args='run --rm -i $t $detach -u $u:$g -v "$pwd":/x -w /x'
+args='run --rm -i $t $detach -u $u:$g -v "$pwd:$pwd" -w "$pwd"'
 case ${http_addr+x} in ?*)
   args=$args' -p "$http_addr:80" -p "$live_addr:35729"'
 esac
@@ -204,6 +204,7 @@ args=$args' "$image"'
 case ${http_addr+x} in ?*)
   args=$args' --serve "$http_addr" "$live_addr"'
 esac
+readonly args
 
 case $# in 0)
   eval " $docker $args" || exit $?

@@ -93,8 +93,10 @@ http-server . -p 80 >/dev/null &
 http_server_pid=$!
 readonly http_server_pid
 
+# TODO: Make -w/--wait an adock option.
+
 info "Starting LiveReload server on $live_addr"
-livereload . >/dev/null &
+livereload . -w 100 >/dev/null &
 livereload_pid=$!
 readonly livereload_pid
 
@@ -137,9 +139,9 @@ while :; do
   for x in $xs; do
     printf -v x "$x"
     if [[ "$x" != /* ]]; then
-      deps+=("$pwd/$x")
-    elif [[ "$x" == "$pwd"/* ]]; then
       deps+=("$x")
+    elif [[ "$x" == "$pwd/"* ]]; then
+      deps+=("${x#"$pwd/"}")
     fi
   done
 
@@ -171,12 +173,11 @@ while :; do
   )
   eval xs="($xs)"
   for x in "${xs[@]}"; do
-    y=/adock/tmp1/$x
-    x=$pwd/$x
-    if [[ -f "$x" ]]; then
+    if [[ -f "$pwd/$x" ]]; then
       deps+=("$x")
+      y=/adock/tmp1/$x
       mkdir -p "${y%/*}"
-      cp "$x" "$y"
+      cp "$pwd/$x" "$y"
     fi
   done
 
