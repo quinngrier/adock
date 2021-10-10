@@ -94,6 +94,7 @@ http-server \
   . \
   --port 80 \
   --proxy 'http://127.0.0.1:80?' \
+  -c-1 \
   >/dev/null \
 &
 
