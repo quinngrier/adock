@@ -218,6 +218,7 @@ while :; do
     if [[ -f "$x" ]]; then
       y=/adock/out/${x#/adock/tmp1/}
       rm -f -r "$y"
+      mkdir -p "${y%/*}"
       mv -f "$x" "$y"
     fi
   done
