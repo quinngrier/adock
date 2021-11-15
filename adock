@@ -359,10 +359,10 @@ until shift && (exit ${1+1}0); do
   fi
 
   #---------------------------------------------------------------------
-  # --detach
+  # -d, --detach
   #---------------------------------------------------------------------
 
-  gatbps_parse_opt --detach forbidden : "$@"
+  gatbps_parse_opt -d --detach forbidden : "$@"
   if ${got?}; then
     eval "${pop?}"
     detach=-d

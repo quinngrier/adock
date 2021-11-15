@@ -41,6 +41,7 @@ ifdef::x_manpage[]
 :x_http_port: pass:n[<__http_port__>]
 :x_live_host: pass:n[<__live_host__>]
 :x_live_port: pass:n[<__live_port__>]
+:x_opt_d_name_arg: pass:n[**-d**]
 :x_opt_detach_name_arg: pass:n[**--detach**]
 :x_opt_image_arg: pass:n[<__image__>]
 :x_opt_image_name: pass:n[**--image**]
@@ -84,6 +85,7 @@ ifndef::x_manpage[]
 :x_http_port: pass:n[``<http_port>``]
 :x_live_host: pass:n[``<live_host>``]
 :x_live_port: pass:n[``<live_port>``]
+:x_opt_d_name_arg: pass:n[``-d``]
 :x_opt_detach_name_arg: pass:n[``--detach``]
 :x_opt_image_arg: pass:n[``<image>``]
 :x_opt_image_name: pass:n[``--image``]
@@ -143,7 +145,7 @@ files will have the appropriate ownership.
 All further arguments will be taken as {x_asciidoctor_argument}s instead
 of possibly being taken as {x_adock_argument}s.
 
-{x_opt_detach_name_arg}::
+{x_opt_d_name_arg}, {x_opt_detach_name_arg}::
 The Docker container will be run in the background instead of the
 foreground.
 This option corresponds to the {x_docker_run_d}/{x_docker_run_detach}
