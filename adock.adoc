@@ -50,6 +50,9 @@ ifdef::x_manpage[]
 :x_opt_name_name_arg: pass:n[**--name=**<__name__>]
 :x_opt_pull_name: pass:n[**--pull**]
 :x_opt_pull_name_arg: pass:n[**--pull**]
+:x_opt_s_arg: pass:n[<__address__>]
+:x_opt_s_name: pass:n[**-s**]
+:x_opt_s_name_arg: pass:n[**-s**[<__address__>]]
 :x_opt_serve_arg: pass:n[<__address__>]
 :x_opt_serve_name: pass:n[**--serve**]
 :x_opt_serve_name_arg: pass:n[**--serve**[**=**<__address__>]]
@@ -162,7 +165,7 @@ action will be taken.
 All other {x_adock_argument}s (except for the {x_opt_image_name} option)
 and all {x_asciidoctor_argument}s will be ignored.
 
-{x_opt_serve_name_arg}::
+{x_opt_s_name_arg}, {x_opt_serve_name_arg}::
 Instead of being output normally, the output files will be collected
 into a temporary directory and an HTTP server will be run to serve them.
 The output files will be automatically rebuilt when any changes to the

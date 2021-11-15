@@ -403,10 +403,10 @@ until shift && (exit ${1+1}0); do
   fi
 
   #---------------------------------------------------------------------
-  # --serve
+  # -s, --serve
   #---------------------------------------------------------------------
 
-  gatbps_parse_opt --serve permitted : "$@"
+  gatbps_parse_opt -s --serve permitted : "$@"
   if ${got?}; then
     eval "${pop?}"
     if ${arg+:} false; then

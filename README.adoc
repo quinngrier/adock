@@ -23,7 +23,7 @@ Download the link:adock[`adock`] shell script from this repository.
 To compile a document `foo.adoc` into `foo.html`, run `adock foo.adoc`.
 
 . {empty}
-To preview a document `foo.adoc`, run `adock --serve foo.adoc` and open
+To preview a document `foo.adoc`, run `adock -s foo.adoc` and open
 `++http://127.0.0.1:8000++` in a browser.
 The page will automatically refresh as you edit the document.
 
