@@ -17,9 +17,7 @@ anything but Docker.
 Here's how to get started:
 
 . {empty}
-Download the link:adock[`adock`] shell script from this repository and
-put it anywhere in your
-link:https://en.wikipedia.org/wiki/PATH_(variable)[`PATH`].
+Download the link:adock[`adock`] shell script from this repository.
 
 . {empty}
 To compile a document `foo.adoc` into `foo.html`, run `adock foo.adoc`.
@@ -31,6 +29,6 @@ The page will automatically refresh as you edit the document.
 
 . {empty}
 To update Adock, redownload the link:adock[`adock`] shell script from
-this repository and additionally run `adock --pull`.
+this repository and run `adock --pull`.
 
 //
