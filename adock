@@ -36,6 +36,302 @@ LC_ALL=C
 readonly LC_ALL
 export LC_ALL
 
+# :r !subset.sh gatbps_barf gatbps_parse_opt gatbps_unknown_opt
+
+#-----------------------------------------------------------------------
+# gatbps_barf
+#-----------------------------------------------------------------------
+#
+# The authors of this section have waived all copyright and
+# related or neighboring rights to the extent permitted by
+# law as described by the CC0 1.0 Universal Public Domain
+# Dedication. You should have received a copy of the full
+# dedication along with this file, typically as a file
+# named <CC0-1.0.txt>. If not, it may be available at
+# <https://creativecommons.org/publicdomain/zero/1.0/>.
+#
+
+gatbps_barf() {
+
+  case $# in 0)
+
+    printf '%s\n' "$0: Error: Unknown error." >&2
+
+  ;; 1)
+
+    printf '%s\n' "$0: Error: ${1?}" >&2
+
+  ;; *)
+
+    printf '%s' "$0: Error: ${1?}" >&2
+    shift
+    printf ' %s' "$@" >&2
+    echo >&2
+
+  esac
+
+  exit 1
+
+}
+
+#-----------------------------------------------------------------------
+# gatbps_parse_opt
+#-----------------------------------------------------------------------
+#
+# The authors of this section have waived all copyright and
+# related or neighboring rights to the extent permitted by
+# law as described by the CC0 1.0 Universal Public Domain
+# Dedication. You should have received a copy of the full
+# dedication along with this file, typically as a file
+# named <CC0-1.0.txt>. If not, it may be available at
+# <https://creativecommons.org/publicdomain/zero/1.0/>.
+#
+
+gatbps_parse_opt() {
+
+  case $# in 0)
+    gatbps_barf \
+      "gatbps_parse_opt(): At least one <option> must be given." \
+    ;
+  esac
+
+  case ${1?} in -? | --*)
+    gatbps_parse_opt_prefix=
+  ;; *)
+    gatbps_parse_opt_prefix=${1?}
+    case ${gatbps_parse_opt_prefix?} in *[!0-9A-Z_a-z]* | [0-9]*)
+      gatbps_barf \
+        "gatbps_parse_opt(): Invalid <prefix>: " \
+        "${gatbps_parse_opt_prefix?}" \
+      ;
+    esac
+    shift
+  esac
+
+  case $# in 0)
+    gatbps_barf \
+      "gatbps_parse_opt(): At least one <option> must be given." \
+    ;
+  esac
+
+  gatbps_parse_opt_opts_n=0
+  while :; do
+    case $# in 0)
+      break
+    esac
+    case ${1?} in -? | --*)
+      eval gatbps_parse_opt_opts_${gatbps_parse_opt_opts_n?}='${1?}'
+      gatbps_parse_opt_opts_n=`
+        expr ${gatbps_parse_opt_opts_n?} + 1
+      ` || exit $?
+      shift
+    ;; *)
+      break
+    esac
+  done
+
+  case ${gatbps_parse_opt_opts_n?} in 0)
+    gatbps_barf \
+      "gatbps_parse_opt(): At least one <option> must be given." \
+    ;
+  esac
+
+  case $# in 0)
+    gatbps_barf \
+      "gatbps_parse_opt(): The argument list must be given." \
+    ;
+  esac
+
+  case ${1?} in required | forbidden | permitted)
+    gatbps_parse_opt_style=${1?}
+    shift
+  ;; *)
+    gatbps_parse_opt_style=required
+  esac
+
+  case $# in 0)
+    gatbps_barf \
+      "gatbps_parse_opt(): The argument list must be given." \
+    ;
+  esac
+
+  case ${1?} in :)
+    shift
+  ;; *)
+    gatbps_barf \
+      "gatbps_parse_opt(): Unexpected argument: ${1?}" \
+    ;
+  esac
+
+  gatbps_parse_opt_opts_i=0
+
+  while :; do
+
+    case ${gatbps_parse_opt_opts_i?} in ${gatbps_parse_opt_opts_n?})
+      break
+    esac
+
+    case $# in 0)
+      break
+    esac
+
+    eval gatbps_parse_opt_opt=\$gatbps_parse_opt_opts_${gatbps_parse_opt_opts_i?}
+
+    case ${1?} in "${gatbps_parse_opt_opt?}")
+      eval ${gatbps_parse_opt_prefix?}got=:
+      eval ${gatbps_parse_opt_prefix?}opt='${gatbps_parse_opt_opt?}'
+      case ${gatbps_parse_opt_style?} in required)
+        case $# in 1)
+          gatbps_barf \
+            "Option requires an argument: ${gatbps_parse_opt_opt?}" \
+          ;
+        esac
+        eval ${gatbps_parse_opt_prefix?}arg='${2?}'
+        eval ${gatbps_parse_opt_prefix?}pop=shift
+      ;; *)
+        unset ${gatbps_parse_opt_prefix?}arg
+        eval ${gatbps_parse_opt_prefix?}pop=
+      esac
+      return
+    esac
+
+    case ${gatbps_parse_opt_opt?} in --*)
+
+      case ${1?} in "${gatbps_parse_opt_opt?}"=*)
+        case ${gatbps_parse_opt_style?} in forbidden)
+          gatbps_barf \
+            "Option forbids an argument: ${gatbps_parse_opt_opt?}" \
+          ;
+        esac
+        gatbps_parse_opt_x='
+          {
+            if (seen_equals) {
+              print;
+            } else if (/=/) {
+              seen_equals = 1;
+              sub(/[^=]*=/, "");
+              print;
+            }
+          }
+        '
+        gatbps_parse_opt_x=`eval " ${AWK:-awk}"' \
+          "${gatbps_parse_opt_x?}" \
+          <<gatbps_parse_opt_eof
+${1?}
+gatbps_parse_opt_eof
+        '` || exit $?
+        eval ${gatbps_parse_opt_prefix?}got=:
+        eval ${gatbps_parse_opt_prefix?}opt='${gatbps_parse_opt_opt?}'
+        eval ${gatbps_parse_opt_prefix?}arg='${gatbps_parse_opt_x?}'
+        eval ${gatbps_parse_opt_prefix?}pop=
+        return
+      esac
+
+    ;; *)
+
+      case ${1?} in "${gatbps_parse_opt_opt?}"*)
+        case ${gatbps_parse_opt_opt?} in '-
+')
+          gatbps_parse_opt_x='
+            1 d
+            s/'\''/&\\&&/g
+            2 s/^/'\''/
+            $ s/$/'\''/
+          '
+        ;; *)
+          gatbps_parse_opt_x='
+            1 s/^..//
+            s/'\''/&\\&&/g
+            1 s/^/'\''/
+            $ s/$/'\''/
+          '
+        esac
+        gatbps_parse_opt_x=`eval " ${SED:-sed}"' \
+          "${gatbps_parse_opt_x?}" \
+          <<gatbps_parse_opt_eof
+${1?}
+gatbps_parse_opt_eof
+        '` || exit $?
+        eval ${gatbps_parse_opt_prefix?}got=:
+        eval ${gatbps_parse_opt_prefix?}opt='${gatbps_parse_opt_opt?}'
+        case ${gatbps_parse_opt_style?} in forbidden)
+          unset ${gatbps_parse_opt_prefix?}arg
+          eval ${gatbps_parse_opt_prefix?}pop=\"'
+            shift
+            set x -${gatbps_parse_opt_x?} \"\$@\"
+          '\"
+        ;; *)
+          eval ${gatbps_parse_opt_prefix?}arg=${gatbps_parse_opt_x?}
+          eval ${gatbps_parse_opt_prefix?}pop=
+        esac
+        return
+      esac
+
+    esac
+
+    gatbps_parse_opt_opts_i=`
+      expr ${gatbps_parse_opt_opts_i?} + 1
+    ` || exit $?
+
+  done
+
+  eval ${gatbps_parse_opt_prefix?}got=false
+  unset ${gatbps_parse_opt_prefix?}opt
+  unset ${gatbps_parse_opt_prefix?}arg
+  eval ${gatbps_parse_opt_prefix?}pop=
+
+}
+
+#-----------------------------------------------------------------------
+# gatbps_unknown_opt
+#-----------------------------------------------------------------------
+#
+# The authors of this section have waived all copyright and
+# related or neighboring rights to the extent permitted by
+# law as described by the CC0 1.0 Universal Public Domain
+# Dedication. You should have received a copy of the full
+# dedication along with this file, typically as a file
+# named <CC0-1.0.txt>. If not, it may be available at
+# <https://creativecommons.org/publicdomain/zero/1.0/>.
+#
+
+gatbps_unknown_opt() {
+
+  case $# in 1)
+    :
+  ;; *)
+    gatbps_barf \
+      "gatbps_unknown_opt(): Exactly one argument must be given." \
+    ;
+  esac
+
+  case ${1?} in --*)
+
+    printf '%s' "$0: Unknown option: " >&2
+
+    sed '
+      /=/ {
+        s/=.*//
+        q
+      }
+    ' <<gatbps_unknown_opt_eof >&2
+${1?}
+gatbps_unknown_opt_eof
+
+    exit 1
+
+  ;; -?*)
+
+    printf '%s: Unknown option: %.2s\n' "$0" "${1?}" >&2
+
+    exit 1
+
+  esac
+
+}
+
+#-----------------------------------------------------------------------
+
 detach=
 unset http_addr
 image=quinngrier/adock
@@ -43,117 +339,105 @@ unset live_addr
 unset name
 pull=false
 
-# TODO: Use gatbps_parse_opt for options parsing.
+case $# in 0)
+  set x
+;; *)
+  set x "$@"
+esac
 
-while :; do
+until shift && (exit ${1+1}0); do
 
-  case ${1-} in --)
+  #---------------------------------------------------------------------
+  # Options terminator
+  #---------------------------------------------------------------------
+
+  gatbps_parse_opt -- forbidden : "$@"
+  if ${got?}; then
+    eval "${pop?}"
     shift
     break
-  esac
+  fi
 
-  case ${1-} in --detach)
+  #---------------------------------------------------------------------
+  # --detach
+  #---------------------------------------------------------------------
+
+  gatbps_parse_opt --detach forbidden : "$@"
+  if ${got?}; then
+    eval "${pop?}"
     detach=-d
-    shift
     continue
-  esac
+  fi
 
-  case ${1-} in --image)
-    case ${2+x} in '')
-      printf '%s\n' "$0: Option requires an argument: $1" >&2
-      exit 1
-    esac
-    image=$1=$2
-    shift 2
-    case $# in 0)
-      set x "$image"
-    ;; *)
-      set x "$image" "$@"
-    esac
-    shift
+  #---------------------------------------------------------------------
+  # --image
+  #---------------------------------------------------------------------
+
+  gatbps_parse_opt --image : "$@"
+  if ${got?}; then
+    eval "${pop?}"
+    image=${arg?}
     continue
-  esac
+  fi
 
-  case ${1-} in --image=*)
-    case $1 in *[!-.0-9:=A-Z_a-z]*)
-      printf '%s\n' "$0: Invalid option argument: $1" >&2
-      exit 1
-    esac
-    r='[^=]*=\(.*\)'
-    image=`expr "x$1" : "x$r"` || exit $?
-    shift
+  #---------------------------------------------------------------------
+  # --name
+  #---------------------------------------------------------------------
+
+  gatbps_parse_opt --name : "$@"
+  if ${got?}; then
+    eval "${pop?}"
+    name=${arg?}
     continue
-  esac
+  fi
 
-  case ${1-} in --name)
-    case ${2+x} in '')
-      printf '%s\n' "$0: Option requires an argument: $1" >&2
-      exit 1
-    esac
-    name=$1=$2
-    shift 2
-    case $# in 0)
-      set x "$name"
-    ;; *)
-      set x "$name" "$@"
-    esac
-    shift
-    continue
-  esac
+  #---------------------------------------------------------------------
+  # --pull
+  #---------------------------------------------------------------------
 
-  case ${1-} in --name=*)
-    case $1 in *[!-.0-9=A-Z_a-z]*)
-      printf '%s\n' "$0: Invalid option argument: $1" >&2
-      exit 1
-    esac
-    r='[^=]*=\(.*\)'
-    name=`expr "x$1" : "x$r"` || exit $?
-    shift
-    continue
-  esac
-
-  case ${1-} in --pull)
+  gatbps_parse_opt --pull forbidden : "$@"
+  if ${got?}; then
+    eval "${pop?}"
     pull=:
-    shift
     continue
-  esac
+  fi
 
-  case ${1-} in --serve)
-    http_addr=0.0.0.0:8000
-    live_addr=0.0.0.0:35729
-    shift
-    continue
-  esac
+  #---------------------------------------------------------------------
+  # --serve
+  #---------------------------------------------------------------------
 
-  case ${1-} in --serve=*)
-    case $1 in *[!-,.0-9:=A-Z_a-z]*)
-      printf '%s\n' "$0: Invalid option argument: $1" >&2
-      exit 1
-    esac
-    r='[^=]*=\(.*\)'
-    http_addr=`expr "x$1" : "x$r"` || exit $?
-    case $http_addr in *,*)
-      r='.*,\(.*\)'
-      live_addr=`expr "x$http_addr" : "x$r"` || exit $?
-      r='\(.*\),.*'
-      http_addr=`expr "x$http_addr" : "x$r"` || exit $?
-    ;; *)
-      live_addr=35729
-    esac
-    case $http_addr in *:*)
-      :
-    ;; *)
-      http_addr=0.0.0.0:$http_addr
-    esac
-    case $live_addr in *:*)
-      :
-    ;; *)
-      r='\(.*\):.*'
-      live_addr=`expr "x$http_addr" : "x$r"`:$live_addr || exit $?
-    esac
-    shift
+  gatbps_parse_opt --serve permitted : "$@"
+  if ${got?}; then
+    eval "${pop?}"
+    if ${arg+:} false; then
+      http_addr=${arg?}
+      case $http_addr in *,*)
+        r='.*,\(.*\)'
+        live_addr=`expr "x$http_addr" : "x$r"` || exit $?
+        r='\(.*\),.*'
+        http_addr=`expr "x$http_addr" : "x$r"` || exit $?
+      ;; *)
+        live_addr=35729
+      esac
+      case $http_addr in *:*)
+        :
+      ;; *)
+        http_addr=0.0.0.0:$http_addr
+      esac
+      case $live_addr in *:*)
+        :
+      ;; *)
+        r='\(.*\):.*'
+        live_addr=`expr "x$http_addr" : "x$r"`:$live_addr || exit $?
+      esac
+    else
+      http_addr=0.0.0.0:8000
+      live_addr=0.0.0.0:35729
+    fi
     continue
-  esac
+  fi
+
+  #---------------------------------------------------------------------
 
   break
 
