@@ -325,7 +325,7 @@ esac
 until shift && (exit ${1+1}0); do
 
   #---------------------------------------------------------------------
-  # Options terminator
+  # --
   #---------------------------------------------------------------------
 
   gatbps_parse_opt -- forbidden : "$@"
@@ -333,6 +333,36 @@ until shift && (exit ${1+1}0); do
     eval "${pop?}"
     shift
     break
+  fi
+
+  #---------------------------------------------------------------------
+  # -a, --address
+  #---------------------------------------------------------------------
+
+  gatbps_parse_opt -a --address required : "$@"
+  if ${got?}; then
+    eval "${pop?}"
+    http_addr=${arg?}
+    case $http_addr in *,*)
+      r='.*,\(.*\)'
+      live_addr=`expr "x$http_addr" : "x$r"` || exit $?
+      r='\(.*\),.*'
+      http_addr=`expr "x$http_addr" : "x$r"` || exit $?
+    ;; *)
+      live_addr=35729
+    esac
+    case $http_addr in *:*)
+      :
+    ;; *)
+      http_addr=0.0.0.0:$http_addr
+    esac
+    case $live_addr in *:*)
+      :
+    ;; *)
+      r='\(.*\):.*'
+      live_addr=`expr "x$http_addr" : "x$r"`:$live_addr || exit $?
+    esac
+    continue
   fi
 
   #---------------------------------------------------------------------
@@ -350,7 +380,7 @@ until shift && (exit ${1+1}0); do
   # --image
   #---------------------------------------------------------------------
 
-  gatbps_parse_opt --image : "$@"
+  gatbps_parse_opt --image required : "$@"
   if ${got?}; then
     eval "${pop?}"
     image=${arg?}
@@ -361,7 +391,7 @@ until shift && (exit ${1+1}0); do
   # -n, --name
   #---------------------------------------------------------------------
 
-  gatbps_parse_opt -n --name : "$@"
+  gatbps_parse_opt -n --name required : "$@"
   if ${got?}; then
     eval "${pop?}"
     name=${arg?}
@@ -372,34 +402,13 @@ until shift && (exit ${1+1}0); do
   # -s, --serve
   #---------------------------------------------------------------------
 
-  gatbps_parse_opt -s --serve permitted : "$@"
+  gatbps_parse_opt -s --serve forbidden : "$@"
   if ${got?}; then
     eval "${pop?}"
-    if ${arg+:} false; then
-      http_addr=${arg?}
-      case $http_addr in *,*)
-        r='.*,\(.*\)'
-        live_addr=`expr "x$http_addr" : "x$r"` || exit $?
-        r='\(.*\),.*'
-        http_addr=`expr "x$http_addr" : "x$r"` || exit $?
-      ;; *)
-        live_addr=35729
-      esac
-      case $http_addr in *:*)
-        :
-      ;; *)
-        http_addr=0.0.0.0:$http_addr
-      esac
-      case $live_addr in *:*)
-        :
-      ;; *)
-        r='\(.*\):.*'
-        live_addr=`expr "x$http_addr" : "x$r"`:$live_addr || exit $?
-      esac
-    else
+    case ${http_addr+x} in '')
       http_addr=0.0.0.0:8000
       live_addr=0.0.0.0:35729
-    fi
+    esac
     continue
   fi
 

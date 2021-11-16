@@ -30,7 +30,11 @@ Run `adock -s foo.adoc` to compile any document `foo.adoc` into
 `foo.html` and run an HTTP server on `0.0.0.0:8000` for previewing.
 The document will be automatically recompiled and your browser will
 automatically refresh as you make changes.
-Press kbd:[Ctrl+C] to stop the server.
+Press kbd:[Ctrl+C] to stop and remove the Docker container.
++
+Run `adock -dsn foo foo.adoc` to do the same thing, but this time naming
+the Docker container `foo` and running it in the background.
+Run `docker rm -f foo` to stop and remove the Docker container.
 
 . {empty}
 Run `adock -u` to pull the latest Docker image and download and replace
