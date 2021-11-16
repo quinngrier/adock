@@ -450,6 +450,27 @@ readonly live_addr
 readonly name
 readonly pull
 
+#-----------------------------------------------------------------------
+#
+# We want any output files produced by the container to have the
+# expected ownership. To achieve this for both rootful and rootless
+# containers, we create an empty temporary directory on the host, mount
+# it into the container, observe its ownership inside the container, and
+# replicate that ownership onto any output files. Using a temporary file
+# instead of a directory would also work, but using a directory makes it
+# easier to get an absolute path.
+#
+
+id_dir=`mktemp -d` || exit $?
+case ${id_dir?} in /*)
+  :
+;; *)
+  id_dir=`cd "./${id_dir?}" && pwd` || exit $?
+esac
+readonly id_dir
+
+#-----------------------------------------------------------------------
+
 docker=${DOCKER:-docker}
 readonly docker
 
@@ -468,26 +489,29 @@ case $s in 0)
 esac
 readonly t
 
-u=`id -u` || exit $?
-readonly u
-
-g=`id -g` || exit $?
-readonly g
-
 pwd=`pwd` || exit $?
 readonly pwd
 
-args='run --rm -i $t $detach -u $u:$g -v "$pwd:$pwd" -w "$pwd"'
+args='run --rm -i $t $detach -v "$pwd:$pwd" -w "$pwd"'
+
+args=${args?}' -v "${id_dir?}":/id_dir'
+
+args=${args?}' -e ADOCK_UMASK='`umask` || exit $?
+
 case ${http_addr+x} in ?*)
-  args=$args' -p "$http_addr:80" -p "$live_addr:35729"'
+  args=${args?}' -p "${http_addr?}:80" -p "${live_addr?}:35729"'
 esac
+
 case ${name+x} in ?*)
-  args=$args' --name "$name"'
+  args=${args?}' --name "${name?}"'
 esac
-args=$args' "$image"'
+
+args=${args?}' "${image?}"'
+
 case ${http_addr+x} in ?*)
-  args=$args' --serve "$http_addr" "$live_addr"'
+  args=${args?}' --serve "${http_addr?}" "${live_addr?}"'
 esac
+
 readonly args
 
 case $# in 0)

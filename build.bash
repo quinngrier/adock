@@ -13,6 +13,7 @@ set -E -e -u -o pipefail || exit $?
 trap exit ERR
 
 apk add --no-cache \
+  doas \
   gnuplot \
   inotify-tools \
   nodejs \

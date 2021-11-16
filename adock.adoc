@@ -139,8 +139,8 @@ specified by the {x_adock_argument}s.
 The current working directory is mounted and used as the current working
 directory in the container so that all files below the current working
 directory can be accessed transparently.
-The container inherits the current user and group IDs so that any output
-files will have the appropriate ownership.
+Output files will have the same ownership and permissions as if
+{x_asciidoctor} were run directly on the host.
 
 == Options
 
@@ -171,13 +171,13 @@ All other {x_adock_argument}s (except for the {x_opt_image_name} option)
 and all {x_asciidoctor_argument}s will be ignored.
 
 {x_opt_s_name_arg}, {x_opt_serve_name_arg}::
-Instead of being output normally, the output files will be collected
+In addition to being output normally, the output files will be collected
 into a temporary directory and an HTTP server will be run to serve them.
-The output files will be automatically rebuilt when any changes to the
-source files are detected.
-A LiveReload server will also be run and JavaScript will be injected
-into all HTML output files so that a browser viewing any HTML output
-file will automatically reload the page when a rebuild occurs.
+The output files will be automatically recompiled when any changes to
+the input files are detected.
+A LiveReload server will be run and JavaScript will be injected into the
+temporary copies of all HTML files so that a browser viewing any such
+file will automatically refresh when a recompile occurs.
 +
 If {x_serve_arg} is omitted, the HTTP server will listen on
 {x_default_http_addr} and the LiveReload server will listen on

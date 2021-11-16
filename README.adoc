@@ -20,15 +20,19 @@ Here's how to get started:
 Download the link:adock[`adock`] shell script from this repository.
 
 . {empty}
-To compile a document `foo.adoc` into `foo.html`, run `adock foo.adoc`.
+Run `adock foo.adoc` to compile `foo.adoc` into `foo.html`.
 
 . {empty}
-To preview a document `foo.adoc`, run `adock -s foo.adoc` and open
-`++http://127.0.0.1:8000++` in a browser.
-The page will automatically refresh as you edit the document.
+Run `adock -s foo.adoc` to compile `foo.adoc` into `foo.html` and host a
+preview server on `0.0.0.0:8000`.
+The document will be automatically recompiled and your browser will
+automatically refresh as you make changes.
 
 . {empty}
-To update Adock, redownload the link:adock[`adock`] shell script from
-this repository and run `adock --pull`.
+To update, redownload the `adock` shell script from this repository and
+run `adock --pull`.
+
+. {empty}
+Read the full man page at link:adock.adoc[`adock.adoc`].
 
 //

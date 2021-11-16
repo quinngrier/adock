@@ -9,8 +9,8 @@
 #
 
 FROM asciidoctor/docker-asciidoctor AS build
-COPY build.bash /
 RUN apk add --no-cache bash
+COPY build.bash /
 RUN bash /build.bash
 RUN rm /build.bash
 COPY entrypoint.bash /

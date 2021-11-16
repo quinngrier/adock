@@ -23,9 +23,57 @@ LC_ALL=C
 readonly LC_ALL
 export LC_ALL
 
-if [[ "${1-}" != --serve ]]; then
-  exec asciidoctor "$@"
+#-----------------------------------------------------------------------
+
+declare -A deps
+declare    host_gid
+declare    host_uid
+declare -A html_deps
+declare -A new_html_deps
+declare -A ys
+
+#-----------------------------------------------------------------------
+
+host_uid=$(stat -c %u:%g /id_dir)
+host_gid=${host_uid#*:}
+host_uid=${host_uid%:*}
+readonly host_uid
+readonly host_gid
+
+if ((host_uid == 0)); then
+
+  run_as_host() {
+    "$@"
+  }; readonly -f run_as_host
+
+else
+
+  if ((host_gid == 0)); then
+    adduser -D -G root -H -u $host_uid host
+  else
+    addgroup -g $host_gid host
+    adduser -D -G host -H -u $host_uid host
+  fi
+
+  echo permit keepenv nopass root >/etc/doas.conf
+
+  run_as_host() {
+    doas -u host -- "$@"
+  }; readonly -f run_as_host
+
 fi
+
+umask $ADOCK_UMASK
+
+#-----------------------------------------------------------------------
+
+if [[ "${1-}" != --serve ]]; then
+  exec run_as_host asciidoctor "$@"
+fi
+
+shift
+
+#-----------------------------------------------------------------------
 
 barf() {
   if (($# == 0)); then
@@ -66,8 +114,6 @@ inotifywait_events+=,move_self
 inotifywait_events+=,moved_from
 inotifywait_events+=,moved_to
 readonly inotifywait_events
-
-shift
 
 http_addr=$1
 readonly http_addr
@@ -121,18 +167,15 @@ while :; do
   info "Running asciidoctor"
 
   deps=()
-
-  rm -f -r /adock/tmp1
-  mkdir /adock/tmp1
+  html_deps=()
 
   # We assume that all non-absolute open() paths are relative to $PWD.
 
-  strace \
+  run_as_host strace \
     -e '?open' \
     -o /adock/deps \
     -xx \
     asciidoctor \
-    -D /adock/tmp1 \
     "$@" \
   ;
   xs=$(
@@ -147,49 +190,61 @@ while :; do
   for x in $xs; do
     printf -v x "$x"
     if [[ "$x" != /* ]]; then
-      deps+=("$x")
+      y=$x
     elif [[ "$x" == "$pwd/"* ]]; then
-      deps+=("${x#"$pwd/"}")
+      y=${x#"$pwd/"}
+    else
+      y=
+    fi
+    if [[ "$y" ]]; then
+      deps[$y]=
+      if [[ "$y" == *.html ]]; then
+        html_deps[$y]=
+        new_html_deps[$y]=
+      fi
     fi
   done
 
-  xs=$(
-    cd /adock/tmp1
-    node -e '
-      const fs = require("fs");
-      const {parseHTML} = require("linkedom");
-      const paths = new Set();
-      for (const file of process.argv.slice(1)) {
-        const prefix = file.replace(/[^\/]+$/, "");
-        const {document} = parseHTML(fs.readFileSync(file, "utf8"));
-        for (const [tag, attr] of [["a", "href"], ["img", "src"]]) {
-          for (const node of document.getElementsByTagName(tag)) {
-            const path = decodeURI(node.getAttribute(attr));
-            if (!path.includes("://")) {
-              paths.add(prefix + path);
+  while ((${#new_html_deps[@]} > 0)); do
+    xs=$(
+      node -e '
+        const fs = require("fs");
+        const {parseHTML} = require("linkedom");
+        const paths = new Set();
+        for (const file of process.argv.slice(1)) {
+          const prefix = file.replace(/[^\/]+$/, "");
+          const {document} = parseHTML(fs.readFileSync(file, "utf8"));
+          for (const [tag, attr] of [["a", "href"], ["img", "src"]]) {
+            for (const node of document.getElementsByTagName(tag)) {
+              const path = decodeURI(node.getAttribute(attr));
+              if (!path.includes("://")) {
+                paths.add(prefix + path);
+              }
             }
           }
         }
-      }
-      const q = "'\''";
-      const qr = /'\''/g;
-      const qe = q + "\\" + q + q;
-      for (const path of paths) {
-        console.log(q + path.replace(qr, qe) + q);
-      }
-    ' -- **/*.html
-  )
-  eval xs="($xs)"
-  for x in "${xs[@]}"; do
-    if [[ -f "$pwd/$x" ]]; then
-      deps+=("$x")
-      y=/adock/tmp1/$x
-      mkdir -p "${y%/*}"
-      cp "$pwd/$x" "$y"
-    fi
+        const q = "'\''";
+        const qr = /'\''/g;
+        const qe = q + "\\" + q + q;
+        for (const path of paths) {
+          console.log("[" + q + path.replace(qr, qe) + q + "]=");
+        }
+      ' -- "${!new_html_deps[@]}"
+    )
+    eval ys="($xs)"
+    new_html_deps=()
+    for x in "${!ys[@]}"; do
+      if [[ ! "${deps[$x]+x}" && -e "$x" ]]; then
+        deps[$x]=
+        if [[ "$x" == *.html ]]; then
+          html_deps[$x]=
+          new_html_deps[$x]=
+        fi
+      fi
+    done
   done
 
-  for x in "${deps[@]}"; do
+  for x in "${!deps[@]}"; do
     case $x in *$'\n'* | *$'\r'*)
       barf "Strange file names are not supported."
     esac
@@ -197,10 +252,15 @@ while :; do
 
   (
     IFS=$'\n'
-    sort -u <<<"${deps[*]}" >/adock/deps
+    sort -u <<<"${!deps[*]}" >/adock/deps
   )
 
+  rm -f -r /adock/tmp1
+  run_as_host mkdir /adock/tmp1
+  cp -L -R -p -- "${!deps[@]}" /adock/tmp1
+
   for x in /adock/tmp1/**/*.html; do
+    run_as_host sh -c '>/adock/tmp2'
     sed '
       s/<\/body>/\
         <script>\
@@ -218,12 +278,12 @@ while :; do
     if [[ -f "$x" ]]; then
       y=/adock/out/${x#/adock/tmp1/}
       rm -f -r "$y"
-      mkdir -p "${y%/*}"
+      run_as_host mkdir -p "${y%/*}"
       mv -f "$x" "$y"
     fi
   done
 
-  inotifywait \
+  run_as_host inotifywait \
     --event "$inotifywait_events" \
     --format '[%T] File modified: %w' \
     --fromfile /adock/deps \
