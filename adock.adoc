@@ -24,6 +24,9 @@ ifdef::x_manpage[]
 :manmanual: Adock
 :mansource: Adock
 
+:x_README_adoc: pass:n[**README.adoc**]
+:x_README_html: pass:n[**README.html**]
+:x_README_pdf: pass:n[**README.pdf**]
 :x_adock: pass:n[**adock**]
 :x_adock_argument: pass:n[<__adock_argument__>]
 :x_asciidoctor: pass:n[**asciidoctor**]
@@ -49,8 +52,6 @@ ifdef::x_manpage[]
 :x_opt_name_arg: pass:n[<__name__>]
 :x_opt_name_name: pass:n[**--name**]
 :x_opt_name_name_arg: pass:n[**--name=**<__name__>]
-:x_opt_pull_name: pass:n[**--pull**]
-:x_opt_pull_name_arg: pass:n[**--pull**]
 :x_opt_s_arg: pass:n[<__address__>]
 :x_opt_s_name: pass:n[**-s**]
 :x_opt_s_name_arg: pass:n[**-s**[<__address__>]]
@@ -58,8 +59,13 @@ ifdef::x_manpage[]
 :x_opt_serve_name: pass:n[**--serve**]
 :x_opt_serve_name_arg: pass:n[**--serve**[**=**<__address__>]]
 :x_opt_terminator: pass:n[**--**]
+:x_opt_u_name: pass:n[**-u**]
+:x_opt_u_name_arg: pass:n[**-u**]
+:x_opt_update_name: pass:n[**--update**]
+:x_opt_update_name_arg: pass:n[**--update**]
 :x_quinngrier_adock_latest: pass:n[**quinngrier/adock:latest**]
 :x_serve_arg: pass:n[<__address__>]
+:x_sudo: pass:n[**sudo**]
 :x_var_DOCKER: pass:n[**DOCKER**]
 
 endif::[]
@@ -68,6 +74,9 @@ ifndef::x_manpage[]
 
 = `adock`
 
+:x_README_adoc: pass:n[``README.adoc``]
+:x_README_html: pass:n[``README.html``]
+:x_README_pdf: pass:n[``README.pdf``]
 :x_adock: pass:n[``adock``]
 :x_adock_argument: pass:n[``<adock_argument>``]
 :x_asciidoctor: pass:n[link:https://docs.asciidoctor.org/asciidoctor/latest/cli/man1/asciidoctor/[``asciidoctor``]]
@@ -93,8 +102,6 @@ ifndef::x_manpage[]
 :x_opt_name_arg: pass:n[``<name>``]
 :x_opt_name_name: pass:n[``--name``]
 :x_opt_name_name_arg: pass:n[``--name=<name>``]
-:x_opt_pull_name: pass:n[``--pull``]
-:x_opt_pull_name_arg: pass:n[``--pull``]
 :x_opt_s_arg: pass:n[``<address>``]
 :x_opt_s_name: pass:n[``-s``]
 :x_opt_s_name_arg: pass:n[``-s[<address>]``]
@@ -102,8 +109,13 @@ ifndef::x_manpage[]
 :x_opt_serve_name: pass:n[``--serve``]
 :x_opt_serve_name_arg: pass:n[``--serve[=<address>]``]
 :x_opt_terminator: pass:n[``--``]
+:x_opt_u_name: pass:n[``-u``]
+:x_opt_u_name_arg: pass:n[``-u``]
+:x_opt_update_name: pass:n[``--update``]
+:x_opt_update_name_arg: pass:n[``--update``]
 :x_quinngrier_adock_latest: pass:n[link:https://hub.docker.com/r/quinngrier/adock[``quinngrier/adock:latest``]]
 :x_serve_arg: pass:n[``<address>``]
+:x_sudo: pass:n[``sudo``]
 :x_var_DOCKER: pass:n[``DOCKER``]
 
 endif::[]
@@ -126,7 +138,7 @@ endif::[]
 
 ifndef::x_manpage[]
 ----
-adock [<adock_argument>]... [--] [<asciidoctor_argument>]...
+adock [<adock_argument>...] [--] [<asciidoctor_argument>...]
 ----
 endif::[]
 
@@ -164,17 +176,11 @@ Docker generate a random name.
 This option corresponds to the {x_docker_run_name} option of
 {x_docker_run}.
 
-{x_opt_pull_name_arg}::
-The latest version of the Docker image will be pulled and no further
-action will be taken.
-All other {x_adock_argument}s (except for the {x_opt_image_name} option)
-and all {x_asciidoctor_argument}s will be ignored.
-
 {x_opt_s_name_arg}, {x_opt_serve_name_arg}::
-In addition to being output normally, the output files will be collected
+In addition to being output normally, the output files will be copied
 into a temporary directory and an HTTP server will be run to serve them.
-The output files will be automatically recompiled when any changes to
-the input files are detected.
+The output files will be automatically recompiled when any changes are
+detected.
 A LiveReload server will be run and JavaScript will be injected into the
 temporary copies of all HTML files so that a browser viewing any such
 file will automatically refresh when a recompile occurs.
@@ -204,9 +210,55 @@ The following steps are taken to fill in any missing values:
 . If {x_live_port} is omitted, it is taken to be {x_default_live_port}.
 . If {x_live_host} is omitted, it is taken to be {x_http_host}.
 
+{x_opt_u_name_arg}, {x_opt_update_name_arg}::
+The latest version of the Docker image will be pulled and the latest
+version of {x_adock} will be downloaded and used to replace the
+currently running copy of {x_adock}.
+All other {x_adock_argument}s (except for the {x_opt_image_name} option)
+and all {x_asciidoctor_argument}s will be ignored.
+
 == Environment variables
 
 {x_var_DOCKER}::
 The command to use to run {x_docker}.
 The value will be evaluated by the shell.
 If the variable is empty or unset, the default value is {x_docker}.
+
+== Examples
+
+. {empty}
+Compile {x_README_adoc} into {x_README_html}:
++
+----
+adock README.adoc
+----
+
+. {empty}
+Compile {x_README_adoc} into {x_README_html}, running {x_docker} with
+{x_sudo}:
++
+----
+DOCKER='sudo docker' adock README.adoc
+----
+
+. {empty}
+Compile {x_README_adoc} into {x_README_html} and host an HTTP server on
+{x_default_http_addr} for previewing:
++
+----
+adock -s README.adoc
+----
+
+. {empty}
+Update the Docker image and the currently running copy of {x_adock}:
++
+----
+adock -u
+----
+
+. {empty}
+Compile {x_README_adoc} into {x_README_pdf}:
++
+----
+adock -b pdf -r asciidoctor-pdf README.adoc
+----

@@ -9,30 +9,35 @@
 //
 
 = Adock
+:experimental:
 
 Adock is a link:https://docs.docker.com/[Dockerized] version of
 link:https://docs.asciidoctor.org/asciidoctor/latest/[Asciidoctor] that
 lets you compile and preview Asciidoctor documents without installing
 anything but Docker.
+
 Here's how to get started:
 
 . {empty}
 Download the link:adock[`adock`] shell script from this repository.
+The script is portable enough to run in any POSIX-like shell.
 
 . {empty}
-Run `adock foo.adoc` to compile `foo.adoc` into `foo.html`.
+Run `adock foo.adoc` to compile any document `foo.adoc` into `foo.html`.
 
 . {empty}
-Run `adock -s foo.adoc` to compile `foo.adoc` into `foo.html` and host a
-preview server on `0.0.0.0:8000`.
+Run `adock -s foo.adoc` to compile any document `foo.adoc` into
+`foo.html` and run an HTTP server on `0.0.0.0:8000` for previewing.
 The document will be automatically recompiled and your browser will
 automatically refresh as you make changes.
+Press kbd:[Ctrl+C] to stop the server.
 
 . {empty}
-To update, redownload the `adock` shell script from this repository and
-run `adock --pull`.
+Run `adock -u` to pull the latest Docker image and download and replace
+the `adock` shell script with the latest version.
 
 . {empty}
-Read the full man page at link:adock.adoc[`adock.adoc`].
+Refer to the full man page for the `adock` shell script at
+link:adock.adoc[`adock.adoc`].
 
 //

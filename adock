@@ -8,29 +8,6 @@
 # named <CC0-1.0.txt>. If not, it may be available at
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
-# Example 1. Compile README.adoc into README.html.
-#
-#       adock README.adoc
-#
-# Example 2. Compile README.adoc into README.pdf.
-#
-#       adock -b pdf -r asciidoctor-pdf README.adoc
-#
-# Example 3. Compile README.adoc into README.html, running docker with
-# sudo.
-#
-#       DOCKER='sudo docker' adock README.adoc
-#
-# Example 4. Continuously recompile README.adoc into HTML and serve it
-# through an HTTP server listening on 0.0.0.0:8000.
-#
-#       adock --serve README.adoc
-#
-# Example 5. Pull the latest version of the quinngrier/adock Docker
-# image.
-#
-#       adock --pull
-#
 
 LC_ALL=C
 readonly LC_ALL
@@ -337,7 +314,7 @@ unset http_addr
 image=quinngrier/adock
 unset live_addr
 unset name
-pull=false
+update=false
 
 case $# in 0)
   set x
@@ -392,17 +369,6 @@ until shift && (exit ${1+1}0); do
   fi
 
   #---------------------------------------------------------------------
-  # --pull
-  #---------------------------------------------------------------------
-
-  gatbps_parse_opt --pull forbidden : "$@"
-  if ${got?}; then
-    eval "${pop?}"
-    pull=:
-    continue
-  fi
-
-  #---------------------------------------------------------------------
   # -s, --serve
   #---------------------------------------------------------------------
 
@@ -438,6 +404,17 @@ until shift && (exit ${1+1}0); do
   fi
 
   #---------------------------------------------------------------------
+  # -u, --update
+  #---------------------------------------------------------------------
+
+  gatbps_parse_opt -u --update forbidden : "$@"
+  if ${got?}; then
+    eval "${pop?}"
+    update=:
+    continue
+  fi
+
+  #---------------------------------------------------------------------
 
   break
 
@@ -448,7 +425,7 @@ readonly http_addr
 readonly image
 readonly live_addr
 readonly name
-readonly pull
+readonly update
 
 #-----------------------------------------------------------------------
 #
@@ -461,23 +438,83 @@ readonly pull
 # easier to get an absolute path.
 #
 
-id_dir=`mktemp -d` || exit $?
-case ${id_dir?} in /*)
+tmp_dir=`mktemp -d` || exit $?
+case ${tmp_dir?} in /*)
   :
 ;; *)
-  id_dir=`cd "./${id_dir?}" && pwd` || exit $?
+  tmp_dir=`cd "./${tmp_dir?}" && pwd` || exit $?
 esac
-readonly id_dir
+readonly tmp_dir
+
+exit_trap='
+  if command -v shred >/dev/null 2>&1; then
+    find "${tmp_dir?}" -type f -exec shred {} \; || :
+  fi
+  rm -f -r "${tmp_dir?}" || :
+'
+readonly exit_trap
+
+trap "${exit_trap?}" EXIT
 
 #-----------------------------------------------------------------------
 
 docker=${DOCKER:-docker}
 readonly docker
 
-if $pull; then
-  eval " $docker"' pull "$image"' || exit $?
-  exit
+if ${update?}; then
+
+  eval " ${docker?}"' pull -- "${image?}"' || exit $?
+
+  url=https://raw.githubusercontent.com/quinngrier/adock/master/adock
+  readonly url
+
+  if command -v curl >/dev/null 2>&1; then
+    curl -L -S -f -m 10 -s "${url?}" >"${tmp_dir?}"/adock || exit $?
+  elif command -v wget >/dev/null 2>&1; then
+    wget -O "${tmp_dir?}"/adock -T 10 "${url?}" || exit $?
+  else
+    # TODO: Use gatbps_warn.
+    printf '%s\n' "$0: Warning: Cannot download and replace adock because neither curl nor wget is installed." >&2
+    exit
+  fi
+
+  chmod +x "${tmp_dir?}"/adock || exit $?
+
+  argv0_=$0
+  readonly argv0_
+  export argv0_
+
+  exit_trap_=${exit_trap?}
+  readonly exit_trap_
+  export exit_trap_
+
+  tmp_dir_=${tmp_dir?}
+  readonly tmp_dir_
+  export tmp_dir_
+
+  exec sh -c '
+
+    argv0=${argv0_?}
+    readonly argv0
+    unset argv0_
+
+    exit_trap=${exit_trap_?}
+    readonly exit_trap
+    unset exit_trap_
+
+    tmp_dir=${tmp_dir_?}
+    readonly tmp_dir
+    unset tmp_dir_
+
+    trap "${exit_trap?}" EXIT
+
+    mv -f -- "${tmp_dir?}"/adock "${argv0?}"
+
+  '
+
 fi
+
+#-----------------------------------------------------------------------
 
 test -t 0 && s=0 || s=$?
 case $s in 0)
@@ -494,7 +531,7 @@ readonly pwd
 
 args='run --rm -i $t $detach -v "$pwd:$pwd" -w "$pwd"'
 
-args=${args?}' -v "${id_dir?}":/id_dir'
+args=${args?}' -v "${tmp_dir?}":/tmp_dir'
 
 args=${args?}' -e ADOCK_UMASK='`umask` || exit $?
 

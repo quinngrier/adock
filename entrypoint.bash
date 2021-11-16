@@ -34,7 +34,7 @@ declare -A ys
 
 #-----------------------------------------------------------------------
 
-host_uid=$(stat -c %u:%g /id_dir)
+host_uid=$(stat -c %u:%g /tmp_dir)
 host_gid=${host_uid#*:}
 host_uid=${host_uid%:*}
 readonly host_uid
@@ -68,7 +68,8 @@ umask $ADOCK_UMASK
 #-----------------------------------------------------------------------
 
 if [[ "${1-}" != --serve ]]; then
-  exec run_as_host asciidoctor "$@"
+  run_as_host asciidoctor "$@"
+  exit
 fi
 
 shift
