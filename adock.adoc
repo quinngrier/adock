@@ -121,7 +121,7 @@ endif::[]
 == Synopsis
 
 ifdef::x_manpage[]
-{x_adock} ++[++{x_adock_argument}++]...++ ++[++**--**++]++ ++[++{x_asciidoctor_argument}++]...++
+{x_adock} ++[++{x_adock_argument}++...]++ ++[++**--**++]++ ++[++{x_asciidoctor_argument}++...]++
 endif::[]
 
 ifndef::x_manpage[]
