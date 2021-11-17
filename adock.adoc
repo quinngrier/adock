@@ -37,7 +37,7 @@ ifdef::x_manpage[]
 :x_default_live_port: pass:n[**35729**]
 :x_docker: pass:n[**docker**]
 :x_docker_run: pass:n[**docker run**]
-:x_docker_run_detach: pass:n[**--detach**]
+:x_docker_run_d: pass:n[**-d**]
 :x_docker_run_name: pass:n[**--name**]
 :x_http_host: pass:n[<__http_host__>]
 :x_http_port: pass:n[<__http_port__>]
@@ -99,7 +99,7 @@ ifndef::x_manpage[]
 :x_default_live_port: pass:n[``35729``]
 :x_docker: pass:n[link:https://docs.docker.com/engine/reference/commandline/cli/[``docker``]]
 :x_docker_run: pass:n[link:https://docs.docker.com/engine/reference/run/[``docker run``]]
-:x_docker_run_detach: pass:n[link:https://docs.docker.com/engine/reference/run/#detached&#x2D;&#x2D;d[``--detach``]]
+:x_docker_run_d: pass:n[link:https://docs.docker.com/engine/reference/run/#detached&#x2D;&#x2D;d[``-d``]]
 :x_docker_run_name: pass:n[link:https://docs.docker.com/engine/reference/run/#name&#x2D;&#x2D;&#x2D;name[``--name``]]
 :x_http_host: pass:n[``<http_host>``]
 :x_http_port: pass:n[``<http_port>``]
@@ -241,7 +241,7 @@ The following table summarizes all possible combinations of omissions:
 {x_opt_d_name}, {x_opt_detach_name}::
 The Docker container will be run in the background instead of the
 foreground.
-This option corresponds to the {x_docker_run_detach} option of
+This option corresponds to the {x_docker_run_d} option of
 {x_docker_run}.
 
 {x_opt_image_name_arg}::
