@@ -297,7 +297,7 @@ DOCKER='sudo docker' adock README.adoc
 ----
 
 . {empty}
-Compile {x_README_adoc} into {x_README_html} and host an HTTP server on
+Compile {x_README_adoc} into {x_README_html} and run an HTTP server on
 {x_default_http_addr} for previewing:
 +
 ----
