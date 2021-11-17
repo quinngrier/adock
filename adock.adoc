@@ -37,7 +37,6 @@ ifdef::x_manpage[]
 :x_default_live_port: pass:n[**35729**]
 :x_docker: pass:n[**docker**]
 :x_docker_run: pass:n[**docker run**]
-:x_docker_run_d: pass:n[**-d**]
 :x_docker_run_detach: pass:n[**--detach**]
 :x_docker_run_name: pass:n[**--name**]
 :x_http_host: pass:n[<__http_host__>]
@@ -100,7 +99,6 @@ ifndef::x_manpage[]
 :x_default_live_port: pass:n[``35729``]
 :x_docker: pass:n[link:https://docs.docker.com/engine/reference/commandline/cli/[``docker``]]
 :x_docker_run: pass:n[link:https://docs.docker.com/engine/reference/run/[``docker run``]]
-:x_docker_run_d: pass:n[link:https://docs.docker.com/engine/reference/run/#detached&#x2D;&#x2D;d[``-d``]]
 :x_docker_run_detach: pass:n[link:https://docs.docker.com/engine/reference/run/#detached&#x2D;&#x2D;d[``--detach``]]
 :x_docker_run_name: pass:n[link:https://docs.docker.com/engine/reference/run/#name&#x2D;&#x2D;&#x2D;name[``--name``]]
 :x_http_host: pass:n[``<http_host>``]
@@ -189,9 +187,10 @@ A long option with a required argument {x_long_option_1a} may also be
 written as {x_long_option_1b}.
 A short option with a required argument {x_short_option_1a} may also be
 written as {x_short_option_1b} if the argument is not empty.
-A short option with no argument {x_short_option_2a} may be bundled with
-a subsequent short option or short option bundle {x_short_option_2b} by
-writing {x_short_option_2c} instead of {x_short_option_2d}.
+A short option with a forbidden argument {x_short_option_2a} may be
+bundled with a subsequent short option or short option bundle
+{x_short_option_2b} by writing {x_short_option_2c} instead of
+{x_short_option_2d}.
 
 {x_opt_terminator}::
 All further arguments will be taken as {x_asciidoctor_argument}s instead
@@ -242,8 +241,8 @@ The following table summarizes all possible combinations of omissions:
 {x_opt_d_name}, {x_opt_detach_name}::
 The Docker container will be run in the background instead of the
 foreground.
-This option corresponds to the {x_docker_run_d}/{x_docker_run_detach}
-option of {x_docker_run}.
+This option corresponds to the {x_docker_run_detach} option of
+{x_docker_run}.
 
 {x_opt_image_name_arg}::
 The {x_opt_image_arg} Docker image will be used instead of the default
@@ -264,7 +263,7 @@ The output files will be automatically recompiled when any changes are
 detected.
 A LiveReload server will be run and JavaScript will be injected into the
 temporary copies of all HTML files so that a browser viewing any such
-file will automatically refresh when a recompile occurs.
+file will automatically refresh when a recompilation occurs.
 
 {x_opt_u_name_arg}, {x_opt_update_name_arg}::
 The latest version of the Docker image will be pulled and the latest
