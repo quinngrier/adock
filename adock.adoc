@@ -306,7 +306,8 @@ adock -s README.adoc
 ----
 
 . {empty}
-Update the Docker image and the currently running copy of {x_adock}:
+Pull the latest Docker image and download and replace {x_adock} with the
+latest version:
 +
 ----
 adock -u
