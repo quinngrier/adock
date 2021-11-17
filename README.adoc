@@ -32,9 +32,9 @@ The document will be automatically recompiled and your browser will
 automatically refresh as you make changes.
 Press kbd:[Ctrl+C] to stop and remove the Docker container.
 +
-Run `adock -dsn foo foo.adoc` to do the same thing, but this time naming
-the Docker container `foo` and running it in the background.
-Run `docker rm -f foo` to stop and remove the Docker container.
+Run `adock -ds foo.adoc` to do the same thing, but this time running the
+Docker container in the background.
+Run `docker rm -f adock` to stop and remove the Docker container.
 
 . {empty}
 Run `adock -u` to pull the latest Docker image and download and replace

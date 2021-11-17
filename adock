@@ -313,7 +313,7 @@ detach=
 unset http_addr
 image=quinngrier/adock
 unset live_addr
-unset name
+name=adock
 update=false
 
 case $# in 0)
@@ -395,6 +395,9 @@ until shift && (exit ${1+1}0); do
   if ${got?}; then
     eval "${pop?}"
     name=${arg?}
+    case ${name?} in '')
+      unset name
+    esac
     continue
   fi
 
