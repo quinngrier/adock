@@ -185,7 +185,7 @@ Output files will have the same ownership and permissions as if
 A long option with a required argument {x_long_option_1a} may also be
 written as {x_long_option_1b}.
 A short option with a required argument {x_short_option_1a} may also be
-written as {x_short_option_1b} if the argument is nonempty.
+written as {x_short_option_1b} if the argument is not empty.
 A short option with no argument {x_short_option_2a} may be bundled with
 a subsequent short option or short option bundle {x_short_option_2b} by
 writing {x_short_option_2c} instead of {x_short_option_2d}.
