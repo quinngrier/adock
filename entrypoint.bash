@@ -215,7 +215,12 @@ while :; do
         for (const file of process.argv.slice(1)) {
           const prefix = file.replace(/[^\/]+$/, "");
           const {document} = parseHTML(fs.readFileSync(file, "utf8"));
-          for (const [tag, attr] of [["a", "href"], ["img", "src"]]) {
+          for (const [tag, attr] of [
+            ["a", "href"],
+            ["img", "src"],
+            ["link", "href"],
+            ["script", "src"],
+          ]) {
             for (const node of document.getElementsByTagName(tag)) {
               const path = decodeURI(node.getAttribute(attr));
               if (!path.includes("://")) {
