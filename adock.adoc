@@ -266,9 +266,9 @@ temporary copies of all HTML files so that a browser viewing any such
 file will automatically refresh when a recompilation occurs.
 
 {x_opt_u_name_arg}, {x_opt_update_name_arg}::
-The latest version of the Docker image will be pulled and the latest
-version of {x_adock} will be downloaded and used to replace the
-currently running copy of {x_adock}.
+Instead of behaving normally, {x_adock} will pull the latest version of
+the Docker image and download and replace itself with the latest version
+of {x_adock}.
 All other {x_adock_argument}s (except for the {x_opt_image_name} option)
 and all {x_asciidoctor_argument}s will be ignored.
 
