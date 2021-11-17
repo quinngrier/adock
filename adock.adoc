@@ -48,10 +48,10 @@ ifdef::x_manpage[]
 :x_long_option_1b: pass:n[**--foo**{nbsp}<__bar__>]
 :x_opt_a_arg: pass:n[<__address__>]
 :x_opt_a_name: pass:n[**-a**]
-:x_opt_a_name_arg: pass:n[**-a**[<__address__>]]
+:x_opt_a_name_arg: pass:n[**-a**<__address__>]
 :x_opt_address_arg: pass:n[<__address__>]
 :x_opt_address_name: pass:n[**--address**]
-:x_opt_address_name_arg: pass:n[**--address**[**=**<__address__>]]
+:x_opt_address_name_arg: pass:n[**--address=**<__address__>]
 :x_opt_d_name: pass:n[**-d**]
 :x_opt_detach_name: pass:n[**--detach**]
 :x_opt_image_arg: pass:n[<__image__>]
@@ -111,10 +111,10 @@ ifndef::x_manpage[]
 :x_long_option_1b: pass:n[``--foo{nbsp}<bar>``]
 :x_opt_a_arg: pass:n[``<address>``]
 :x_opt_a_name: pass:n[``-a``]
-:x_opt_a_name_arg: pass:n[``-a[<address>]``]
+:x_opt_a_name_arg: pass:n[``-a<address>``]
 :x_opt_address_arg: pass:n[``<address>``]
 :x_opt_address_name: pass:n[``--address``]
-:x_opt_address_name_arg: pass:n[``--address[=<address>]``]
+:x_opt_address_name_arg: pass:n[``--address=<address>``]
 :x_opt_d_name: pass:n[``-d``]
 :x_opt_detach_name: pass:n[``--detach``]
 :x_opt_image_arg: pass:n[``<image>``]
@@ -216,9 +216,25 @@ endif::[]
 +
 The following steps are taken to fill in any omitted values:
 +
+--
 . If {x_http_host} is omitted, it is taken to be {x_default_http_host}.
 . If {x_live_port} is omitted, it is taken to be {x_default_live_port}.
 . If {x_live_host} is omitted, it is taken to be {x_http_host}.
+--
++
+The following table summarizes all possible combinations of omissions:
++
+----
+ -a option                      |  HTTP address  | LiveReload address
+--------------------------------+----------------+--------------------
+ omitted                        |   0.0.0.0:8000 |    0.0.0.0:35729
+ -a 123                         |   0.0.0.0:123  |    0.0.0.0:35729
+ -a 123,456                     |   0.0.0.0:123  |    0.0.0.0:456
+ -a 127.0.0.1:123               | 127.0.0.1:123  |  127.0.0.1:35729
+ -a 127.0.0.1:123,456           | 127.0.0.1:123  |  127.0.0.1:456
+ -a 123,127.7.8.9:456           |   0.0.0.0:123  |  127.7.8.9:456
+ -a 127.0.0.1:123,127.7.8.9:456 | 127.0.0.1:123  |  127.7.8.9:456
+----
 
 {x_opt_d_name}, {x_opt_detach_name}::
 The Docker container will be run in the background instead of the
