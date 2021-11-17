@@ -44,6 +44,8 @@ ifdef::x_manpage[]
 :x_http_port: pass:n[<__http_port__>]
 :x_live_host: pass:n[<__live_host__>]
 :x_live_port: pass:n[<__live_port__>]
+:x_long_option_1a: pass:n[**--foo=**<__bar__>]
+:x_long_option_1b: pass:n[**--foo**{nbsp}<__bar__>]
 :x_opt_a_arg: pass:n[<__address__>]
 :x_opt_a_name: pass:n[**-a**]
 :x_opt_a_name_arg: pass:n[**-a**[<__address__>]]
@@ -70,6 +72,12 @@ ifdef::x_manpage[]
 :x_opt_update_name_arg: pass:n[**--update**]
 :x_quinngrier_adock_latest: pass:n[**quinngrier/adock:latest**]
 :x_serve_arg: pass:n[<__address__>]
+:x_short_option_1a: pass:n[**-f**<__bar__>]
+:x_short_option_1b: pass:n[**-f**{nbsp}<__bar__>]
+:x_short_option_2a: pass:n[**-f**]
+:x_short_option_2b: pass:n[**-g**]
+:x_short_option_2c: pass:n[**-fg**]
+:x_short_option_2d: pass:n[**-f{nbsp}-g**]
 :x_sudo: pass:n[**sudo**]
 :x_var_DOCKER: pass:n[**DOCKER**]
 
@@ -99,6 +107,8 @@ ifndef::x_manpage[]
 :x_http_port: pass:n[``<http_port>``]
 :x_live_host: pass:n[``<live_host>``]
 :x_live_port: pass:n[``<live_port>``]
+:x_long_option_1a: pass:n[``--foo=<bar>``]
+:x_long_option_1b: pass:n[``--foo{nbsp}<bar>``]
 :x_opt_a_arg: pass:n[``<address>``]
 :x_opt_a_name: pass:n[``-a``]
 :x_opt_a_name_arg: pass:n[``-a[<address>]``]
@@ -125,6 +135,12 @@ ifndef::x_manpage[]
 :x_opt_update_name_arg: pass:n[``--update``]
 :x_quinngrier_adock_latest: pass:n[link:https://hub.docker.com/r/quinngrier/adock[``quinngrier/adock:latest``]]
 :x_serve_arg: pass:n[``<address>``]
+:x_short_option_1a: pass:n[``-f<bar>``]
+:x_short_option_1b: pass:n[``-f{nbsp}<bar>``]
+:x_short_option_2a: pass:n[``-f``]
+:x_short_option_2b: pass:n[``-g``]
+:x_short_option_2c: pass:n[``-fg``]
+:x_short_option_2d: pass:n[``-f{nbsp}-g``]
 :x_sudo: pass:n[``sudo``]
 :x_var_DOCKER: pass:n[``DOCKER``]
 
@@ -165,6 +181,14 @@ Output files will have the same ownership and permissions as if
 {x_asciidoctor} were run directly on the host.
 
 == Options
+
+A long option with a required argument {x_long_option_1a} may also be
+written as {x_long_option_1b}.
+A short option with a required argument {x_short_option_1a} may also be
+written as {x_short_option_1b}.
+A short option with no argument {x_short_option_2a} may be bundled with
+a subsequent short option or short option bundle {x_short_option_2b} by
+writing {x_short_option_2c} instead of {x_short_option_2d}.
 
 {x_opt_terminator}::
 All further arguments will be taken as {x_asciidoctor_argument}s instead
