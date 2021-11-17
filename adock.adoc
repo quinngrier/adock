@@ -173,10 +173,13 @@ endif::[]
 {x_adock} runs {x_asciidoctor} in a Docker container with the given
 {x_asciidoctor_argument}s and performs additional processing as
 specified by the {x_adock_argument}s.
+The first unrecognized {x_adock_argument} or the first argument after
+the {x_opt_terminator} terminator is taken to be the beginning of the
+{x_asciidoctor_argument}s.
 
 The current working directory is mounted and used as the current working
-directory in the container so that all files below the current working
-directory can be accessed transparently.
+directory in the Docker container so that all files below the current
+working directory can be accessed transparently.
 Output files will have the same ownership and permissions as if
 {x_asciidoctor} were run directly on the host.
 
