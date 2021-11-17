@@ -147,11 +147,11 @@ endif::[]
 == Name
 
 ifdef::x_manpage[]
-adock - Run asciidoctor in a Docker container
+adock - Run asciidoctor via a Docker container
 endif::[]
 
 ifndef::x_manpage[]
-{x_adock} &#x2014; Run {x_asciidoctor} in a Docker container
+{x_adock} &#x2014; Run {x_asciidoctor} via a Docker container
 endif::[]
 
 == Synopsis
@@ -168,9 +168,9 @@ endif::[]
 
 == Description
 
-{x_adock} runs {x_asciidoctor} in a Docker container with the given
-{x_asciidoctor_argument}s and performs additional processing as
-specified by the {x_adock_argument}s.
+{x_adock} runs {x_asciidoctor} with the given {x_asciidoctor_argument}s
+via a Docker container and performs additional processing as specified
+by the {x_adock_argument}s.
 The first unrecognized {x_adock_argument} or the first argument after
 the {x_opt_terminator} terminator is taken to be the beginning of the
 {x_asciidoctor_argument}s.
