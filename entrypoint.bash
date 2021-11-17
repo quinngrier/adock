@@ -131,7 +131,7 @@ if [[ ! "$live_port" =~ $r ]] || ((live_port > 65535)); then
   barf "Invalid live_port: $live_port"
 fi
 
-mkdir /adock/out
+run_as_host mkdir /adock/out
 
 pushd /adock/out >/dev/null
 
@@ -258,7 +258,12 @@ while :; do
 
   rm -f -r /adock/tmp1
   run_as_host mkdir /adock/tmp1
-  cp -L -R -p -- "${!deps[@]}" /adock/tmp1
+  for x in "${!deps[@]}"; do
+    if [[ "$x" == */* ]]; then
+      run_as_host mkdir -p "/adock/tmp1/${x%/*}"
+    fi
+    cp -L -R -p -- "$x" "/adock/tmp1/$x"
+  done
 
   for x in /adock/tmp1/**/*.html; do
     run_as_host sh -c '>/adock/tmp2'
