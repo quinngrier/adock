@@ -280,7 +280,7 @@ and all {x_asciidoctor_argument}s will be ignored.
 {x_var_DOCKER}::
 The command to use to run {x_docker}.
 The value will be evaluated by the shell.
-If the variable is empty or unset, the default value is {x_docker}.
+If the variable is unset or empty, the default value is {x_docker}.
 
 == Examples
 
