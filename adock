@@ -313,7 +313,8 @@ detach=
 unset http_addr
 image=quinngrier/adock
 unset live_addr
-name=adock
+unset name
+unset serve
 update=false
 
 case $# in 0)
@@ -391,13 +392,10 @@ until shift && (exit ${1+1}0); do
   # -n, --name
   #---------------------------------------------------------------------
 
-  gatbps_parse_opt -n --name required : "$@"
+  gatbps_parse_opt -n --name permitted : "$@"
   if ${got?}; then
     eval "${pop?}"
-    name=${arg?}
-    case ${name?} in '')
-      unset name
-    esac
+    name=${arg-}
     continue
   fi
 
@@ -408,6 +406,7 @@ until shift && (exit ${1+1}0); do
   gatbps_parse_opt -s --serve forbidden : "$@"
   if ${got?}; then
     eval "${pop?}"
+    serve=
     case ${http_addr+x} in '')
       http_addr=0.0.0.0:8000
       live_addr=0.0.0.0:35729
@@ -437,6 +436,7 @@ readonly http_addr
 readonly image
 readonly live_addr
 readonly name
+readonly serve
 readonly update
 
 #-----------------------------------------------------------------------
@@ -547,17 +547,24 @@ args=${args?}' -v "${tmp_dir?}":/tmp_dir'
 
 args=${args?}' -e ADOCK_UMASK='`umask` || exit $?
 
-case ${http_addr+x} in ?*)
+case ${serve+x} in ?*)
   args=${args?}' -p "${http_addr?}:80" -p "${live_addr?}:35729"'
-esac
-
-case ${name+x} in ?*)
-  args=${args?}' --name "${name?}"'
+  case ${name+x} in ?*)
+    case ${name?} in ?*)
+      args=${args?}' --name "${name?}"'
+    esac
+  ;; *)
+    args=${args?}' --name adock'
+  esac
+;; *)
+  case ${name-} in ?*)
+    args=${args?}' --name "${name?}"'
+  esac
 esac
 
 args=${args?}' "${image?}"'
 
-case ${http_addr+x} in ?*)
+case ${serve+x} in ?*)
   args=${args?}' --serve "${http_addr?}" "${live_addr?}"'
 esac
 

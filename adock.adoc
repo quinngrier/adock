@@ -58,10 +58,10 @@ ifdef::x_manpage[]
 :x_opt_image_name_arg: pass:n[**--image=**<__image__>]
 :x_opt_n_arg: pass:n[<__name__>]
 :x_opt_n_name: pass:n[**-n**]
-:x_opt_n_name_arg: pass:n[**-n**{nbsp}<__name__>]
+:x_opt_n_name_arg: pass:n[**-n**[<__name__>]]
 :x_opt_name_arg: pass:n[<__name__>]
 :x_opt_name_name: pass:n[**--name**]
-:x_opt_name_name_arg: pass:n[**--name=**<__name__>]
+:x_opt_name_name_arg: pass:n[**--name**[**=**<__name__>]]
 :x_opt_s_name: pass:n[**-s**]
 :x_opt_serve_name: pass:n[**--serve**]
 :x_opt_terminator: pass:n[**--**]
@@ -120,10 +120,10 @@ ifndef::x_manpage[]
 :x_opt_image_name_arg: pass:n[``--image=<image>``]
 :x_opt_n_arg: pass:n[``<name>``]
 :x_opt_n_name: pass:n[``-n``]
-:x_opt_n_name_arg: pass:n[``-n{nbsp}<name>``]
+:x_opt_n_name_arg: pass:n[``-n[<name>]``]
 :x_opt_name_arg: pass:n[``<name>``]
 :x_opt_name_name: pass:n[``--name``]
-:x_opt_name_name_arg: pass:n[``--name=<name>``]
+:x_opt_name_name_arg: pass:n[``--name[=<name>]``]
 :x_opt_s_name: pass:n[``-s``]
 :x_opt_serve_name: pass:n[``--serve``]
 :x_opt_terminator: pass:n[``--``]
@@ -249,9 +249,12 @@ The {x_opt_image_arg} Docker image will be used instead of the default
 {x_quinngrier_adock_latest} image.
 
 {x_opt_n_name_arg}, {x_opt_name_name_arg}::
-If this option is omitted, the Docker container will be named {x_adock}.
-Otherwise, if {x_opt_name_arg} is empty, Docker will generate a random
-name for the container.
+If this option is omitted and the {x_opt_serve_name} option is omitted,
+Docker will generate a random name for the Docker container.
+Otherwise, if this option is omitted and the {x_opt_serve_name} option
+is given, the Docker container will be named {x_adock}.
+Otherwise, if {x_opt_name_arg} is omitted or empty, Docker will generate
+a random name for the Docker container.
 Otherwise, the Docker container will be named {x_opt_name_arg}.
 This option corresponds to the {x_docker_run_name} option of
 {x_docker_run}.
