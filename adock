@@ -450,6 +450,8 @@ readonly update
 # easier to get an absolute path.
 #
 
+# TODO: Use gatbps_csf for perfect output collection.
+
 tmp_dir=`mktemp -d` || exit $?
 case ${tmp_dir?} in /*)
   :
@@ -466,7 +468,7 @@ exit_trap='
 '
 readonly exit_trap
 
-trap "${exit_trap?}" EXIT
+trap "${exit_trap?}" EXIT || exit $?
 
 #-----------------------------------------------------------------------
 
@@ -522,7 +524,7 @@ if ${update?}; then
 
     mv -f -- "${tmp_dir?}"/adock "${argv0?}"
 
-  '
+  ' || exit $?
 
 fi
 
