@@ -48,7 +48,7 @@ container.
 
 . {empty}
 Run `adock -u` to pull the latest Docker image and download and replace
-`adock` with the latest version.
+the `adock` script with the latest version.
 
 . {empty}
 link:{man_page_url}[Click here to view the full man page for `adock`.]
