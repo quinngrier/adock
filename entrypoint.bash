@@ -67,6 +67,12 @@ umask $ADOCK_UMASK
 
 #-----------------------------------------------------------------------
 
+CHROMIUM_PATH=/usr/bin/chromium-browser
+readonly CHROMIUM_PATH
+export CHROMIUM_PATH
+
+#-----------------------------------------------------------------------
+
 if [[ "${1-}" != --serve ]]; then
   run_as_host asciidoctor "$@"
   exit
@@ -97,10 +103,6 @@ info() {
 }
 
 trap exit INT
-
-CHROMIUM_PATH=/usr/bin/chromium-browser
-readonly CHROMIUM_PATH
-export CHROMIUM_PATH
 
 NODE_NO_WARNINGS=1
 readonly NODE_NO_WARNINGS
