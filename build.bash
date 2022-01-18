@@ -13,6 +13,7 @@ set -E -e -u -o pipefail || exit $?
 trap exit ERR
 
 apk add --no-cache \
+  chromium \
   doas \
   gnuplot \
   inotify-tools \
@@ -21,7 +22,10 @@ apk add --no-cache \
   strace \
 ;
 
-npm install -g \
+npm install \
+  --unsafe-perm \
+  -g \
+  bpmn-js-cmd \
   http-server \
   linkedom \
   livereload \

@@ -98,6 +98,10 @@ info() {
 
 trap exit INT
 
+CHROMIUM_PATH=/usr/bin/chromium-browser
+readonly CHROMIUM_PATH
+export CHROMIUM_PATH
+
 NODE_NO_WARNINGS=1
 readonly NODE_NO_WARNINGS
 export NODE_NO_WARNINGS
