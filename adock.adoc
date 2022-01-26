@@ -70,7 +70,7 @@ ifdef::x_manpage[]
 :x_opt_u_name: pass:n[**-u**]
 :x_opt_u_name_arg: pass:n[**-u**]
 :x_podman: pass:n[**podman**]
-:x_quinngrier_adock_latest: pass:n[**docker.io/quinngrier/adock**]
+:x_quinngrier_adock: pass:n[**docker.io/quinngrier/adock**]
 :x_serve_arg: pass:n[<__address__>]
 :x_short_option_1a: pass:n[**-f**{nbsp}<__bar__>]
 :x_short_option_1b: pass:n[**-f**<__bar__>]
@@ -135,7 +135,7 @@ ifndef::x_manpage[]
 :x_opt_u_name: pass:n[``-u``]
 :x_opt_u_name_arg: pass:n[``-u``]
 :x_podman: pass:n[``podman``]
-:x_quinngrier_adock_latest: pass:n[link:https://hub.docker.com/r/quinngrier/adock[``docker.io/quinngrier/adock``]]
+:x_quinngrier_adock: pass:n[link:https://hub.docker.com/r/quinngrier/adock[``docker.io/quinngrier/adock``]]
 :x_serve_arg: pass:n[``<address>``]
 :x_short_option_1a: pass:n[``-f{nbsp}<bar>``]
 :x_short_option_1b: pass:n[``-f<bar>``]
@@ -252,7 +252,7 @@ This option corresponds to the {x_docker_run_d} option of
 
 {x_opt_image_name_arg}::
 The {x_opt_image_arg} Docker image will be used instead of the default
-{x_quinngrier_adock_latest} image.
+{x_quinngrier_adock} image.
 
 {x_opt_name_name_arg}, {x_opt_n_name_arg}::
 If this option is omitted and the {x_opt_serve_name} option is omitted,
