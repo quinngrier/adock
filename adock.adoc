@@ -288,18 +288,18 @@ The command to use to run {x_docker}.
 The value will be evaluated by the shell.
 If the variable is unset or empty, the default value is the first of
 {x_docker} and {x_podman} that exists as a command.
-If neither command exists, the default value is {x_docker}, and any
+If neither exists as a command, the default value is {x_docker}, and any
 attempt to run it will fail.
 
 {x_var_DOCKER_FLAGS}::
 Extra arguments to pass to {x_docker} before any subcommand.
 The value will be evaluated by the shell.
-If the variable is unset, the default value is empty.
+If the variable is unset, the default value is the empty string.
 
 {x_var_DOCKER_RUN_FLAGS}::
 Extra arguments to pass to {x_docker_run}.
 The value will be evaluated by the shell.
-If the variable is unset, the default value is empty.
+If the variable is unset, the default value is the empty string.
 
 == Examples
 
