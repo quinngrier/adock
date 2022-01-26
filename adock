@@ -472,7 +472,15 @@ trap "${exit_trap?}" EXIT || exit $?
 
 #-----------------------------------------------------------------------
 
-docker=${DOCKER:-docker}
+case ${DOCKER-} in '')
+  if command -v docker >/dev/null 2>&1; then
+    docker=docker
+  elif command -v podman >/dev/null 2>&1; then
+    docker=podman
+  else
+    docker=docker
+  fi
+esac
 readonly docker
 
 if ${update?}; then

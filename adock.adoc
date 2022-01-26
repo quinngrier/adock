@@ -69,6 +69,7 @@ ifdef::x_manpage[]
 :x_opt_update_name_arg: pass:n[**--update**]
 :x_opt_u_name: pass:n[**-u**]
 :x_opt_u_name_arg: pass:n[**-u**]
+:x_podman: pass:n[**podman**]
 :x_quinngrier_adock_latest: pass:n[**quinngrier/adock:latest**]
 :x_serve_arg: pass:n[<__address__>]
 :x_short_option_1a: pass:n[**-f**{nbsp}<__bar__>]
@@ -133,6 +134,7 @@ ifndef::x_manpage[]
 :x_opt_update_name_arg: pass:n[``--update``]
 :x_opt_u_name: pass:n[``-u``]
 :x_opt_u_name_arg: pass:n[``-u``]
+:x_podman: pass:n[``podman``]
 :x_quinngrier_adock_latest: pass:n[link:https://hub.docker.com/r/quinngrier/adock[``quinngrier/adock:latest``]]
 :x_serve_arg: pass:n[``<address>``]
 :x_short_option_1a: pass:n[``-f{nbsp}<bar>``]
@@ -284,7 +286,10 @@ and all {x_asciidoctor_argument}s will be ignored.
 {x_var_DOCKER}::
 The command to use to run {x_docker}.
 The value will be evaluated by the shell.
-If the variable is unset or empty, the default value is {x_docker}.
+If the variable is unset or empty, the default value is the first of
+{x_docker} and {x_podman} that exists as a command.
+If neither command exists, the default value is {x_docker}, and any
+attempt to run it will fail.
 
 {x_var_DOCKER_FLAGS}::
 Extra arguments to pass to {x_docker} before any subcommand.
