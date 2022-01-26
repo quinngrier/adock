@@ -284,7 +284,7 @@ and all {x_asciidoctor_argument}s will be ignored.
 == Environment variables
 
 {x_var_DOCKER}::
-The command to use to run {x_docker}.
+The command for {x_docker}.
 The value will be evaluated by the shell.
 If the variable is unset or empty, the default value is the first of
 {x_docker} and {x_podman} that exists as a command.
@@ -327,8 +327,8 @@ adock -s README.adoc
 ----
 
 . {empty}
-Pull the latest Docker image and download and replace {x_adock} with the
-latest version:
+Pull the latest version of the Docker image and download and replace
+{x_adock} itself with the latest version of {x_adock}:
 +
 ----
 adock -u

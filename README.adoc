@@ -47,8 +47,8 @@ When you're done, run `docker rm -f adock` to stop and remove the Docker
 container.
 
 . {empty}
-Run `adock -u` to pull the latest Docker image and download and replace
-the `adock` script with the latest version.
+Run `adock -u` to pull the latest version of the Docker image and
+download and replace `adock` itself with the latest version of `adock`.
 
 . {empty}
 link:{man_page_url}[Click here to view the full man page for `adock`.]
