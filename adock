@@ -311,7 +311,7 @@ gatbps_unknown_opt_eof
 
 detach=
 unset http_addr
-image=quinngrier/adock
+image=docker.io/quinngrier/adock
 unset live_addr
 unset name
 unset serve
