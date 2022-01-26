@@ -79,6 +79,8 @@ ifdef::x_manpage[]
 :x_short_option_2d: pass:n[**-f{nbsp}-g**]
 :x_sudo: pass:n[**sudo**]
 :x_var_DOCKER: pass:n[**DOCKER**]
+:x_var_DOCKER_FLAGS: pass:n[**DOCKER_FLAGS**]
+:x_var_DOCKER_RUN_FLAGS: pass:n[**DOCKER_RUN_FLAGS**]
 
 endif::[]
 
@@ -141,6 +143,8 @@ ifndef::x_manpage[]
 :x_short_option_2d: pass:n[``-f{nbsp}-g``]
 :x_sudo: pass:n[``sudo``]
 :x_var_DOCKER: pass:n[``DOCKER``]
+:x_var_DOCKER_FLAGS: pass:n[``DOCKER_FLAGS``]
+:x_var_DOCKER_RUN_FLAGS: pass:n[``DOCKER_RUN_FLAGS``]
 
 endif::[]
 
@@ -281,6 +285,16 @@ and all {x_asciidoctor_argument}s will be ignored.
 The command to use to run {x_docker}.
 The value will be evaluated by the shell.
 If the variable is unset or empty, the default value is {x_docker}.
+
+{x_var_DOCKER_FLAGS}::
+Extra arguments to pass to {x_docker} before any subcommand.
+The value will be evaluated by the shell.
+If the variable is unset, the default value is empty.
+
+{x_var_DOCKER_RUN_FLAGS}::
+Extra arguments to pass to {x_docker_run}.
+The value will be evaluated by the shell.
+If the variable is unset, the default value is empty.
 
 == Examples
 

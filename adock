@@ -543,7 +543,11 @@ readonly t
 pwd=`pwd` || exit $?
 readonly pwd
 
-args='run --rm -i $t $detach -v "$pwd:$pwd" -w "$pwd"'
+args=
+
+args=${args?}" ${DOCKER_FLAGS-}"
+
+args=${args?}' run --rm -i $t $detach -v "$pwd:$pwd" -w "$pwd"'
 
 args=${args?}' -v "${tmp_dir?}":/tmp_dir'
 
@@ -563,6 +567,8 @@ case ${serve+x} in ?*)
     args=${args?}' --name "${name?}"'
   esac
 esac
+
+args=${args?}" ${DOCKER_RUN_FLAGS-}"
 
 args=${args?}' "${image?}"'
 
