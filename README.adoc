@@ -37,7 +37,7 @@ document.
 Open `++http://127.0.0.1:8000++` in a browser and click on `foo.html` to
 view the document.
 The document will be automatically recompiled and your browser will
-automatically refresh as you make changes.
+automatically refresh as you make changes to `foo.adoc`.
 When you're done, press kbd:[Ctrl+C] to stop and remove the Docker
 container.
 
