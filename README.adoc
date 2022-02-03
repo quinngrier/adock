@@ -27,7 +27,8 @@ You can put the script anywhere you like, but the rest of these steps
 will assume that you've put it somewhere in your `PATH`.
 
 . {empty}
-Run `adock foo.adoc` to compile any document `foo.adoc` into `foo.html`.
+Run `echo 'Hello, world!' >foo.adoc` to create a simple Asciidoctor
+document, then run `adock foo.adoc` to compile it into `foo.html`.
 
 . {empty}
 Run `adock -s foo.adoc` to do the same thing as the previous step, but
