@@ -108,9 +108,19 @@ NODE_NO_WARNINGS=1
 readonly NODE_NO_WARNINGS
 export NODE_NO_WARNINGS
 
-NODE_PATH=/usr/lib/node_modules
+#-----------------------------------------------------------------------
+
+x=(
+  /usr/local/lib/node_modules
+  /usr/lib/node_modules
+)
+
+NODE_PATH="${x[@]}"
+NODE_PATH=${NODE_PATH// /:}
 readonly NODE_PATH
 export NODE_PATH
+
+#-----------------------------------------------------------------------
 
 inotifywait_events=attrib
 inotifywait_events+=,create
