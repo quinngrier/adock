@@ -55,7 +55,7 @@ else
     adduser -D -G host -H -u $host_uid host
   fi
 
-  echo permit keepenv nopass root >/etc/doas.conf
+  echo permit keepenv nopass root >/etc/doas.d/doas.conf
 
   run_as_host() {
     doas -u host -- "$@"
