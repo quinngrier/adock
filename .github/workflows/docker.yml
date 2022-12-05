@@ -8,18 +8,22 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
 
+name: Build and push the Docker image
+
 on:
   push:
     branches:
       - master
   schedule:
     - cron: '0 0 * * 0'
+  workflow_dispatch:
 
 jobs:
-  push_to_docker_hub:
+  docker:
     runs-on: ubuntu-latest
     steps:
-      - id: tag
+      - name: Construct the image tag
+        id: tag
         run: |
           tag=`date '+%Y-%m-%d'`-${GITHUB_RUN_ID?} || exit $?
           echo ::set-output name=tag::${tag?} || exit $?
