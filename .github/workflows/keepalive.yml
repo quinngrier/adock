@@ -1,0 +1,37 @@
+#
+# The authors of this file have waived all copyright and
+# related or neighboring rights to the extent permitted by
+# law as described by the CC0 1.0 Universal Public Domain
+# Dedication. You should have received a copy of the full
+# dedication along with this file, typically as a file
+# named <CC0-1.0.txt>. If not, it may be available at
+# <https://creativecommons.org/publicdomain/zero/1.0/>.
+#
+
+name: Reset the GitHub Actions inactivity timer
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: keepalive
+      - name: Create and push an empty commit
+        run: |
+          git config user.name \
+            'Quinn Grier (via GitHub Actions)' \
+          || exit $?
+          git config user.email \
+            'quinn@quinngrier.com' \
+          || exit $?
+          git commit \
+            --allow-empty \
+            -m 'Reset the GitHub Actions inactivity timer' \
+          || exit $?
+          git push || exit $?
