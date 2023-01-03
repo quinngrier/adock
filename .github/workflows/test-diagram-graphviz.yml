@@ -15,7 +15,7 @@ on:
     types:
       - completed
     workflows:
-      - Build and push the Docker image
+      - Build the Docker image
 
 jobs:
   test:

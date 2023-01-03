@@ -8,7 +8,7 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
 
-name: Build and push the Docker image
+name: Build the Docker image
 
 on:
   push:
