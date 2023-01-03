@@ -57,11 +57,11 @@ link:{man_page_url}[Click here to view the full man page for `adock`.]
 
 == Diagram support
 
-[cols="a,a,a"]
+[cols=".^a,.^a,.^a"]
 |===
 
 | Graphviz
-| link:test/diagram/graphviz/index.adoc[Example]
+| link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/graphviz/index.adoc[Example]
 | image::https://github.com/quinngrier/adock/actions/workflows/test-diagram-graphviz.yml/badge.svg[Graphviz test result]
 
 |===
