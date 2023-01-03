@@ -55,4 +55,13 @@ download and replace `adock` itself with the latest version of `adock`.
 . {empty}
 link:{man_page_url}[Click here to view the full man page for `adock`.]
 
+[cols="1,1,1"]
+|===
+
+| Graphviz
+| link:test/diagram/graphviz/index.adoc[Example]
+| image::https://github.com/quinngrier/adock/actions/workflows/test-diagram-graphviz.yml/badge.svg[Graphviz test result]
+
+|===
+
 //

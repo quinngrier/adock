@@ -8,7 +8,7 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
 
-name: Test Graphviz
+name: Test Graphviz diagrams
 
 on:
   workflow_run:
@@ -20,7 +20,7 @@ on:
 jobs:
   test:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    name: Test Graphviz
+    name: Test Graphviz diagrams
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -31,4 +31,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifacts
-          path: test/diagram/graphviz/
+          path: test/diagra[m]/graphviz/
