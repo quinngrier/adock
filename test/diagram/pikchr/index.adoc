@@ -8,7 +8,7 @@
 // <https://creativecommons.org/publicdomain/zero/1.0/>.
 //
 
-= Test Pikchr diagrams
+= Test the Pikchr diagram support
 
 [pikchr]
 ....

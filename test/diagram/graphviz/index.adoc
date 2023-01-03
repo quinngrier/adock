@@ -8,7 +8,7 @@
 // <https://creativecommons.org/publicdomain/zero/1.0/>.
 //
 
-= Test Graphviz diagrams
+= Test the Graphviz diagram support
 
 [graphviz]
 ....
