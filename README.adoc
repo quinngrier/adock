@@ -57,6 +57,9 @@ link:{man_page_url}[Click here to view the full man page for `adock`.]
 
 == Diagram support
 
+link:https://github.com/asciidoctor/asciidoctor-diagram[Asciidoctor Diagram]
+can be enabled with the `-r asciidoctor-diagram` option.
+
 [cols=".^a,.^a,.^a"]
 |===
 
