@@ -14,6 +14,15 @@
 :download_url: https://raw.githubusercontent.com/quinngrier/adock/master/adock
 :man_page_url: https://github.com/quinngrier/adock/blob/master/adock.adoc
 
+:x_Asciidoctor_Diagram_url: https://github.com/asciidoctor/asciidoctor-diagram
+:x_Asciidoctor_Diagram: link:{x_Asciidoctor_Diagram_url}[Asciidoctor Diagram,window=_blank]
+
+:x_asciidoctor_url: https://docs.asciidoctor.org/asciidoctor/latest/cli/man1/asciidoctor/
+:x_asciidoctor: link:{x_asciidoctor_url}[asciidoctor,window=_blank]
+
+:x_asciidoctor_r_url: https://docs.asciidoctor.org/asciidoctor/latest/cli/man1/asciidoctor/
+:x_asciidoctor_r: link:{x_asciidoctor_r_url}[-r,window=_blank]
+
 Adock is a Dockerized version of Asciidoctor that lets you compile and
 preview Asciidoctor documents without installing anything but Docker.
 
@@ -57,8 +66,10 @@ link:{man_page_url}[Click here to view the full man page for `adock`.]
 
 == Diagram support
 
-link:https://github.com/asciidoctor/asciidoctor-diagram[Asciidoctor Diagram]
-can be enabled with the `-r asciidoctor-diagram` option.
+{x_Asciidoctor_Diagram} can be enabled using the `{x_asciidoctor_r}`
+option of `{x_asciidoctor}` with `asciidoctor-diagram` as the argument.
+For example:
+`adock {x_asciidoctor_r} asciidoctor-diagram foo.adoc`.
 
 [cols=".^a,.^a,.^a"]
 |===
