@@ -12,7 +12,9 @@
 
 [pikchr]
 ....
-line
+circle
+arrow
 box "Hello, world!"
 arrow
+circle
 ....

@@ -13,6 +13,10 @@
 [graphviz]
 ....
 digraph G {
-  A -> B;
+  rankdir = LR;
+  A [label = "", shape = circle];
+  B [label = "Hello, world!", shape = box];
+  C [label = "", shape = circle];
+  A -> B -> C;
 }
 ....
