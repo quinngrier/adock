@@ -11,4 +11,15 @@
 set -E -e -u -o pipefail || exit $?
 trap exit ERR
 
-../../adock -r asciidoctor-diagram test.adoc
+shopt -s nullglob
+
+cd test/diagram/"$1"
+
+rm -f diag-*
+
+../../../adock -r asciidoctor-diagram index.adoc
+
+for x in diag-*; do
+  exit 0
+done
+exit 1

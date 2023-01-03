@@ -26,9 +26,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Run test script
-        run: cd test/graphviz && bash test.bash
+        run: bash test/diagram.bash graphviz
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: artifacts
-          path: test/graphviz
+          path: test/diagram/graphviz/
