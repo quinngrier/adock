@@ -15,12 +15,35 @@ trap exit ERR
 apk add --no-cache \
   chromium \
   doas \
+  gcc \
   gnuplot \
   inotify-tools \
+  musl-dev \
   nodejs \
   npm \
   strace \
+  wget \
 ;
+
+#-----------------------------------------------------------------------
+# Install Pikchr
+#-----------------------------------------------------------------------
+
+mkdir pikchr
+pushd pikchr >/dev/null
+wget \
+  -O pikchr.tar.gz \
+  https://pikchr.org/home/tarball/trunk/pikchr.tar.gz \
+;
+tar xzf pikchr.tar.gz
+pushd */ >/dev/null
+make CFLAGS='-O3 -s'
+cp pikchr /bin
+popd >/dev/null
+popd >/dev/null
+rm -f -r pikchr
+
+#-----------------------------------------------------------------------
 
 npm install \
   --unsafe-perm \
