@@ -1,0 +1,32 @@
+#
+# The authors of this file have waived all copyright and
+# related or neighboring rights to the extent permitted by
+# law as described by the CC0 1.0 Universal Public Domain
+# Dedication. You should have received a copy of the full
+# dedication along with this file, typically as a file
+# named <CC0-1.0.txt>. If not, it may be available at
+# <https://creativecommons.org/publicdomain/zero/1.0/>.
+#
+
+name: Test Graphviz
+
+on:
+  workflow_run:
+    types:
+      - completed
+    workflows:
+      - Build and push the Docker image
+
+jobs:
+  test:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Test Graphviz
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Run the Graphviz test script
+        run: cd test/graphviz && bash test.bash
+        with:
+          name: files
+          path: test/graphviz
