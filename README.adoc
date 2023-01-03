@@ -60,7 +60,7 @@ link:{man_page_url}[Click here to view the full man page for `adock`.]
 
 | Graphviz
 | link:test/diagram/graphviz/index.adoc[Example]
-| image::https://github.com/quinngrier/adock/actions/workflows/test-diagram-graphviz.yml/badge.svg[Graphviz test result]
+| image:https://github.com/quinngrier/adock/actions/workflows/test-diagram-graphviz.yml/badge.svg[Graphviz test result]
 
 |===
 
