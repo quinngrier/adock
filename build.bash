@@ -33,3 +33,5 @@ npm install \
 
 mkdir /adock
 chmod 777 /adock
+
+echo permit keepenv nopass root >/etc/doas.d/doas.conf

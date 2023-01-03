@@ -26,42 +26,55 @@ export LC_ALL
 #-----------------------------------------------------------------------
 
 declare -A deps
-declare    host_gid
-declare    host_uid
+declare    group_id
+declare    group_name
 declare -A html_deps
 declare -A new_html_deps
+declare    s
+declare    user_id
+declare    user_name
 declare -A ys
 
 #-----------------------------------------------------------------------
 
-host_uid=$(stat -c %u:%g /tmp_dir)
-host_gid=${host_uid#*:}
-host_uid=${host_uid%:*}
-readonly host_uid
-readonly host_gid
+user_id=$(stat -c %u /tmp_dir)
+readonly user_id
 
-if ((host_uid == 0)); then
+group_id=$(stat -c %g /tmp_dir)
+readonly group_id
 
-  run_as_host() {
-    "$@"
-  }; readonly -f run_as_host
-
+group_name=$(getent group $group_id) && :
+s=$?
+if ((s == 0)); then
+  group_name=${group_name%%:*}
+elif ((s == 2)); then
+  group_name=adock_group
+  addgroup -g $group_id $group_name
 else
-
-  if ((host_gid == 0)); then
-    adduser -D -G root -H -u $host_uid host
-  else
-    addgroup -g $host_gid host
-    adduser -D -G host -H -u $host_uid host
-  fi
-
-  echo permit keepenv nopass root >/etc/doas.d/doas.conf
-
-  run_as_host() {
-    doas -u host -- "$@"
-  }; readonly -f run_as_host
-
+  exit $s
 fi
+readonly group_name
+
+user_name=$(getent passwd $user_id) && :
+s=$?
+if ((s == 0)); then
+  user_name=${user_name%%:*}
+  sed -i '
+    /^'$user_name':/ {
+      s/^\([^:]*:[^:]*:[^:]*\):[^:]*:\(.*\)/\1:'$group_id':\2/
+    }
+  ' /etc/passwd
+elif ((s == 2)); then
+  user_name=adock_user
+  adduser -D -G $group_name -H -u $user_id $user_name
+else
+  exit $s
+fi
+readonly user_name
+
+run_as_host() {
+  doas -u $user_name -- "$@"
+}; readonly -f run_as_host
 
 umask $ADOCK_UMASK
 
