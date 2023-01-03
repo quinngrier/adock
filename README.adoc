@@ -65,15 +65,15 @@ can be enabled with the `-r asciidoctor-diagram` option.
 
 | link:https://www.bpmn.org/[BPMN,window=_blank]
 | link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/bpmn/index.adoc[Example code,window=_blank]
-| image::https://github.com/quinngrier/adock/actions/workflows/test-diagram-bpmn.yml/badge.svg[BPMN test result]
+| image:https://github.com/quinngrier/adock/actions/workflows/test-diagram-bpmn.yml/badge.svg[BPMN test result]
 
 | link:https://graphviz.org/[Graphviz,window=_blank]
 | link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/graphviz/index.adoc[Example code,window=_blank]
-| image::https://github.com/quinngrier/adock/actions/workflows/test-diagram-graphviz.yml/badge.svg[Graphviz test result]
+| image:https://github.com/quinngrier/adock/actions/workflows/test-diagram-graphviz.yml/badge.svg[Graphviz test result]
 
 | link:https://pikchr.org/[Pikchr,window=_blank]
 | link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/pikchr/index.adoc[Example code,window=_blank]
-| image::https://github.com/quinngrier/adock/actions/workflows/test-diagram-pikchr.yml/badge.svg[Pikchr test result]
+| image:https://github.com/quinngrier/adock/actions/workflows/test-diagram-pikchr.yml/badge.svg[Pikchr test result]
 
 |===
 
