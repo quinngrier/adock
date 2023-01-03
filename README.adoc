@@ -57,7 +57,7 @@ link:{man_page_url}[Click here to view the full man page for `adock`.]
 
 == Diagram support
 
-[cols=".^a,.^a,.^a"]
+[cols="a,a,a"]
 |===
 
 | Graphviz
