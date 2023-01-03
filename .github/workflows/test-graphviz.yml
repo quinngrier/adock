@@ -23,10 +23,12 @@ jobs:
     name: Test Graphviz
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the repository
+      - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Run the Graphviz test script
+      - name: Run test script
         run: cd test/graphviz && bash test.bash
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
         with:
-          name: files
+          name: artifacts
           path: test/graphviz
