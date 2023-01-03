@@ -60,6 +60,10 @@ link:{man_page_url}[Click here to view the full man page for `adock`.]
 [cols=".^a,.^a,.^a"]
 |===
 
+| link:https://www.bpmn.org/[BPMN]
+| link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/bpmn/index.adoc[Example code]
+| image::https://github.com/quinngrier/adock/actions/workflows/test-diagram-bpmn.yml/badge.svg[BPMN test result]
+
 | link:https://graphviz.org/[Graphviz]
 | link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/graphviz/index.adoc[Example code]
 | image::https://github.com/quinngrier/adock/actions/workflows/test-diagram-graphviz.yml/badge.svg[Graphviz test result]

@@ -1,0 +1,41 @@
+//
+// The authors of this file have waived all copyright and
+// related or neighboring rights to the extent permitted by
+// law as described by the CC0 1.0 Universal Public Domain
+// Dedication. You should have received a copy of the full
+// dedication along with this file, typically as a file
+// named <CC0-1.0.txt>. If not, it may be available at
+// <https://creativecommons.org/publicdomain/zero/1.0/>.
+//
+
+= Test BPMN diagrams
+
+[bpmn]
+....
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="11.1.0">
+  <process id="Process_1" isExecutable="false">
+    <startEvent id="Event_1xcnqa4">
+      <outgoing>Flow_0iva0ls</outgoing>
+    </startEvent>
+    <endEvent id="Event_17x2c5x">
+      <incoming>Flow_0iva0ls</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_0iva0ls" sourceRef="Event_1xcnqa4" targetRef="Event_17x2c5x" />
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Event_1xcnqa4_di" bpmnElement="Event_1xcnqa4">
+        <omgdc:Bounds x="152" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_17x2c5x_di" bpmnElement="Event_17x2c5x">
+        <omgdc:Bounds x="232" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0iva0ls_di" bpmnElement="Flow_0iva0ls">
+        <omgdi:waypoint x="188" y="100" />
+        <omgdi:waypoint x="232" y="100" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
+....
