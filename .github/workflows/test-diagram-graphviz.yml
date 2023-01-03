@@ -31,4 +31,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifacts
-          path: test/diagra[m]/graphviz/
+          path: test/diagram/graphviz/**
