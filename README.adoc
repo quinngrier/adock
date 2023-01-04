@@ -101,9 +101,10 @@ For example:
 |===
 
 * {empty}
-Pikchr is patched to allow `\<` and `\>` escapes to be used in strings,
-which emit `<` and `>` directly into the SVG code instead of `&amp;gt;`
-and `&amp;lt;`.
+Pikchr is
+link:patches/pikchr.patch[patched]
+to allow `\<` and `\>` escapes to be used in strings, which emit `<` and
+`>` directly into the SVG code instead of `&amp;gt;` and `&amp;lt;`.
 This allows SVG tags such as `<{x_tspan}>` to be used.
 For example:
 `box "\<{x_tspan} {x_style}=\"{x_font_family}: {x_monospace}\"\>foo\</{x_tspan}\>"`.
