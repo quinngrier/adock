@@ -23,6 +23,18 @@
 :x_asciidoctor_r_url: https://docs.asciidoctor.org/asciidoctor/latest/cli/man1/asciidoctor/
 :x_asciidoctor_r: link:{x_asciidoctor_r_url}[-r,window=_blank]
 
+:x_font_family_url: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
+:x_font_family: link:{x_font_family_url}[font-family,window=_blank]
+
+:x_monospace_url: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#monospace
+:x_monospace: link:{x_monospace_url}[monospace,window=_blank]
+
+:x_style_url: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/style
+:x_style: link:{x_style_url}[style,window=_blank]
+
+:x_tspan_url: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan
+:x_tspan: link:{x_tspan_url}[tspan,window=_blank]
+
 Adock is a Dockerized version of Asciidoctor that lets you compile and
 preview Asciidoctor documents without installing anything but Docker.
 
@@ -92,8 +104,8 @@ For example:
 Pikchr is patched to allow `\<` and `\>` escapes to be used in strings,
 which emit `<` and `>` directly into the SVG code instead of `&amp;gt;`
 and `&amp;lt;`.
-This allows SVG tags such as `<tspan>` to be used.
+This allows SVG tags such as `<{x_tspan}>` to be used.
 For example:
-`box "\<tspan style=\"font-family: monospace\"\>foo\</tspan\>"`.
+`box "\<{x_tspan} {x_style}=\"{x_font_family}: {x_monospace}\"\>foo\</{x_tspan}\>"`.
 
 //
