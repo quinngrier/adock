@@ -32,7 +32,7 @@ diff -N -r -u a/pikchr.c b/pikchr.c
  **
 +** Omit "\<" and "\>" escapes entirely, along with anything that lies
 +** between matching pairs of these escapes. These escapes are used to
-+** output custom SVG tags, which are of course not displayed.
++** output SVG tags, which are of course not displayed.
 +**
  ** Attempt to scale the answer by the actual characters seen.  Wide
  ** characters count more than narrow characters.  But the widths are
