@@ -55,21 +55,21 @@ diff -N -r -u a/pikchr.c b/pikchr.c
        for(k=j+1; k<j+7 && z[k]!=0 && z[k]!=';'; k++){}
        if( z[k]==';' ) j = k;
 -      cnt += 150;
-+      cnt += visible * 150;
++      cnt += 150 * visible;
        continue;
      }
      if( (c & 0xc0)==0xc0 ){
        while( j+1<n-1 && (z[j+1]&0xc0)==0x80 ){ j++; }
 -      cnt += 100;
-+      cnt += visible * 100;
++      cnt += 100 * visible;
        continue;
      }
      if( c>=0x20 && c<=0x7e ){
 -      cnt += awChar[c-0x20];
-+      cnt += visible * awChar[c-0x20];
++      cnt += awChar[c-0x20] * visible;
      }else{
 -      cnt += 100;
-+      cnt += visible * 100;
++      cnt += 100 * visible;
      }
    }
    return cnt;
@@ -129,21 +129,21 @@ diff -N -r -u a/pikchr.y b/pikchr.y
        for(k=j+1; k<j+7 && z[k]!=0 && z[k]!=';'; k++){}
        if( z[k]==';' ) j = k;
 -      cnt += 150;
-+      cnt += visible * 150;
++      cnt += 150 * visible;
        continue;
      }
      if( (c & 0xc0)==0xc0 ){
        while( j+1<n-1 && (z[j+1]&0xc0)==0x80 ){ j++; }
 -      cnt += 100;
-+      cnt += visible * 100;
++      cnt += 100 * visible;
        continue;
      }
      if( c>=0x20 && c<=0x7e ){
 -      cnt += awChar[c-0x20];
-+      cnt += visible * awChar[c-0x20];
++      cnt += awChar[c-0x20] * visible;
      }else{
 -      cnt += 100;
-+      cnt += visible * 100;
++      cnt += 100 * visible;
      }
    }
    return cnt;
