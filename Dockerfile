@@ -11,6 +11,7 @@
 FROM asciidoctor/docker-asciidoctor AS build
 RUN apk add --no-cache bash
 COPY build.bash /
+COPY patches /patches/
 RUN bash /build.bash
 RUN rm /build.bash
 COPY entrypoint.bash /

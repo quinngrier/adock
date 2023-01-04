@@ -88,4 +88,12 @@ For example:
 
 |===
 
+* {empty}
+Pikchr is patched to allow `\<` and `\>` escapes to be used in strings,
+which emit `<` and `>` directly into the SVG code instead of `&amp;gt;`
+and `&amp;lt;`.
+This allows SVG tags such as `<tspan>` to be used.
+For example:
+`box "\<tspan style=\"font-family: monospace\"\>foo\</tspan\>"`.
+
 //

@@ -21,6 +21,7 @@ apk add --no-cache \
   musl-dev \
   nodejs \
   npm \
+  patch \
   strace \
   wget \
 ;
@@ -37,6 +38,7 @@ wget \
 ;
 tar xzf pikchr.tar.gz
 pushd */ >/dev/null
+patch -p1 </patches/pikchr.patch
 make CFLAGS='-O3 -s'
 cp pikchr /bin
 popd >/dev/null
@@ -66,6 +68,7 @@ echo permit keepenv nopass root >/etc/doas.d/doas.conf
 apk del \
   gcc \
   musl-dev \
+  patch \
   wget \
 ;
 
