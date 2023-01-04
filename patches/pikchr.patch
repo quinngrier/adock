@@ -89,7 +89,7 @@ diff -N -r -u a/pikchr.y b/pikchr.y
        int j;
        for(j=0; j<nz && z[j]!='\\'; j++){}
 -      if( j ) pik_append_text(p, z, j, 0x3);
-+      if( j ) pik_append_text(p, z, j, 0x2 & visible);
++      if( j ) pik_append_text(p, z, j, 0x2 | visible);
        if( j<nz && (j+1==nz || z[j+1]=='\\') ){
          pik_append(p, "&#92;", -1);
          j++;
