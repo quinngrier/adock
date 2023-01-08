@@ -94,8 +94,8 @@ diff -N -r -u a/pikchr.y b/pikchr.y
          pik_append(p, "&#92;", -1);
          j++;
 +      }else if( j<nz && (z[j+1]=='<' || z[j+1]=='>') ){
-+        visible = z[j+1]=='>';
 +        pik_append(p, &z[j+1], 1);
++        visible = z[j+1]=='>';
 +        j++;
        }
        nz -= j+1;
