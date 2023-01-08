@@ -1,6 +1,6 @@
 diff -N -r -u a/doc/grammar.md b/doc/grammar.md
 --- a/doc/grammar.md	2022-12-07 03:14:59.000000000 -0800
-+++ b/doc/grammar.md	2023-01-04 01:33:23.610977094 -0800
++++ b/doc/grammar.md	2023-01-08 13:43:52.681282387 -0800
 @@ -44,8 +44,9 @@
    *  STRING  &rarr;  A string literal that begins and ends with
       double-quotes (U+0022).  Within the string literal, a double-quote
@@ -15,18 +15,32 @@ diff -N -r -u a/doc/grammar.md b/doc/grammar.md
       any mixture of upper and lower cases.  The value of a COLORNAME is
 diff -N -r -u a/pikchr.c b/pikchr.c
 --- a/pikchr.c	2022-12-07 03:14:59.000000000 -0800
-+++ b/pikchr.c	2023-01-04 01:33:23.614977168 -0800
-@@ -5073,6 +5073,9 @@
++++ b/pikchr.c	2023-01-08 13:47:39.157882591 -0800
+@@ -4906,6 +4906,7 @@
+   const char *z;
+   PToken *aTxt;
+   unsigned allMask = 0;
++  int visible = 1;
+ 
+   if( p->nErr ) return;
+   if( pObj->nTxt==0 ) return;
+@@ -5069,10 +5070,14 @@
+     while( nz>0 ){
+       int j;
+       for(j=0; j<nz && z[j]!='\\'; j++){}
+-      if( j ) pik_append_text(p, z, j, 0x3);
++      if( j ) pik_append_text(p, z, j, 0x2 | visible);
        if( j<nz && (j+1==nz || z[j+1]=='\\') ){
          pik_append(p, "&#92;", -1);
          j++;
 +      }else if( j<nz && (z[j+1]=='<' || z[j+1]=='>') ){
 +        pik_append(p, &z[j+1], 1);
++        visible = z[j+1]=='>';
 +        j++;
        }
        nz -= j+1;
        z += j+1;
-@@ -6182,6 +6185,10 @@
+@@ -6182,6 +6187,10 @@
  ** "&lt;" as a single character.  Multi-byte UTF8 characters count
  ** as a single character.
  **
@@ -37,7 +51,7 @@ diff -N -r -u a/pikchr.c b/pikchr.c
  ** Attempt to scale the answer by the actual characters seen.  Wide
  ** characters count more than narrow characters.  But the widths are
  ** only guesses.
-@@ -6190,26 +6197,31 @@
+@@ -6190,26 +6199,31 @@
    int n = pToken->n;
    const char *z = pToken->z;
    int cnt, j;
@@ -75,7 +89,7 @@ diff -N -r -u a/pikchr.c b/pikchr.c
    return cnt;
 diff -N -r -u a/pikchr.y b/pikchr.y
 --- a/pikchr.y	2022-12-07 03:14:59.000000000 -0800
-+++ b/pikchr.y	2023-01-04 01:37:50.559895041 -0800
++++ b/pikchr.y	2023-01-08 13:43:52.681282387 -0800
 @@ -2304,6 +2304,7 @@
    const char *z;
    PToken *aTxt;
