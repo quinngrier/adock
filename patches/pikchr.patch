@@ -1,6 +1,6 @@
 diff -N -r -u a/doc/grammar.md b/doc/grammar.md
---- a/doc/grammar.md	2022-12-07 03:14:59.000000000 -0800
-+++ b/doc/grammar.md	2023-01-08 13:43:52.681282387 -0800
+--- a/doc/grammar.md	2023-05-18 09:57:56.000000000 -0700
++++ b/doc/grammar.md	2023-05-21 12:48:50.483238483 -0700
 @@ -44,8 +44,9 @@
    *  STRING  &rarr;  A string literal that begins and ends with
       double-quotes (U+0022).  Within the string literal, a double-quote
@@ -14,9 +14,9 @@ diff -N -r -u a/doc/grammar.md b/doc/grammar.md
    *  COLORNAME &rarr;  One of the 140 official HTML color names, in 
       any mixture of upper and lower cases.  The value of a COLORNAME is
 diff -N -r -u a/pikchr.c b/pikchr.c
---- a/pikchr.c	2022-12-07 03:14:59.000000000 -0800
-+++ b/pikchr.c	2023-01-08 13:47:39.157882591 -0800
-@@ -4906,6 +4906,7 @@
+--- a/pikchr.c	2023-05-18 09:57:56.000000000 -0700
++++ b/pikchr.c	2023-05-21 12:56:55.026711024 -0700
+@@ -4912,6 +4912,7 @@
    const char *z;
    PToken *aTxt;
    unsigned allMask = 0;
@@ -24,7 +24,7 @@ diff -N -r -u a/pikchr.c b/pikchr.c
  
    if( p->nErr ) return;
    if( pObj->nTxt==0 ) return;
-@@ -5069,10 +5070,14 @@
+@@ -5080,10 +5081,14 @@
      while( nz>0 ){
        int j;
        for(j=0; j<nz && z[j]!='\\'; j++){}
@@ -40,7 +40,7 @@ diff -N -r -u a/pikchr.c b/pikchr.c
        }
        nz -= j+1;
        z += j+1;
-@@ -6182,6 +6187,10 @@
+@@ -6194,6 +6199,10 @@
  ** "&lt;" as a single character.  Multi-byte UTF8 characters count
  ** as a single character.
  **
@@ -48,10 +48,10 @@ diff -N -r -u a/pikchr.c b/pikchr.c
 +** between matching pairs of these escapes. These escapes are used to
 +** output SVG tags, which are of course not displayed.
 +**
- ** Attempt to scale the answer by the actual characters seen.  Wide
- ** characters count more than narrow characters.  But the widths are
- ** only guesses.
-@@ -6190,26 +6199,31 @@
+ ** Unless using a monospaced font, attempt to scale the answer by
+ ** the actual characters seen.  Wide characters count more than
+ ** narrow characters. But the widths are only guesses.
+@@ -6204,28 +6213,33 @@
    int n = pToken->n;
    const char *z = pToken->z;
    int cnt, j;
@@ -68,29 +68,32 @@ diff -N -r -u a/pikchr.c b/pikchr.c
        int k;
        for(k=j+1; k<j+7 && z[k]!=0 && z[k]!=';'; k++){}
        if( z[k]==';' ) j = k;
--      cnt += 150;
-+      if (visible) cnt += 150;
+-      cnt += (isMonospace ? monoAvg : stdAvg) * 3 / 2;
++      if (visible) cnt += (isMonospace ? monoAvg : stdAvg) * 3 / 2;
        continue;
      }
      if( (c & 0xc0)==0xc0 ){
        while( j+1<n-1 && (z[j+1]&0xc0)==0x80 ){ j++; }
--      cnt += 100;
-+      if (visible) cnt += 100;
+-      cnt += isMonospace ? monoAvg : stdAvg;
++      if (visible) cnt += isMonospace ? monoAvg : stdAvg;
        continue;
      }
-     if( c>=0x20 && c<=0x7e ){
+     if( isMonospace ){
+-      cnt += monoAvg;
++      if (visible) cnt += monoAvg;
+     }else if( c >= 0x20 && c <= 0x7e ){
 -      cnt += awChar[c-0x20];
 +      if (visible) cnt += awChar[c-0x20];
      }else{
--      cnt += 100;
-+      if (visible) cnt += 100;
+-      cnt += stdAvg;
++      if (visible) cnt += stdAvg;
      }
    }
    return cnt;
 diff -N -r -u a/pikchr.y b/pikchr.y
---- a/pikchr.y	2022-12-07 03:14:59.000000000 -0800
-+++ b/pikchr.y	2023-01-08 13:43:52.681282387 -0800
-@@ -2304,6 +2304,7 @@
+--- a/pikchr.y	2023-05-18 09:57:56.000000000 -0700
++++ b/pikchr.y	2023-05-21 12:56:38.746344887 -0700
+@@ -2305,6 +2305,7 @@
    const char *z;
    PToken *aTxt;
    unsigned allMask = 0;
@@ -98,7 +101,7 @@ diff -N -r -u a/pikchr.y b/pikchr.y
  
    if( p->nErr ) return;
    if( pObj->nTxt==0 ) return;
-@@ -2467,10 +2468,14 @@
+@@ -2473,10 +2474,14 @@
      while( nz>0 ){
        int j;
        for(j=0; j<nz && z[j]!='\\'; j++){}
@@ -114,7 +117,7 @@ diff -N -r -u a/pikchr.y b/pikchr.y
        }
        nz -= j+1;
        z += j+1;
-@@ -3580,6 +3585,10 @@
+@@ -3587,6 +3592,10 @@
  ** "&lt;" as a single character.  Multi-byte UTF8 characters count
  ** as a single character.
  **
@@ -122,10 +125,10 @@ diff -N -r -u a/pikchr.y b/pikchr.y
 +** between matching pairs of these escapes. These escapes are used to
 +** output SVG tags, which are of course not displayed.
 +**
- ** Attempt to scale the answer by the actual characters seen.  Wide
- ** characters count more than narrow characters.  But the widths are
- ** only guesses.
-@@ -3588,26 +3597,31 @@
+ ** Unless using a monospaced font, attempt to scale the answer by
+ ** the actual characters seen.  Wide characters count more than
+ ** narrow characters. But the widths are only guesses.
+@@ -3597,28 +3606,33 @@
    int n = pToken->n;
    const char *z = pToken->z;
    int cnt, j;
@@ -142,22 +145,25 @@ diff -N -r -u a/pikchr.y b/pikchr.y
        int k;
        for(k=j+1; k<j+7 && z[k]!=0 && z[k]!=';'; k++){}
        if( z[k]==';' ) j = k;
--      cnt += 150;
-+      if (visible) cnt += 150;
+-      cnt += (isMonospace ? monoAvg : stdAvg) * 3 / 2;
++      if (visible) cnt += (isMonospace ? monoAvg : stdAvg) * 3 / 2;
        continue;
      }
      if( (c & 0xc0)==0xc0 ){
        while( j+1<n-1 && (z[j+1]&0xc0)==0x80 ){ j++; }
--      cnt += 100;
-+      if (visible) cnt += 100;
+-      cnt += isMonospace ? monoAvg : stdAvg;
++      if (visible) cnt += isMonospace ? monoAvg : stdAvg;
        continue;
      }
-     if( c>=0x20 && c<=0x7e ){
+     if( isMonospace ){
+-      cnt += monoAvg;
++      if (visible) cnt += monoAvg;
+     }else if( c >= 0x20 && c <= 0x7e ){
 -      cnt += awChar[c-0x20];
 +      if (visible) cnt += awChar[c-0x20];
      }else{
--      cnt += 100;
-+      if (visible) cnt += 100;
+-      cnt += stdAvg;
++      if (visible) cnt += stdAvg;
      }
    }
    return cnt;
