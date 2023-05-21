@@ -33,7 +33,7 @@ diff -N -r -u a/pikchr.c b/pikchr.c
        if( j<nz && (j+1==nz || z[j+1]=='\\') ){
          pik_append(p, "&#92;", -1);
          j++;
-+      }else if( j<nz && (z[j+1]=='<' || z[j+1]=='>') ){
++      }else if( j<nz-1 && (z[j+1]=='<' || z[j+1]=='>') ){
 +        pik_append(p, &z[j+1], 1);
 +        visible = z[j+1]=='>';
 +        j++;
@@ -110,7 +110,7 @@ diff -N -r -u a/pikchr.y b/pikchr.y
        if( j<nz && (j+1==nz || z[j+1]=='\\') ){
          pik_append(p, "&#92;", -1);
          j++;
-+      }else if( j<nz && (z[j+1]=='<' || z[j+1]=='>') ){
++      }else if( j<nz-1 && (z[j+1]=='<' || z[j+1]=='>') ){
 +        pik_append(p, &z[j+1], 1);
 +        visible = z[j+1]=='>';
 +        j++;
