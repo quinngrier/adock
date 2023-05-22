@@ -60,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifacts
-          path: test/diagram/bpmn/**
+          path: test*/diagram/bpmn/**
 
   test_graphviz:
     name: Test Graphviz
@@ -78,7 +78,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifacts
-          path: test/diagram/graphviz/**
+          path: test*/diagram/graphviz/**
 
   test_pikchr:
     name: Test Pikchr
@@ -96,7 +96,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifacts
-          path: test/diagram/pikchr/**
+          path: test*/diagram/pikchr/**
 
   push:
     name: Push image
