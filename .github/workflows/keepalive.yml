@@ -9,39 +9,32 @@
 #
 
 #
-# This workflow periodically resets the GitHub Actions inactivity timer,
-# which would otherwise disable all scheduled workflows after a certain
-# period of repository inactivity.
+# This workflow periodically force pushes an empty orphan commit to the
+# keepalive branch to prevent the following behaviors:
+#
+#     * If the repository is inactive for too long, scheduled
+#       GitHub Actions may be disabled.
 #
 
-name: Reset inactivity
+name: keepalive
 
 on:
   schedule:
-    - cron: '0 0 1 * *'
+    - cron: "0 0 * * 0"
   workflow_dispatch:
 
 jobs:
   keepalive:
-    name: Reset inactivity
+    name: keepalive
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
-        with:
-          ref: keepalive
-      - name: Create an empty commit
+      - name: Create and push the commit
         run: |
-          git config user.name \
-            'Quinn Grier (via GitHub Actions)' \
-          || exit $?
-          git config user.email \
-            'quinn@quinngrier.com' \
-          || exit $?
-          git commit \
-            --allow-empty \
-            -m 'Reset the GitHub Actions inactivity timer' \
-          || exit $?
-      - name: Push the empty commit
-        run: |
-          git push || exit $?
+          git config user.name keepalive || exit $?
+          git config user.email keepalive || exit $?
+          git rm "*" || exit $?
+          tree=`git write-tree` || exit $?
+          commit=`git commit-tree -m keepalive ${tree?}` || exit $?
+          git push -f origin ${commit?}:keepalive || exit $?
