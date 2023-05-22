@@ -8,8 +8,19 @@
 // <https://creativecommons.org/publicdomain/zero/1.0/>.
 //
 
-= Test the Pikchr diagram support
+= Pikchr examples
 
+== Example {counter:example}
+
+=== Code
+
+----
+include::index.adoc[tag=code]
+----
+
+=== Result
+
+// tag::code[]
 [pikchr]
 ....
 circle
@@ -18,3 +29,4 @@ box "Hello, world!"
 arrow
 circle
 ....
+// end::code[]

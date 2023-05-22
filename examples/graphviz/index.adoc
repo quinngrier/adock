@@ -8,8 +8,19 @@
 // <https://creativecommons.org/publicdomain/zero/1.0/>.
 //
 
-= Test the Graphviz diagram support
+= Graphviz examples
 
+== Example {counter:example}
+
+=== Code
+
+----
+include::index.adoc[tag=code]
+----
+
+=== Result
+
+// tag::code[]
 [graphviz]
 ....
 digraph G {
@@ -20,3 +31,4 @@ digraph G {
   A -> B -> C;
 }
 ....
+// end::code[]

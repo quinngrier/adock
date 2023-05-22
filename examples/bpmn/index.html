@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<title>Test the BPMN diagram support</title>
+<title>BPMN examples</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -435,18 +435,75 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>Test the BPMN diagram support</h1>
+<h1>BPMN examples</h1>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_example_1">Example 1</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_code">Code</h3>
+<div class="listingblock">
+<div class="content">
+<pre>[bpmn]
+....
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="11.1.0"&gt;
+  &lt;process id="Process_1" isExecutable="false"&gt;
+    &lt;task id="Activity_17pgnq5" name="Hello, world!"&gt;
+      &lt;incoming&gt;Flow_1b5tjk2&lt;/incoming&gt;
+      &lt;outgoing&gt;Flow_0duxl2w&lt;/outgoing&gt;
+    &lt;/task&gt;
+    &lt;startEvent id="Event_09v9slq"&gt;
+      &lt;outgoing&gt;Flow_1b5tjk2&lt;/outgoing&gt;
+    &lt;/startEvent&gt;
+    &lt;sequenceFlow id="Flow_1b5tjk2" sourceRef="Event_09v9slq" targetRef="Activity_17pgnq5" /&gt;
+    &lt;endEvent id="Event_0vib1vj"&gt;
+      &lt;incoming&gt;Flow_0duxl2w&lt;/incoming&gt;
+    &lt;/endEvent&gt;
+    &lt;sequenceFlow id="Flow_0duxl2w" sourceRef="Activity_17pgnq5" targetRef="Event_0vib1vj" /&gt;
+  &lt;/process&gt;
+  &lt;bpmndi:BPMNDiagram id="BpmnDiagram_1"&gt;
+    &lt;bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1"&gt;
+      &lt;bpmndi:BPMNShape id="Activity_17pgnq5_di" bpmnElement="Activity_17pgnq5"&gt;
+        &lt;omgdc:Bounds x="230" y="100" width="100" height="80" /&gt;
+        &lt;bpmndi:BPMNLabel /&gt;
+      &lt;/bpmndi:BPMNShape&gt;
+      &lt;bpmndi:BPMNShape id="Event_09v9slq_di" bpmnElement="Event_09v9slq"&gt;
+        &lt;omgdc:Bounds x="152" y="122" width="36" height="36" /&gt;
+      &lt;/bpmndi:BPMNShape&gt;
+      &lt;bpmndi:BPMNShape id="Event_0vib1vj_di" bpmnElement="Event_0vib1vj"&gt;
+        &lt;omgdc:Bounds x="372" y="122" width="36" height="36" /&gt;
+      &lt;/bpmndi:BPMNShape&gt;
+      &lt;bpmndi:BPMNEdge id="Flow_1b5tjk2_di" bpmnElement="Flow_1b5tjk2"&gt;
+        &lt;omgdi:waypoint x="188" y="140" /&gt;
+        &lt;omgdi:waypoint x="230" y="140" /&gt;
+      &lt;/bpmndi:BPMNEdge&gt;
+      &lt;bpmndi:BPMNEdge id="Flow_0duxl2w_di" bpmnElement="Flow_0duxl2w"&gt;
+        &lt;omgdi:waypoint x="330" y="140" /&gt;
+        &lt;omgdi:waypoint x="372" y="140" /&gt;
+      &lt;/bpmndi:BPMNEdge&gt;
+    &lt;/bpmndi:BPMNPlane&gt;
+  &lt;/bpmndi:BPMNDiagram&gt;
+&lt;/definitions&gt;
+....</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_result">Result</h3>
 <div class="imageblock">
 <div class="content">
 <img src="diag-76a2af4cd31ecf9d315e12a0d2c2835e.png" alt="Diagram" width="2048" height="1536">
 </div>
 </div>
 </div>
+</div>
+</div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-05-22 07:15:51 UTC
+Last updated 2023-05-22 07:50:31 UTC
 </div>
 </div>
 </body>
