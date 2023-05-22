@@ -20,7 +20,7 @@ cd examples/"$1"
 
 rm -f diag-*
 
-x=../../../adock
+x=../../adock
 if [[ "${2+x}" ]]; then
   x+=' --image="$2"'
 fi
