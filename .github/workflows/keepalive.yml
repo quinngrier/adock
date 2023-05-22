@@ -8,7 +8,13 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
 
-name: Reset the GitHub Actions inactivity timer
+#
+# This workflow periodically resets the GitHub Actions inactivity timer,
+# which would otherwise disable all scheduled workflows after a certain
+# period of repository inactivity.
+#
+
+name: Reset inactivity
 
 on:
   schedule:
@@ -17,12 +23,14 @@ on:
 
 jobs:
   keepalive:
+    name: Reset inactivity
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout the repository
+        uses: actions/checkout@v3
         with:
           ref: keepalive
-      - name: Create and push an empty commit
+      - name: Create an empty commit
         run: |
           git config user.name \
             'Quinn Grier (via GitHub Actions)' \
@@ -34,4 +42,6 @@ jobs:
             --allow-empty \
             -m 'Reset the GitHub Actions inactivity timer' \
           || exit $?
+      - name: Push the empty commit
+        run: |
           git push || exit $?

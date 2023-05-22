@@ -21,10 +21,10 @@ on:
 jobs:
 
   build:
-    name: Build the candidate Docker image
+    name: Build image
     runs-on: ubuntu-latest
     steps:
-      - name: Construct the Docker image tag
+      - name: Construct the image tag
         id: tag
         run: |
           tag=`date '+%Y-%m-%d'`-${GITHUB_RUN_ID?} || exit $?
@@ -36,7 +36,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      - name: Build and push the candidate Docker image
+      - name: Build and push the candidate image
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -45,7 +45,7 @@ jobs:
       tag: ${{ steps.tag.outputs.tag }}
 
   test_bpmn:
-    name: Test the BPMN diagram support
+    name: Test BPMN
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -63,7 +63,7 @@ jobs:
           path: test/diagram/bpmn/**
 
   test_graphviz:
-    name: Test the Graphviz diagram support
+    name: Test Graphviz
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -81,7 +81,7 @@ jobs:
           path: test/diagram/graphviz/**
 
   test_pikchr:
-    name: Test the Pikchr diagram support
+    name: Test Pikchr
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -99,7 +99,7 @@ jobs:
           path: test/diagram/pikchr/**
 
   push:
-    name: Build the final Docker image
+    name: Push image
     needs:
       - build
       - test_bpmn
@@ -112,12 +112,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      - name: Pull the candidate Docker image
+      - name: Pull the candidate image
         run: |
           docker pull \
             quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
           || exit $?
-      - name: Tag the final Docker image
+      - name: Tag the final image
         run: |
           docker tag \
             quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
@@ -127,7 +127,7 @@ jobs:
             quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
             quinngrier/adock:latest \
           || exit $?
-      - name: Push the final Docker image
+      - name: Push the final image
         run: |
           docker push \
             quinngrier/adock:${{ needs.build.outputs.tag }} \
