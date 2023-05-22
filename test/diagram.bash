@@ -13,11 +13,20 @@ trap exit ERR
 
 shopt -s nullglob
 
+image=${2+"--image=$2"}
+readonly image
+
 cd test/diagram/"$1"
 
 rm -f diag-*
 
-../../../adock -r asciidoctor-diagram index.adoc
+x=../../../adock
+if [[ "${2+x}" ]]; then
+  x+=' --image="$2"'
+fi
+x+=' -r asciidoctor-diagram'
+x+=' index.adoc'
+eval " $x"
 
 for x in diag-*; do
   exit 0

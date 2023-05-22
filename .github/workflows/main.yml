@@ -1,0 +1,137 @@
+#
+# The authors of this file have waived all copyright and
+# related or neighboring rights to the extent permitted by
+# law as described by the CC0 1.0 Universal Public Domain
+# Dedication. You should have received a copy of the full
+# dedication along with this file, typically as a file
+# named <CC0-1.0.txt>. If not, it may be available at
+# <https://creativecommons.org/publicdomain/zero/1.0/>.
+#
+
+name: Main workflow
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+
+  build:
+    name: Build the candidate Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Construct the Docker image tag
+        id: tag
+        run: |
+          tag=`date '+%Y-%m-%d'`-${GITHUB_RUN_ID?} || exit $?
+          echo ::set-output name=tag::${tag?} || exit $?
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Build and push the candidate Docker image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: quinngrier/adock:${{ steps.tag.outputs.tag }}-rc
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+
+  test_bpmn:
+    name: Test the BPMN diagram support
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Run the test script
+        run: |
+          bash test/diagram.bash bpmn \
+            quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
+          || exit $?
+      - name: Upload the artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: test/diagram/bpmn/**
+
+  test_graphviz:
+    name: Test the Graphviz diagram support
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Run the test script
+        run: |
+          bash test/diagram.bash graphviz \
+            quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
+          || exit $?
+      - name: Upload the artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: test/diagram/graphviz/**
+
+  test_pikchr:
+    name: Test the Pikchr diagram support
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Run the test script
+        run: |
+          bash test/diagram.bash pikchr \
+            quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
+          || exit $?
+      - name: Upload the artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: test/diagram/pikchr/**
+
+  push:
+    name: Build the final Docker image
+    needs:
+      - build
+      - test_bpmn
+      - test_graphviz
+      - test_pikchr
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Pull the candidate Docker image
+        run: |
+          docker pull \
+            quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
+          || exit $?
+      - name: Tag the final Docker image
+        run: |
+          docker tag \
+            quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
+            quinngrier/adock:${{ needs.build.outputs.tag }} \
+          || exit $?
+          docker tag \
+            quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
+            quinngrier/adock:latest \
+          || exit $?
+      - name: Push the final Docker image
+        run: |
+          docker push \
+            quinngrier/adock:${{ needs.build.outputs.tag }} \
+          || exit $?
+          docker push \
+            quinngrier/adock:latest \
+          || exit $?
