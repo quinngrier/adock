@@ -16,7 +16,7 @@ shopt -s nullglob
 image=${2+"--image=$2"}
 readonly image
 
-cd test/diagram/"$1"
+cd examples/"$1"
 
 rm -f diag-*
 
