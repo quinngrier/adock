@@ -28,7 +28,7 @@ jobs:
         id: tag
         run: |
           tag=`date '+%Y-%m-%d'`-${GITHUB_RUN_ID?} || exit $?
-          echo ::set-output name=tag::${tag?} || exit $?
+          echo tag=${tag?} >>${GITHUB_OUTPUT?} || exit $?
       - name: Checkout the repository
         uses: actions/checkout@v2
       - name: Log in to Docker Hub
