@@ -23,11 +23,11 @@
 :x_asciidoctor_r_url: https://docs.asciidoctor.org/asciidoctor/latest/cli/man1/asciidoctor/
 :x_asciidoctor_r: link:{x_asciidoctor_r_url}[-r,window=_blank]
 
-:x_font_family_url: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
-:x_font_family: link:{x_font_family_url}[font-family,window=_blank]
+:x_fill_url: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill
+:x_fill: link:{x_fill_url}[fill,window=_blank]
 
-:x_monospace_url: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family#monospace
-:x_monospace: link:{x_monospace_url}[monospace,window=_blank]
+:x_red_url: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+:x_red: link:{x_red_url}[red,window=_blank]
 
 :x_style_url: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/style
 :x_style: link:{x_style_url}[style,window=_blank]
@@ -83,30 +83,27 @@ option of `{x_asciidoctor}` with `asciidoctor-diagram` as the argument.
 For example:
 `adock {x_asciidoctor_r} asciidoctor-diagram foo.adoc`.
 
-[cols=".^a,.^a,.^a"]
-|===
-
-| link:https://www.bpmn.org/[BPMN,window=_blank]
-| link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/bpmn/index.adoc[Example code,window=_blank]
-| image:https://github.com/quinngrier/adock/actions/workflows/test-diagram-bpmn.yml/badge.svg[alt="BPMN test result",link="https://github.com/quinngrier/adock/actions/workflows/test-diagram-bpmn.yml",window=_blank]
-
-| link:https://graphviz.org/[Graphviz,window=_blank]
-| link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/graphviz/index.adoc[Example code,window=_blank]
-| image:https://github.com/quinngrier/adock/actions/workflows/test-diagram-graphviz.yml/badge.svg[alt="Graphviz test result",link="https://github.com/quinngrier/adock/actions/workflows/test-diagram-graphviz.yml",window=_blank]
-
-| link:https://pikchr.org/[Pikchr,window=_blank]
-| link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/pikchr/index.adoc[Example code,window=_blank]
-| image:https://github.com/quinngrier/adock/actions/workflows/test-diagram-pikchr.yml/badge.svg[alt="Pikchr test result",link="https://github.com/quinngrier/adock/actions/workflows/test-diagram-pikchr.yml",window=_blank]
-
-|===
+The following diagram types are supported:
 
 * {empty}
+link:https://www.bpmn.org/[BPMN,window=_blank]
+(link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/bpmn/index.adoc[example,window=_blank])
+
+* {empty}
+link:https://graphviz.org/[Graphviz,window=_blank]
+(link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/graphviz/index.adoc[example,window=_blank])
+
+* {empty}
+link:https://pikchr.org/[Pikchr,window=_blank]
+(link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/pikchr/index.adoc[example,window=_blank])
+
+** {empty}
 Pikchr is
 link:patches/pikchr.patch[patched]
 to allow `\<` and `\>` escapes to be used in strings, which emit `<` and
 `>` directly into the SVG code instead of `&amp;gt;` and `&amp;lt;`.
 This allows SVG tags such as `<{x_tspan}>` to be used.
 For example:
-`box "\<{x_tspan} {x_style}=\"{x_font_family}: {x_monospace}\"\>foo\</{x_tspan}\>"`.
+`box "\<{x_tspan} {x_style}=\"{x_fill}: {x_red}\"\>foo\</{x_tspan}\>"`.
 
 //
