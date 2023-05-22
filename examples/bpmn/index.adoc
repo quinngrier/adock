@@ -1,0 +1,54 @@
+//
+// The authors of this file have waived all copyright and
+// related or neighboring rights to the extent permitted by
+// law as described by the CC0 1.0 Universal Public Domain
+// Dedication. You should have received a copy of the full
+// dedication along with this file, typically as a file
+// named <CC0-1.0.txt>. If not, it may be available at
+// <https://creativecommons.org/publicdomain/zero/1.0/>.
+//
+
+= Test the BPMN diagram support
+
+[bpmn]
+....
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="11.1.0">
+  <process id="Process_1" isExecutable="false">
+    <task id="Activity_17pgnq5" name="Hello, world!">
+      <incoming>Flow_1b5tjk2</incoming>
+      <outgoing>Flow_0duxl2w</outgoing>
+    </task>
+    <startEvent id="Event_09v9slq">
+      <outgoing>Flow_1b5tjk2</outgoing>
+    </startEvent>
+    <sequenceFlow id="Flow_1b5tjk2" sourceRef="Event_09v9slq" targetRef="Activity_17pgnq5" />
+    <endEvent id="Event_0vib1vj">
+      <incoming>Flow_0duxl2w</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_0duxl2w" sourceRef="Activity_17pgnq5" targetRef="Event_0vib1vj" />
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Activity_17pgnq5_di" bpmnElement="Activity_17pgnq5">
+        <omgdc:Bounds x="230" y="100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_09v9slq_di" bpmnElement="Event_09v9slq">
+        <omgdc:Bounds x="152" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vib1vj_di" bpmnElement="Event_0vib1vj">
+        <omgdc:Bounds x="372" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1b5tjk2_di" bpmnElement="Flow_1b5tjk2">
+        <omgdi:waypoint x="188" y="140" />
+        <omgdi:waypoint x="230" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0duxl2w_di" bpmnElement="Flow_0duxl2w">
+        <omgdi:waypoint x="330" y="140" />
+        <omgdi:waypoint x="372" y="140" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
+....

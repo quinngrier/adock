@@ -1,0 +1,11 @@
+<svg class='pikchr' preserveAspectRatio='xMidYMid meet' viewBox='0 0 400.32 76.32' xmlns='http://www.w3.org/2000/svg'>
+<circle cx='38.16' cy='38.16' r='36' style='fill:none;stroke-width:2.16;stroke:rgb(0,0,0);'/>
+<polygon points='146.16,38.16 134.64,42.48 134.64,33.84' style='fill:rgb(0,0,0)'/>
+<path d='M74.16,38.16L140.4,38.16' style='fill:none;stroke-width:2.16;stroke:rgb(0,0,0);'/>
+<path d='M146.16,74.16L254.16,74.16L254.16,2.16L146.16,2.16Z' style='fill:none;stroke-width:2.16;stroke:rgb(0,0,0);'/>
+<text dominant-baseline='central' fill='rgb(0,0,0)' text-anchor='middle' x='200.16' y='38.16'>Hello, world!</text>
+<polygon points='326.16,38.16 314.64,42.48 314.64,33.84' style='fill:rgb(0,0,0)'/>
+<path d='M254.16,38.16L320.4,38.16' style='fill:none;stroke-width:2.16;stroke:rgb(0,0,0);'/>
+<circle cx='362.16' cy='38.16' r='36' style='fill:none;stroke-width:2.16;stroke:rgb(0,0,0);'/>
+</svg>
+
