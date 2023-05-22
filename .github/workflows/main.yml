@@ -20,7 +20,7 @@ on:
 
 jobs:
 
-  build:
+  build_image:
     name: Build image
     runs-on: ubuntu-latest
     steps:
@@ -46,7 +46,7 @@ jobs:
 
   test_bpmn:
     name: Test BPMN
-    needs: build
+    needs: build_image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -54,7 +54,7 @@ jobs:
       - name: Run the test script
         run: |
           bash test/diagram.bash bpmn \
-            quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
+            quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
           || exit $?
       - name: Upload the artifacts
         uses: actions/upload-artifact@v3
@@ -64,7 +64,7 @@ jobs:
 
   test_graphviz:
     name: Test Graphviz
-    needs: build
+    needs: build_image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -72,7 +72,7 @@ jobs:
       - name: Run the test script
         run: |
           bash test/diagram.bash graphviz \
-            quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
+            quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
           || exit $?
       - name: Upload the artifacts
         uses: actions/upload-artifact@v3
@@ -82,7 +82,7 @@ jobs:
 
   test_pikchr:
     name: Test Pikchr
-    needs: build
+    needs: build_image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -90,7 +90,7 @@ jobs:
       - name: Run the test script
         run: |
           bash test/diagram.bash pikchr \
-            quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
+            quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
           || exit $?
       - name: Upload the artifacts
         uses: actions/upload-artifact@v3
@@ -98,10 +98,10 @@ jobs:
           name: artifacts
           path: test*/diagram/pikchr/**
 
-  push:
+  push_image:
     name: Push image
     needs:
-      - build
+      - build_image
       - test_bpmn
       - test_graphviz
       - test_pikchr
@@ -115,22 +115,22 @@ jobs:
       - name: Pull the candidate image
         run: |
           docker pull \
-            quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
+            quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
           || exit $?
       - name: Tag the final image
         run: |
           docker tag \
-            quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
-            quinngrier/adock:${{ needs.build.outputs.tag }} \
+            quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
+            quinngrier/adock:${{ needs.build_image.outputs.tag }} \
           || exit $?
           docker tag \
-            quinngrier/adock:${{ needs.build.outputs.tag }}-rc \
+            quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
             quinngrier/adock:latest \
           || exit $?
       - name: Push the final image
         run: |
           docker push \
-            quinngrier/adock:${{ needs.build.outputs.tag }} \
+            quinngrier/adock:${{ needs.build_image.outputs.tag }} \
           || exit $?
           docker push \
             quinngrier/adock:latest \
@@ -138,7 +138,7 @@ jobs:
 
   update_examples:
     name: Update examples
-    needs: push
+    needs: push_image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
