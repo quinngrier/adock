@@ -135,3 +135,30 @@ jobs:
           docker push \
             quinngrier/adock:latest \
           || exit $?
+
+  update_examples:
+    name: Update examples
+    needs: push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+      - name: Remove the old examples
+        run: git rm "*"
+      - name: Download the new examples
+        uses: actions/download-artifact@v3
+        with:
+          name: artifacts
+      - name: Add the new examples
+        run: git add .
+      - name: Commit the new examples
+        run: |
+          export GIT_AUTHOR_NAME="${GITHUB_ACTOR?}"
+          export GIT_AUTHOR_EMAIL=
+          export GIT_COMMITTER_NAME="${GITHUB_SERVER_URL?}/${GITHUB_REPOSITORY?}/actions/runs/${GITHUB_RUN_ID?}"
+          export GIT_COMMITTER_EMAIL=
+          git commit -m "Update the examples" || exit $?
+      - name: Push the new examples
+        run: git push

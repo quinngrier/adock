@@ -87,15 +87,15 @@ The following diagram types are supported:
 
 * {empty}
 link:https://www.bpmn.org/[BPMN,window=_blank]
-(link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/bpmn/index.adoc[example,window=_blank])
+(link:https://quinngrier.github.io/adock/test/diagram/bpmn/[example,window=_blank])
 
 * {empty}
 link:https://graphviz.org/[Graphviz,window=_blank]
-(link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/graphviz/index.adoc[example,window=_blank])
+(link:https://quinngrier.github.io/adock/test/diagram/graphviz/[example,window=_blank])
 
 * {empty}
 link:https://pikchr.org/[Pikchr,window=_blank]
-(link:https://raw.githubusercontent.com/quinngrier/adock/master/test/diagram/pikchr/index.adoc[example,window=_blank])
+(link:https://quinngrier.github.io/adock/test/diagram/pikchr/[example,window=_blank])
 
 ** {empty}
 Pikchr is
