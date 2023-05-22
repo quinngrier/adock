@@ -8,8 +8,19 @@
 // <https://creativecommons.org/publicdomain/zero/1.0/>.
 //
 
-= Test the BPMN diagram support
+= BPMN examples
 
+== Example {counter:example}
+
+=== Code
+
+----
+include::index.adoc[tag=code]
+----
+
+=== Result
+
+// tag::code[]
 [bpmn]
 ....
 <?xml version="1.0" encoding="UTF-8"?>
@@ -52,3 +63,4 @@
   </bpmndi:BPMNDiagram>
 </definitions>
 ....
+// end::code[]
