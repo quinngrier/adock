@@ -146,7 +146,11 @@ jobs:
         with:
           ref: gh-pages
       - name: Remove the old examples
-        run: git rm "*"
+        run: |
+          x=`git ls-files` || exit $?
+          case ${x?} in ?*)
+            git rm "*"
+          esac
       - name: Download the new examples
         uses: actions/download-artifact@v3
         with:
