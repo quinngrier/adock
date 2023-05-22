@@ -37,4 +37,4 @@ jobs:
           git rm "*" || exit $?
           x=`git write-tree` || exit $?
           x=`git commit-tree -m keepalive ${x?}` || exit $?
-          git push -f origin ${x?}:keepalive || exit $?
+          git push -f origin ${x?}:refs/heads/keepalive || exit $?
