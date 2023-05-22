@@ -29,7 +29,7 @@
 :x_red_url: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
 :x_red: link:{x_red_url}[red,window=_blank]
 
-:x_style_url: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/style
+:x_style_url: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/style
 :x_style: link:{x_style_url}[style,window=_blank]
 
 :x_tspan_url: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan
