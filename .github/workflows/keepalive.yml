@@ -9,8 +9,8 @@
 #
 
 #
-# This workflow periodically force pushes an empty orphan commit to the
-# keepalive branch to prevent the following behaviors:
+# This workflow periodically pushes and deletes a tag to prevent the
+# following behaviors:
 #
 #     * If the repository is inactive for too long, scheduled
 #       GitHub Actions may be disabled.
@@ -30,11 +30,9 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
-      - name: Create and push the commit
+      - name: Push and delete a tag
         run: |
-          git config user.name keepalive || exit $?
-          git config user.email keepalive || exit $?
-          git rm "*" || exit $?
-          x=`git write-tree` || exit $?
-          x=`git commit-tree -m keepalive ${x?}` || exit $?
-          git push -f origin ${x?}:refs/heads/keepalive || exit $?
+          t=keepalive${GITHUB_RUN_ID?}
+          git tag ${t?} || exit $?
+          git push origin ${t?}:refs/tags/${t?} || exit $?
+          git push origin :refs/tags/${t?} || exit $?
