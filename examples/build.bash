@@ -28,12 +28,6 @@ x+=' -r asciidoctor-diagram'
 x+=' index.adoc'
 eval " $x"
 
-# Asciidoctor Diagram may output files whose filenames contain colon
-# characters into the .asciidoctor/diagram directory. Obviously this
-# causes severe portability problems, and the .asciidoctor directory
-# seems to just be a cache, so we'll just delete it.
-rm -f -r .asciidoctor
-
 for x in diag-*; do
   exit 0
 done
