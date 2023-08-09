@@ -28,6 +28,12 @@ x+=' -r asciidoctor-diagram'
 x+=' index.adoc'
 eval " $x"
 
+# TODO: Right now, this is hardcoded to fail if no diag-* files are
+#       generated. I might later have examples that don't have diagrams,
+#       so they wouldn't generate diag-* files. This script will likely
+#       need an option that says whether it should expect diag-* files
+#       to be generated.
+
 for x in diag-*; do
   exit 0
 done
