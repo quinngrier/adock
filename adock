@@ -408,7 +408,7 @@ until shift && (exit ${1+1}0); do
     eval "${pop?}"
     serve=
     case ${http_addr+x} in '')
-      http_addr=0.0.0.0:8000
+      http_addr=0.0.0.0:8080
       live_addr=0.0.0.0:35729
     esac
     continue

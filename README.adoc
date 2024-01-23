@@ -53,9 +53,9 @@ document, then run `adock foo.adoc` to compile it into `foo.html`.
 
 . {empty}
 Run `adock -s foo.adoc` to do the same thing as the previous step, but
-this time also running an HTTP server on `0.0.0.0:8000` to preview the
+this time also running an HTTP server on `0.0.0.0:8080` to preview the
 document.
-Open `++http://127.0.0.1:8000++` in a browser and click on `foo.html` to
+Open `++http://127.0.0.1:8080++` in a browser and click on `foo.html` to
 view the document.
 The document will be automatically recompiled and your browser will
 automatically refresh as you make changes to `foo.adoc`.

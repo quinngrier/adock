@@ -31,7 +31,7 @@ ifdef::x_manpage[]
 :x_adock_argument: pass:n[<__adock_argument__>]
 :x_asciidoctor: pass:n[**asciidoctor**]
 :x_asciidoctor_argument: pass:n[<__asciidoctor_argument__>]
-:x_default_http_addr: pass:n[**0.0.0.0:8000**]
+:x_default_http_addr: pass:n[**0.0.0.0:8080**]
 :x_default_http_host: pass:n[**0.0.0.0**]
 :x_default_live_addr: pass:n[**0.0.0.0:35729**]
 :x_default_live_port: pass:n[**35729**]
@@ -96,7 +96,7 @@ ifndef::x_manpage[]
 :x_adock_argument: pass:n[``<adock_argument>``]
 :x_asciidoctor: pass:n[link:https://docs.asciidoctor.org/asciidoctor/latest/cli/man1/asciidoctor/[``asciidoctor``]]
 :x_asciidoctor_argument: pass:n[``<asciidoctor_argument>``]
-:x_default_http_addr: pass:n[``0.0.0.0:8000``]
+:x_default_http_addr: pass:n[``0.0.0.0:8080``]
 :x_default_http_host: pass:n[``0.0.0.0``]
 :x_default_live_addr: pass:n[``0.0.0.0:35729``]
 :x_default_live_port: pass:n[``35729``]
@@ -235,7 +235,7 @@ The following table summarizes all possible combinations of omissions:
 ----
  -a option                      |  HTTP address  | LiveReload address
 --------------------------------+----------------+--------------------
- omitted                        |   0.0.0.0:8000 |    0.0.0.0:35729
+ omitted                        |   0.0.0.0:8080 |    0.0.0.0:35729
  -a 123                         |   0.0.0.0:123  |    0.0.0.0:35729
  -a 123,456                     |   0.0.0.0:123  |    0.0.0.0:456
  -a 127.0.0.1:123               | 127.0.0.1:123  |  127.0.0.1:35729
