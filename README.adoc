@@ -17,6 +17,12 @@
 :x_Asciidoctor_Diagram_url: https://github.com/asciidoctor/asciidoctor-diagram
 :x_Asciidoctor_Diagram: link:{x_Asciidoctor_Diagram_url}[Asciidoctor Diagram,window=_blank]
 
+:x_Asciidoctor_PDF_url: https://github.com/asciidoctor/asciidoctor-pdf
+:x_Asciidoctor_PDF: link:{x_Asciidoctor_PDF_url}[Asciidoctor PDF,window=_blank]
+
+:x_Asciidoctor_Mathematical_url: https://github.com/asciidoctor/asciidoctor-mathematical
+:x_Asciidoctor_Mathematical: link:{x_Asciidoctor_Mathematical_url}[Asciidoctor Mathematical,window=_blank]
+
 :x_asciidoctor_url: https://docs.asciidoctor.org/asciidoctor/latest/cli/man1/asciidoctor/
 :x_asciidoctor: link:{x_asciidoctor_url}[asciidoctor,window=_blank]
 
@@ -25,6 +31,9 @@
 
 :x_fill_url: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill
 :x_fill: link:{x_fill_url}[fill,window=_blank]
+
+:x_Lasem_url: https://github.com/LasemProject/lasem
+:x_Lasem: link:{x_Lasem_url}[Lasem,window=_blank]
 
 :x_red_url: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
 :x_red: link:{x_red_url}[red,window=_blank]
@@ -75,6 +84,15 @@ download and replace `adock` itself with the latest version of `adock`.
 
 . {empty}
 link:{man_page_url}[Click here to view the full man page for `adock`.]
+
+== Math support
+
+* {empty}
+{x_Lasem} is link:patches/lasem[patched] to use traditional LaTeX fonts
+instead of generic fonts.
+This primarily affects {x_Asciidoctor_Mathematical}.
+// TODO: Add an example document that displays a bunch of math:
+//       adock -r asciidoctor-pdf -r asciidoctor-mathematical -a stem=latexmath example.adoc
 
 == Diagram support
 
