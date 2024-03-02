@@ -88,10 +88,16 @@ link:{man_page_url}[Click here to view the full man page for `adock`.]
 == Math support
 
 * {empty}
-{x_Lasem} is link:patches/lasem[patched] to use traditional LaTeX fonts
-instead of generic fonts.
-This primarily affects {x_Asciidoctor_Mathematical}.
-// TODO: Add an example document that displays a bunch of math:
+{x_Lasem}, which is a dependency of {x_Asciidoctor_Mathematical}, is
+link:patches/lasem.patch[patched] with the following changes:
+
+** {empty}
+Traditional LaTeX fonts are used instead of generic fonts.
+
+** {empty}
+A bug that was preventing `\mathtt` from working is fixed.
+
+// TODO: Add an example document that displays a bunch of math?
 //       adock -r asciidoctor-pdf -r asciidoctor-mathematical -a stem=latexmath example.adoc
 
 == Diagram support

@@ -75,19 +75,25 @@ popd >/dev/null
 rm -f -r pikchr
 
 #-----------------------------------------------------------------------
-# Install Lasem 0.5.1
+# Install Lasem
 #-----------------------------------------------------------------------
+#
+# Note that we symlink on top of an older version here. It works fine.
+#
 
+rm -f -r /usr/lib/liblasem*
 git clone https://github.com/LasemProject/lasem.git lasem
 cd lasem
-git checkout LASEM_0_5_1
-patch -p1 </patches/lasem/0.5.1.patch
-./autogen.sh
-./configure --prefix /usr PKG_CONFIG=pkg-config
-make
-make install
-cd ..
+git checkout 62b629413ed9465ee0b54e784b89d78bcce2bd03
+patch -p1 </patches/lasem.patch
+meson --prefix /usr build
+cd build
+ninja
+ninja install
+cd ../..
 rm -r lasem
+ln -s liblasem-0.6.so.0.5.2 /usr/lib/liblasem-0.6.so.5.0.1
+ln -s liblasem-0.6.so.0.5.2 /usr/lib/liblasem-0.6.so.5
 
 #-----------------------------------------------------------------------
 
