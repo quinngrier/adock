@@ -1,4 +1,4 @@
-diff -Nru a/extension.rb b/extension.rb
+diff -N -r -u a/extension.rb b/extension.rb
 --- a/extension.rb	2024-03-02 02:17:50.182777708 -0800
 +++ b/extension.rb	2024-03-02 02:18:04.031033191 -0800
 @@ -25,6 +25,7 @@

@@ -1,4 +1,4 @@
-diff -Nru a/src/lsmmathmlmathelement.c b/src/lsmmathmlmathelement.c
+diff -N -r -u a/src/lsmmathmlmathelement.c b/src/lsmmathmlmathelement.c
 --- a/src/lsmmathmlmathelement.c	2024-03-01 21:34:13.302151905 -0800
 +++ b/src/lsmmathmlmathelement.c	2024-03-01 21:34:24.598431788 -0800
 @@ -146,7 +146,7 @@
@@ -10,7 +10,7 @@ diff -Nru a/src/lsmmathmlmathelement.c b/src/lsmmathmlmathelement.c
  	style->math_variant = LSM_MATHML_VARIANT_NORMAL;
  	style->math_color.red = 0;
  	style->math_color.green = 0;
-diff -Nru a/src/lsmmathmlmathelement.h b/src/lsmmathmlmathelement.h
+diff -N -r -u a/src/lsmmathmlmathelement.h b/src/lsmmathmlmathelement.h
 --- a/src/lsmmathmlmathelement.h	2024-03-01 21:34:13.302151905 -0800
 +++ b/src/lsmmathmlmathelement.h	2024-03-01 21:34:24.598431788 -0800
 @@ -29,10 +29,10 @@
@@ -28,7 +28,7 @@ diff -Nru a/src/lsmmathmlmathelement.h b/src/lsmmathmlmathelement.h
  #define LSM_MATHML_FONT_SCRIPT		"cmsy10"
  #define LSM_MATHML_FONT_DOUBLE_STRUCK	"msbm10"
  
-diff -Nru a/src/lsmmathmlpresentationtoken.c b/src/lsmmathmlpresentationtoken.c
+diff -N -r -u a/src/lsmmathmlpresentationtoken.c b/src/lsmmathmlpresentationtoken.c
 --- a/src/lsmmathmlpresentationtoken.c	2024-03-01 21:34:13.302151905 -0800
 +++ b/src/lsmmathmlpresentationtoken.c	2024-03-01 21:34:24.598431788 -0800
 @@ -96,7 +96,8 @@
@@ -41,7 +41,7 @@ diff -Nru a/src/lsmmathmlpresentationtoken.c b/src/lsmmathmlpresentationtoken.c
  		char *text;
  		text = lsm_mathml_presentation_token_get_text (token);
  		style->math_variant = g_utf8_strlen (text, -1) > 1 ?
-diff -Nru a/src/lsmmathmlview.c b/src/lsmmathmlview.c
+diff -N -r -u a/src/lsmmathmlview.c b/src/lsmmathmlview.c
 --- a/src/lsmmathmlview.c	2024-03-01 21:34:13.302151905 -0800
 +++ b/src/lsmmathmlview.c	2024-03-01 21:34:24.598431788 -0800
 @@ -44,7 +44,7 @@
@@ -53,7 +53,7 @@ diff -Nru a/src/lsmmathmlview.c b/src/lsmmathmlview.c
  	"cmr10",
  	"cmmi10",
  	"cmex10",
-diff -Nru a/src/lsmsvgstyle.c b/src/lsmsvgstyle.c
+diff -N -r -u a/src/lsmsvgstyle.c b/src/lsmsvgstyle.c
 --- a/src/lsmsvgstyle.c	2024-03-01 21:34:13.306152005 -0800
 +++ b/src/lsmsvgstyle.c	2024-03-01 21:34:24.598431788 -0800
 @@ -232,7 +232,7 @@
