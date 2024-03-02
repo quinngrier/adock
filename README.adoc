@@ -88,6 +88,11 @@ link:{man_page_url}[Click here to view the full man page for `adock`.]
 == Math support
 
 * {empty}
+{x_Asciidoctor_Mathematical} is
+link:patches/asciidoctor-mathematical.patch[patched] to improve the size
+of math expressions.
+
+* {empty}
 {x_Lasem}, which is a dependency of {x_Asciidoctor_Mathematical}, is
 link:patches/lasem.patch[patched] with the following changes:
 

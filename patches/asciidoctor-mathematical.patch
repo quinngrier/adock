@@ -1,0 +1,25 @@
+diff -Nru a/extension.rb b/extension.rb
+--- a/extension.rb	2024-03-02 02:17:50.182777708 -0800
++++ b/extension.rb	2024-03-02 02:18:04.031033191 -0800
+@@ -25,6 +25,7 @@
+     end
+     # The no-args constructor defaults to SVG and standard delimiters ($..$ for inline, $$..$$ for block)
+     mathematical = ::Mathematical.new format: format, ppi: ppi
++    mathematical_zoom = ::Mathematical.new format: format, ppi: ppi, zoom: 1.21
+     unless inline
+       image_output_dir, image_target_dir = image_output_and_target_dir document
+       ::Asciidoctor::Helpers.mkdir_p image_output_dir unless ::File.directory? image_output_dir
+@@ -37,11 +38,11 @@
+     document.find_by(traverse_documents: true) {|b|
+       (b.content_model == :simple && (b.subs.include? :macros)) || b.context == :list_item
+     }.each do |prose|
+-      handle_prose_block prose, mathematical, image_output_dir, image_target_dir, format, inline
++      handle_prose_block prose, mathematical_zoom, image_output_dir, image_target_dir, format, inline
+     end
+ 
+     (document.find_by content: :section).each do |sect|
+-      handle_section_title sect, mathematical, image_output_dir, image_target_dir, format, inline
++      handle_section_title sect, mathematical_zoom, image_output_dir, image_target_dir, format, inline
+     end
+ 
+     document.remove_attr 'stem'

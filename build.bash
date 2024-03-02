@@ -97,6 +97,12 @@ ln -s liblasem-0.6.so.0.5.2 /usr/lib/liblasem-0.6.so.5
 
 #-----------------------------------------------------------------------
 
+cd /usr/lib/ruby/gems/3.2.0/gems/asciidoctor-mathematical-0.3.5/lib/asciidoctor-mathematical
+patch -p1 </patches/asciidoctor-mathematical.patch
+cd /
+
+#-----------------------------------------------------------------------
+
 npm install \
   --unsafe-perm \
   -g \
