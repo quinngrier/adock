@@ -114,12 +114,12 @@ codespan:
 
 * {empty}
 {x_Asciidoctor_Mathematical} is
-link:patches/asciidoctor-mathematical.patch[patched] to improve the size
+link:src/asciidoctor-mathematical.patch[patched] to improve the size
 of math expressions.
 
 * {empty}
 {x_Lasem}, which is a dependency of {x_Asciidoctor_Mathematical}, is
-link:patches/lasem.patch[patched] with the following changes:
+link:src/lasem.patch[patched] with the following changes:
 
 ** {empty}
 {x_KaTeX} fonts are used instead of generic fonts.
@@ -153,7 +153,7 @@ link:https://pikchr.org/[Pikchr,window=_blank]
 
 ** {empty}
 Pikchr is
-link:patches/pikchr.patch[patched]
+link:src/pikchr.patch[patched]
 to allow `\<` and `\>` escapes to be used in strings, which emit `<` and
 `>` directly into the SVG code instead of `&amp;gt;` and `&amp;lt;`.
 This allows SVG tags such as `<{x_tspan}>` to be used.

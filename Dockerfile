@@ -11,7 +11,7 @@
 FROM asciidoctor/docker-asciidoctor AS build1
 RUN apk add --no-cache bash
 COPY build1.bash /
-COPY patches /patches/
+COPY src /src/
 RUN bash /build1.bash
 
 FROM asciidoctor/docker-asciidoctor AS build2
@@ -20,7 +20,7 @@ COPY [ \
   "adock-theme.yml", \
   "build2.bash", \
 "/"]
-COPY patches /patches/
+COPY src /src/
 COPY --from=build1 /katex/fonts /usr/share/fonts/katex/
 RUN bash /build2.bash
 RUN rm /build2.bash

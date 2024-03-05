@@ -19,4 +19,4 @@ apk add --no-cache \
 
 git clone https://github.com/KaTeX/KaTeX.git /katex
 
-fontforge -script /patches/fonts.py
+fontforge -script /src/fonts.py

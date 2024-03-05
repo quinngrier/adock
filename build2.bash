@@ -62,7 +62,7 @@ wget \
 ;
 tar xzf pikchr.tar.gz
 pushd */ >/dev/null
-patch -p1 </patches/pikchr.patch
+patch -p1 </src/pikchr.patch
 make CFLAGS='-O3 -s'
 cp pikchr /bin
 popd >/dev/null
@@ -80,7 +80,7 @@ rm -f -r /usr/lib/liblasem*
 git clone https://github.com/LasemProject/lasem.git lasem
 cd lasem
 git checkout 62b629413ed9465ee0b54e784b89d78bcce2bd03
-patch -p1 </patches/lasem.patch
+patch -p1 </src/lasem.patch
 meson --prefix /usr build
 cd build
 ninja
@@ -93,7 +93,7 @@ ln -s liblasem-0.6.so.0.5.2 /usr/lib/liblasem-0.6.so.5
 #-----------------------------------------------------------------------
 
 cd /usr/lib/ruby/gems/3.2.0/gems/asciidoctor-mathematical-0.3.5/lib/asciidoctor-mathematical
-patch -p1 </patches/asciidoctor-mathematical.patch
+patch -p1 </src/asciidoctor-mathematical.patch
 cd /
 
 #-----------------------------------------------------------------------
