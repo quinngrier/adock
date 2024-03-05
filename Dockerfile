@@ -8,11 +8,11 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
 
-FROM asciidoctor/docker-asciidoctor AS build2
+FROM asciidoctor/docker-asciidoctor AS build3
 RUN apk add --no-cache bash
-COPY build2.bash /
+COPY build3.bash /
 COPY patches /patches/
-RUN bash /build2.bash
+RUN bash /build3.bash
 
 FROM asciidoctor/docker-asciidoctor AS build1
 RUN apk add --no-cache bash
@@ -21,7 +21,7 @@ COPY [ \
   "build1.bash", \
 "/"]
 COPY patches /patches/
-COPY --from=build2 /katex/fonts /usr/share/fonts/katex/
+COPY --from=build3 /katex/fonts /usr/share/fonts/katex/
 RUN bash /build1.bash
 RUN rm /build1.bash
 COPY entrypoint.bash /
