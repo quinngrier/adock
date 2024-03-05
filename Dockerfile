@@ -8,16 +8,16 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
 
-FROM asciidoctor/docker-asciidoctor AS build
+FROM asciidoctor/docker-asciidoctor AS build1
 RUN apk add --no-cache bash
-COPY build.bash /
+COPY build1.bash /
 COPY patches /patches/
-RUN bash /build.bash
-RUN rm /build.bash
+RUN bash /build1.bash
+RUN rm /build1.bash
 COPY entrypoint.bash /
 RUN chmod +x /entrypoint.bash
 
 FROM scratch
-COPY --from=build / /
+COPY --from=build1 / /
 ENTRYPOINT ["/entrypoint.bash"]
 CMD []
