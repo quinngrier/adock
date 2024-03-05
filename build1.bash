@@ -48,11 +48,6 @@ apk add --no-cache \
 # Install the KaTeX fonts
 #-----------------------------------------------------------------------
 
-git clone https://github.com/KaTeX/KaTeX.git katex
-mkdir /usr/share/fonts/katex
-rmdir /usr/share/fonts/katex
-cp -R katex/fonts /usr/share/fonts/katex
-rm -r katex
 fc-cache -r -v
 
 #-----------------------------------------------------------------------

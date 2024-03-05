@@ -32,6 +32,9 @@
 :x_fill_url: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill
 :x_fill: link:{x_fill_url}[fill,window=_blank]
 
+:x_KaTeX_url: https://katex.org/
+:x_KaTeX: link:{x_KaTeX_url}[KaTeX,window=_blank]
+
 :x_Lasem_url: https://github.com/LasemProject/lasem
 :x_Lasem: link:{x_Lasem_url}[Lasem,window=_blank]
 
@@ -85,6 +88,28 @@ download and replace `adock` itself with the latest version of `adock`.
 . {empty}
 link:{man_page_url}[Click here to view the full man page for `adock`.]
 
+== Asciidoctor PDF support
+
+Adock includes an {x_Asciidoctor_PDF} theme file `/adock-theme.yml` that
+can be used to add {x_KaTeX} fonts to the font catalog.
+The fonts are named `KaTeX_Main` and `KaTeX_Typewriter`.
+The fonts also have some extra glyphs added to them.
+Here's an example of how to use this in your own theme file:
+
+----
+extends:
+  - /adock-theme.yml
+
+base:
+  font-family: KaTeX_Main
+
+code:
+  font-family: KaTeX_Typewriter
+
+codespan:
+  font-family: KaTeX_Typewriter
+----
+
 == Math support
 
 * {empty}
@@ -97,7 +122,7 @@ of math expressions.
 link:patches/lasem.patch[patched] with the following changes:
 
 ** {empty}
-Traditional LaTeX fonts are used instead of generic fonts.
+{x_KaTeX} fonts are used instead of generic fonts.
 
 ** {empty}
 A bug that was preventing `\mathtt` from working is fixed.
