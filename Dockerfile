@@ -10,22 +10,14 @@
 
 FROM asciidoctor/docker-asciidoctor AS build1
 RUN apk add --no-cache bash
-COPY build1.bash /
 COPY src /src/
-RUN bash /build1.bash
+RUN bash /src/build1.bash
 
 FROM asciidoctor/docker-asciidoctor AS build2
 RUN apk add --no-cache bash
-COPY [ \
-  "adock-theme.yml", \
-  "build2.bash", \
-"/"]
 COPY src /src/
+RUN bash /src/build2.bash
 COPY --from=build1 /katex/fonts /usr/share/fonts/katex/
-RUN bash /build2.bash
-RUN rm /build2.bash
-COPY entrypoint.bash /
-RUN chmod +x /entrypoint.bash
 
 FROM scratch
 COPY --from=build2 / /
