@@ -66,7 +66,7 @@ if ((s == 0)); then
   ' /etc/passwd
 elif ((s == 2)); then
   user_name=adock_user
-  adduser -D -G $group_name -H -u $user_id $user_name
+  adduser -D -G $group_name -u $user_id $user_name
 else
   exit $s
 fi
