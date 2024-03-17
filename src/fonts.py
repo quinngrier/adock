@@ -80,7 +80,7 @@ def glob_unique(x):
   return xs[0]
 
 for files in fileses:
-  fonts = [fontforge.open(glob_unique(file)) for file in files]
+  fonts = [fontforge.open(glob_unique(x)) for x in files]
   dst = fonts[0]
   for chars in charses:
     ref = chars[0]
