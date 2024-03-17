@@ -11,6 +11,16 @@
 import fontforge
 import shutil
 
+#-----------------------------------------------------------------------
+# Fonts
+#-----------------------------------------------------------------------
+#
+# Each element of this array is an array [dst, fb1, fb2, ...] that
+# specifies that the destination font file dst should have certain
+# missing glyphs filled in from the first fallback font file of fb1,
+# fb2, ... in which the glyph exists.
+#
+
 fileses = [
   [
     "/katex/fonts/KaTeX_Main-Regular.ttf",
@@ -34,9 +44,22 @@ fileses = [
   ],
 ]
 
+#-----------------------------------------------------------------------
+# Glyphs
+#-----------------------------------------------------------------------
+#
+# Each element of this array is a tuple (x, y) that specifies that if
+# the glyph y does not exist in the destination font file dst, then it
+# should be filled in from the first fallback font file in which it does
+# exist, and it should be scaled to be the same height as the glyph x in
+# dst. x is usually 0x004D ("M") or 0x006D ("m").
+#
+
 charses = [
   (0x004D, 0x00A9), # copyright sign
 ]
+
+#-----------------------------------------------------------------------
 
 for files in fileses:
   fonts = [fontforge.open(file) for file in files]
