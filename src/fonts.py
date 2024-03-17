@@ -9,6 +9,8 @@
 #
 
 import fontforge
+import glob
+import json
 import shutil
 
 #-----------------------------------------------------------------------
@@ -24,23 +26,23 @@ import shutil
 fileses = [
   [
     "/katex/fonts/KaTeX_Main-Regular.ttf",
-    "/usr/lib/ruby/gems/3.2.0/gems/asciidoctor-pdf-2.3.13/data/fonts/notoserif-regular-subset.ttf",
-    "/usr/lib/ruby/gems/3.2.0/gems/asciidoctor-pdf-2.3.13/data/fonts/notoemoji-subset.ttf",
+    "/usr/lib/ruby/gems/*/gems/asciidoctor-pdf-*/data/fonts/notoserif-regular-subset.ttf",
+    "/usr/lib/ruby/gems/*/gems/asciidoctor-pdf-*/data/fonts/notoemoji-subset.ttf",
   ],
   [
     "/katex/fonts/KaTeX_Main-Bold.ttf",
-    "/usr/lib/ruby/gems/3.2.0/gems/asciidoctor-pdf-2.3.13/data/fonts/notoserif-bold-subset.ttf",
-    "/usr/lib/ruby/gems/3.2.0/gems/asciidoctor-pdf-2.3.13/data/fonts/notoemoji-subset.ttf",
+    "/usr/lib/ruby/gems/*/gems/asciidoctor-pdf-*/data/fonts/notoserif-bold-subset.ttf",
+    "/usr/lib/ruby/gems/*/gems/asciidoctor-pdf-*/data/fonts/notoemoji-subset.ttf",
   ],
   [
     "/katex/fonts/KaTeX_Main-Italic.ttf",
-    "/usr/lib/ruby/gems/3.2.0/gems/asciidoctor-pdf-2.3.13/data/fonts/notoserif-italic-subset.ttf",
-    "/usr/lib/ruby/gems/3.2.0/gems/asciidoctor-pdf-2.3.13/data/fonts/notoemoji-subset.ttf",
+    "/usr/lib/ruby/gems/*/gems/asciidoctor-pdf-*/data/fonts/notoserif-italic-subset.ttf",
+    "/usr/lib/ruby/gems/*/gems/asciidoctor-pdf-*/data/fonts/notoemoji-subset.ttf",
   ],
   [
     "/katex/fonts/KaTeX_Main-BoldItalic.ttf",
-    "/usr/lib/ruby/gems/3.2.0/gems/asciidoctor-pdf-2.3.13/data/fonts/notoserif-bold_italic-subset.ttf",
-    "/usr/lib/ruby/gems/3.2.0/gems/asciidoctor-pdf-2.3.13/data/fonts/notoemoji-subset.ttf",
+    "/usr/lib/ruby/gems/*/gems/asciidoctor-pdf-*/data/fonts/notoserif-bold_italic-subset.ttf",
+    "/usr/lib/ruby/gems/*/gems/asciidoctor-pdf-*/data/fonts/notoemoji-subset.ttf",
   ],
 ]
 
@@ -61,8 +63,24 @@ charses = [
 
 #-----------------------------------------------------------------------
 
+def glob_unique(x):
+  xs = glob.glob(x)
+  if len(xs) == 0:
+    m = ""
+    m += "Glob pattern "
+    m += json.dumps(x)
+    m += " has no matches"
+    raise Exception(m)
+  if len(xs) > 1:
+    m = ""
+    m += "Glob pattern "
+    m += json.dumps(x)
+    m += " has more than one match"
+    raise Exception(m)
+  return xs[0]
+
 for files in fileses:
-  fonts = [fontforge.open(file) for file in files]
+  fonts = [fontforge.open(glob_unique(file)) for file in files]
   dst = fonts[0]
   for chars in charses:
     ref = chars[0]
