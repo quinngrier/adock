@@ -1,22 +1,25 @@
 diff -N -r -u a/doc/grammar.md b/doc/grammar.md
---- a/doc/grammar.md	2023-05-18 09:57:56.000000000 -0700
-+++ b/doc/grammar.md	2023-05-21 12:48:50.483238483 -0700
-@@ -44,8 +44,9 @@
+--- a/doc/grammar.md	2024-04-20 09:39:32.000000000 -0700
++++ b/doc/grammar.md	2024-04-20 18:17:35.321928026 -0700
+@@ -44,9 +44,11 @@
    *  STRING  &rarr;  A string literal that begins and ends with
       double-quotes (U+0022).  Within the string literal, a double-quote
       character can be escaped using backslash (U+005c).  A backslash
 -     can also be used to escape a backslash.  No other escape sequences
--     are recognized.
-+     can also be used to escape a backslash.  The "<" and ">" characters
-+     can also be escaped to emit them literally instead of as "&lt;" and
-+     "&gt;".  No other escape sequences are recognized.
+-     are recognized and standalone backslashes are elided from the output.
+-     Newlines are permitted in strings.
++     can also be used to escape a backslash.  A backslash can also be used
++     to escape the "<" and ">" characters to emit them literally instead
++     of as "&lt;" and "&gt;".  No other escape sequences are recognized
++     and standalone backslashes are elided from the output.  Newlines are
++     permitted in strings.
  
-   *  COLORNAME &rarr;  One of the 140 official HTML color names, in 
+   *  COLORNAME &rarr;  One of the 140 official HTML color names, in
       any mixture of upper and lower cases.  The value of a COLORNAME is
 diff -N -r -u a/pikchr.y b/pikchr.y
---- a/pikchr.y	2023-05-18 09:57:56.000000000 -0700
-+++ b/pikchr.y	2023-05-21 12:56:38.746344887 -0700
-@@ -2305,6 +2305,7 @@
+--- a/pikchr.y	2024-04-20 09:39:32.000000000 -0700
++++ b/pikchr.y	2024-04-20 18:17:35.321928026 -0700
+@@ -2379,6 +2379,7 @@
    const char *z;
    PToken *aTxt;
    unsigned allMask = 0;
@@ -24,7 +27,7 @@ diff -N -r -u a/pikchr.y b/pikchr.y
  
    if( p->nErr ) return;
    if( pObj->nTxt==0 ) return;
-@@ -2473,10 +2474,14 @@
+@@ -2547,10 +2548,14 @@
      while( nz>0 ){
        int j;
        for(j=0; j<nz && z[j]!='\\'; j++){}
@@ -40,7 +43,7 @@ diff -N -r -u a/pikchr.y b/pikchr.y
        }
        nz -= j+1;
        z += j+1;
-@@ -3587,6 +3592,10 @@
+@@ -3661,6 +3666,10 @@
  ** "&lt;" as a single character.  Multi-byte UTF8 characters count
  ** as a single character.
  **
@@ -51,7 +54,7 @@ diff -N -r -u a/pikchr.y b/pikchr.y
  ** Unless using a monospaced font, attempt to scale the answer by
  ** the actual characters seen.  Wide characters count more than
  ** narrow characters. But the widths are only guesses.
-@@ -3597,28 +3606,33 @@
+@@ -3671,28 +3680,33 @@
    int n = pToken->n;
    const char *z = pToken->z;
    int cnt, j;
