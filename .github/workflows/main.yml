@@ -12,8 +12,6 @@ name: Build and push image
 
 on:
   push:
-    branches:
-      - master
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:
@@ -99,6 +97,7 @@ jobs:
           path: examples*/pikchr/**
 
   push_image:
+    if: github.ref == 'refs/heads/master'
     name: Push image
     needs:
       - build_image
@@ -137,6 +136,7 @@ jobs:
           || exit $?
 
   update_examples:
+    if: github.ref == 'refs/heads/master'
     name: Update examples
     needs: push_image
     runs-on: ubuntu-latest
