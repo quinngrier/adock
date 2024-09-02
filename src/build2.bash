@@ -107,7 +107,13 @@ npm install \
   livereload \
 ;
 
-npm list -g
+echo -n 'node version: '
+node -v
+
+echo -n 'npm version: '
+npm -v
+
+npm ls -g --all
 
 mkdir /adock
 chmod 777 /adock
