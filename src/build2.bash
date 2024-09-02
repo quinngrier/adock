@@ -107,6 +107,8 @@ npm install \
   livereload \
 ;
 
+npm list -g
+
 mkdir /adock
 chmod 777 /adock
 
