@@ -12,6 +12,8 @@
 set -E -e -u -o pipefail || exit $?
 trap exit ERR
 
+set -x
+
 shopt -s \
   dotglob \
   extglob \
