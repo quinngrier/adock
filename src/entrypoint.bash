@@ -89,7 +89,7 @@ export CHROMIUM_PATH
 #-----------------------------------------------------------------------
 
 if [[ "${1-}" != --serve ]]; then
-  run_as_host asciidoctor "$@"
+  run_as_host asciidoctor -v "$@"
   exit
 fi
 
