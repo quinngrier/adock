@@ -9,6 +9,8 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
 
+set -x
+
 LC_ALL=C
 readonly LC_ALL
 export LC_ALL
