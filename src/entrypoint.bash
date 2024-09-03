@@ -35,6 +35,10 @@ declare    user_id
 declare    user_name
 declare -A ys
 
+IN_ADOCK=1
+readonly IN_ADOCK
+export IN_ADOCK
+
 #-----------------------------------------------------------------------
 
 user_id=$(stat -c %u /tmp_dir)
@@ -83,6 +87,10 @@ umask $ADOCK_UMASK
 CHROMIUM_PATH=/usr/bin/chromium-browser
 readonly CHROMIUM_PATH
 export CHROMIUM_PATH
+
+PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+readonly PUPPETEER_EXECUTABLE_PATH
+export PUPPETEER_EXECUTABLE_PATH
 
 #-----------------------------------------------------------------------
 

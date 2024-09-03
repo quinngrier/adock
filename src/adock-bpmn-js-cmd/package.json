@@ -1,0 +1,14 @@
+{
+  "bin": {
+    "bpmn-js": "src/main.js"
+  },
+  "dependencies": {
+    "puppeteer": "23.2.1"
+  },
+  "files": [
+    "src"
+  ],
+  "main": "main.js",
+  "name": "adock-bpmn-js-cmd",
+  "version": "0.0.1"
+}

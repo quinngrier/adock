@@ -98,10 +98,18 @@ cd /
 
 #-----------------------------------------------------------------------
 
+export PUPPETEER_SKIP_DOWNLOAD=1
+
+cp -R /src/adock-bpmn-js-cmd /
+(
+  cd /adock-bpmn-js-cmd
+  npm install
+)
+
 npm install \
   --unsafe-perm \
   -g \
-  bpmn-js-cmd \
+  /adock-bpmn-js-cmd \
   http-server \
   linkedom \
   livereload \
