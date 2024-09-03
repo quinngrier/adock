@@ -82,7 +82,9 @@ fs.writeFileSync(tmp_html, `
 `);
 
 (async () => {
-  const browser_args = [];
+  const browser_args = [
+    "--disable-gpu",
+  ];
   if (process.env.IN_ADOCK) {
     browser_args.push("--no-sandbox");
   }
