@@ -548,17 +548,36 @@ case $s in 0)
 esac
 readonly t
 
+if command -v cygcheck >/dev/null 2>/dev/null; then
+  on_cygwin=x
+else
+  on_cygwin=
+fi
+readonly on_cygwin
+
 pwd=`pwd` || exit $?
 readonly pwd
 
+case ${on_cygwin?} in ?*)
+  pwd_native=`cygpath -w -- "${pwd?}"` || exit $?
+;; *)
+  pwd_native=${pwd?}
+esac
+readonly pwd_native
+
+case ${on_cygwin?} in ?*)
+  tmp_dir_native=`cygpath -w -- "${tmp_dir?}"` || exit $?
+;; *)
+  tmp_dir_native=${tmp_dir?}
+esac
+readonly tmp_dir_native
+
 args=
-
 args=${args?}" ${DOCKER_FLAGS-}"
-
-args=${args?}' run --rm -i $t $detach -v "$pwd:$pwd" -w "$pwd"'
-
-args=${args?}' -v "${tmp_dir?}":/tmp_dir'
-
+args=${args?}' run --rm -i $t $detach'
+args=${args?}' -v "${pwd_native?}:$pwd"'
+args=${args?}' -v "${tmp_dir_native?}:/tmp_dir"'
+args=${args?}' -w "$pwd"'
 args=${args?}' -e ADOCK_UMASK='`umask` || exit $?
 
 case ${serve+x} in ?*)
