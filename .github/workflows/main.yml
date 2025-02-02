@@ -135,10 +135,21 @@ jobs:
             quinngrier/adock:latest \
           || exit $?
 
-  update_examples:
+  merge_examples:
+    name: Merge examples
     if: github.ref == 'refs/heads/master'
-    name: Update examples
     needs: push_image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge examples
+        uses: actions/upload-artifact/merge@v4
+        with:
+          name: examples
+
+  update_examples:
+    name: Update examples
+    if: github.ref == 'refs/heads/master'
+    needs: merge_examples
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
