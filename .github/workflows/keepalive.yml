@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Push and delete a tag
         run: |
           t=keepalive${GITHUB_RUN_ID?}

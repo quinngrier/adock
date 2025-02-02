@@ -28,7 +28,7 @@ jobs:
           tag=`date '+%Y-%m-%d'`-${GITHUB_RUN_ID?} || exit $?
           echo tag=${tag?} >>${GITHUB_OUTPUT?} || exit $?
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -48,14 +48,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Run the test script
         run: |
           bash examples/build.bash bpmn \
             quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
           || exit $?
       - name: Upload the artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: examples
           path: examples*/bpmn/**
@@ -66,14 +66,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Run the test script
         run: |
           bash examples/build.bash graphviz \
             quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
           || exit $?
       - name: Upload the artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: examples
           path: examples*/graphviz/**
@@ -84,14 +84,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Run the test script
         run: |
           bash examples/build.bash pikchr \
             quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
           || exit $?
       - name: Upload the artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: examples
           path: examples*/pikchr/**
@@ -142,7 +142,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
       - name: Remove the old examples
@@ -152,7 +152,7 @@ jobs:
             git rm "*"
           esac
       - name: Download the new examples
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: examples
       - name: Add the new examples
