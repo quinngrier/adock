@@ -254,9 +254,12 @@ while :; do
           const {document} = parseHTML(fs.readFileSync(file, "utf8"));
           for (const [tag, attr] of [
             ["a", "href"],
+            ["audio", "src"],
             ["img", "src"],
             ["link", "href"],
             ["script", "src"],
+            ["source", "src"],
+            ["video", "src"],
           ]) {
             for (const node of document.getElementsByTagName(tag)) {
               const path = decodeURI(node.getAttribute(attr));
