@@ -312,6 +312,7 @@ gatbps_unknown_opt_eof
 detach=
 unset http_addr
 image=docker.io/quinngrier/adock
+link=false
 unset live_addr
 unset name
 unset serve
@@ -385,6 +386,17 @@ until shift && (exit ${1+1}0); do
   if ${got?}; then
     eval "${pop?}"
     image=${arg?}
+    continue
+  fi
+
+  #---------------------------------------------------------------------
+  # -l, --link
+  #---------------------------------------------------------------------
+
+  gatbps_parse_opt -l --link forbidden : "$@"
+  if ${got?}; then
+    eval "${pop?}"
+    link=:
     continue
   fi
 
@@ -578,6 +590,7 @@ args=${args?}' run --rm -i $t $detach'
 args=${args?}' -v "${pwd_native?}:$pwd"'
 args=${args?}' -v "${tmp_dir_native?}:/tmp_dir"'
 args=${args?}' -w "$pwd"'
+args=${args?}" -e ADOCK_LINK=${link?}" || exit $?
 args=${args?}' -e ADOCK_UMASK='`umask` || exit $?
 
 case ${serve+x} in ?*)

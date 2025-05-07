@@ -56,6 +56,10 @@ ifdef::x_manpage[]
 :x_opt_image_arg: pass:n[<__image__>]
 :x_opt_image_name: pass:n[**--image**]
 :x_opt_image_name_arg: pass:n[**--image=**<__image__>]
+:x_opt_link_name: pass:n[**--link**]
+:x_opt_link_name_arg: pass:n[**--link**]
+:x_opt_l_name: pass:n[**-l**]
+:x_opt_l_name_arg: pass:n[**-l**]
 :x_opt_name_arg: pass:n[<__name__>]
 :x_opt_name_name: pass:n[**--name**]
 :x_opt_name_name_arg: pass:n[**--name**[**=**<__name__>]]
@@ -121,6 +125,10 @@ ifndef::x_manpage[]
 :x_opt_image_arg: pass:n[``<image>``]
 :x_opt_image_name: pass:n[``--image``]
 :x_opt_image_name_arg: pass:n[``--image=<image>``]
+:x_opt_link_name: pass:n[``--link``]
+:x_opt_link_name_arg: pass:n[``--link``]
+:x_opt_l_name: pass:n[``-l``]
+:x_opt_l_name_arg: pass:n[``-l``]
 :x_opt_name_arg: pass:n[``<name>``]
 :x_opt_name_name: pass:n[``--name``]
 :x_opt_name_name_arg: pass:n[``--name[=<name>]``]
@@ -254,6 +262,12 @@ This option corresponds to the {x_docker_run_d} option of
 The {x_opt_image_arg} Docker image will be used instead of the default
 {x_quinngrier_adock} image.
 
+{x_opt_link_name_arg}, {x_opt_l_name_arg}::
+When the {x_opt_serve_name} option is being used, prerequisite files
+will be symlinked instead of copied.
+This will increase performance when working with large prerequisite
+files.
+
 {x_opt_name_name_arg}, {x_opt_n_name_arg}::
 If this option is omitted and the {x_opt_serve_name} option is omitted,
 Docker will generate a random name for the Docker container.
@@ -270,9 +284,13 @@ In addition to being output normally, the output files will be copied
 into a temporary directory and an HTTP server will be run to serve them.
 The output files will be automatically recompiled when any changes are
 detected.
+Any prerequisite files, such as image files, will also be copied.
 A LiveReload server will be run and JavaScript will be injected into the
 temporary copies of all HTML files so that a browser viewing any such
 file will automatically refresh when a recompilation occurs.
++
+The {x_opt_link_name} option can be used to increase performance when
+working with large prerequisite files.
 
 {x_opt_update_name_arg}, {x_opt_u_name_arg}::
 Instead of behaving normally, {x_adock} will pull the latest version of

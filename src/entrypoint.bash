@@ -307,7 +307,11 @@ while :; do
     if [[ "$x" == */* ]]; then
       run_as_host mkdir -p "/adock/tmp1/${x%/*}"
     fi
-    cp -L -R -p -- "$x" "/adock/tmp1/$x"
+    if $ADOCK_LINK; then
+      ln -s -- "$pwd/$x" "/adock/tmp1/$x"
+    else
+      cp -L -p -- "$x" "/adock/tmp1/$x"
+    fi
   done
 
   for x in /adock/tmp1/**/*.html; do
