@@ -93,6 +93,9 @@ export PUPPETEER_EXECUTABLE_PATH
 
 #-----------------------------------------------------------------------
 
+# TODO: Should probably always use environment variables to communicate
+#       options from adock to entrypoint.sh.
+
 if [[ "${1-}" != --serve ]]; then
   run_as_host asciidoctor "$@"
   exit
