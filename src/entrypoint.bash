@@ -196,11 +196,11 @@ readonly livereload_pid
 
 popd >/dev/null
 
-pwd=$PWD
-if [[ "$pwd" == / ]]; then
-  pwd=
+pfx=$PWD
+if [[ "$pfx" == / ]]; then
+  pfx=
 fi
-readonly pwd
+readonly pfx
 
 while :; do
 
@@ -231,8 +231,8 @@ while :; do
     printf -v x "$x"
     if [[ "$x" != /* ]]; then
       y=$x
-    elif [[ "$x" == "$pwd/"* ]]; then
-      y=${x#"$pwd/"}
+    elif [[ "$x" == "$pfx/"* ]]; then
+      y=${x#"$pfx/"}
     else
       y=
     fi
@@ -308,7 +308,7 @@ while :; do
       run_as_host mkdir -p "/adock/tmp1/${x%/*}"
     fi
     if $ADOCK_LINK; then
-      ln -s -- "$pwd/$x" "/adock/tmp1/$x"
+      ln -s -- "$pfx/$x" "/adock/tmp1/$x"
     else
       cp -L -p -- "$x" "/adock/tmp1/$x"
     fi
