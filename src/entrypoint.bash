@@ -29,7 +29,6 @@ declare -A deps
 declare    group_id
 declare    group_name
 declare -A html_deps
-declare -A new_html_deps
 declare    s
 declare    user_id
 declare    user_name
@@ -238,12 +237,11 @@ while :; do
       deps[$y]=
       if [[ "$y" == *.html ]]; then
         html_deps[$y]=
-        new_html_deps[$y]=
       fi
     fi
   done
 
-  while ((${#new_html_deps[@]} > 0)); do
+  while ((${#html_deps[@]} > 0)); do
     xs=$(
       node -e '
         const fs = require("fs");
@@ -275,16 +273,15 @@ while :; do
         for (const path of paths) {
           console.log("[" + q + path.replace(qr, qe) + q + "]=");
         }
-      ' -- "${!new_html_deps[@]}"
+      ' -- "${!html_deps[@]}"
     )
     eval ys="($xs)"
-    new_html_deps=()
+    html_deps=()
     for x in "${!ys[@]}"; do
       if [[ ! "${deps[$x]+x}" && -e "$x" ]]; then
         deps[$x]=
         if [[ "$x" == *.html ]]; then
           html_deps[$x]=
-          new_html_deps[$x]=
         fi
       fi
     done
