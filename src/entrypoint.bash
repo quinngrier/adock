@@ -256,6 +256,7 @@ while :; do
           for (const [tag, attr] of [
             ["a", "href"],
             ["audio", "src"],
+            ["iframe", "src"],
             ["img", "src"],
             ["link", "href"],
             ["script", "src"],
