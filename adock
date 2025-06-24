@@ -499,7 +499,7 @@ if ${update?}; then
 
   eval " ${docker?}"' pull -- "${image?}"' || exit $?
 
-  url=https://raw.githubusercontent.com/quinngrier/adock/master/adock
+  url=https://raw.githubusercontent.com/quinngrier/adock/main/adock
   readonly url
 
   if command -v curl >/dev/null 2>&1; then

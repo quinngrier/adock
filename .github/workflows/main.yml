@@ -97,7 +97,7 @@ jobs:
           path: examples*/pikchr/**
 
   push_image:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     name: Push image
     needs:
       - build_image
@@ -137,7 +137,7 @@ jobs:
 
   merge_examples:
     name: Merge examples
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     needs: push_image
     runs-on: ubuntu-latest
     steps:
@@ -148,7 +148,7 @@ jobs:
 
   update_examples:
     name: Update examples
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     needs: merge_examples
     runs-on: ubuntu-latest
     steps:
