@@ -53,7 +53,7 @@ preview Asciidoctor documents without installing anything but Docker.
 Here's how to get started:
 
 . {empty}
-link:{download_url}[Click here to download the `adock` shell script.]
+link:{download_url}[Download] the `adock` shell script.
 The script is portable enough to run on any Unix-like system that has
 Docker installed.
 You can put the script anywhere you like, but the rest of these steps
@@ -86,7 +86,7 @@ Run `adock -u` to pull the latest version of the Docker image and
 download and replace `adock` itself with the latest version of `adock`.
 
 . {empty}
-link:{man_page_url}[Click here to view the full man page for `adock`.]
+For more advanced usage, see the link:{man_page_url}[man page].
 
 == Asciidoctor PDF support
 
