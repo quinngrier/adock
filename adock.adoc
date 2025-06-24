@@ -321,39 +321,34 @@ If the variable is unset, the default value is the empty string.
 
 == Examples
 
-. {empty}
-Compile {x_README_adoc} into {x_README_html}:
+. Compile {x_README_adoc} into {x_README_html}:
 +
 ----
 adock README.adoc
 ----
 
-. {empty}
-Compile {x_README_adoc} into {x_README_html}, running {x_docker} with
+. Compile {x_README_adoc} into {x_README_html}, running {x_docker} with
 {x_sudo}:
 +
 ----
 DOCKER='sudo docker' adock README.adoc
 ----
 
-. {empty}
-Compile {x_README_adoc} into {x_README_html} and run an HTTP server on
+. Compile {x_README_adoc} into {x_README_html} and run an HTTP server on
 {x_default_http_addr} for previewing:
 +
 ----
 adock -s README.adoc
 ----
 
-. {empty}
-Pull the latest version of the Docker image and download and replace
+. Pull the latest version of the Docker image and download and replace
 {x_adock} itself with the latest version of {x_adock}:
 +
 ----
 adock -u
 ----
 
-. {empty}
-Compile {x_README_adoc} into {x_README_pdf}:
+. Compile {x_README_adoc} into {x_README_pdf}:
 +
 ----
 adock -b pdf -r asciidoctor-pdf README.adoc

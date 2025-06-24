@@ -52,19 +52,16 @@ preview Asciidoctor documents without installing anything but Docker.
 
 Here's how to get started:
 
-. {empty}
-link:{download_url}[Download] the `adock` shell script.
+. link:{download_url}[Download] the `adock` shell script.
 The script is portable enough to run on any Unix-like system that has
 Docker installed.
 You can put the script anywhere you like, but the rest of these steps
 will assume that you've put it somewhere in your `PATH`.
 
-. {empty}
-Run `echo 'Hello, world!' >foo.adoc` to create a simple Asciidoctor
+. Run `echo 'Hello, world!' >foo.adoc` to create a simple Asciidoctor
 document, then run `adock foo.adoc` to compile it into `foo.html`.
 
-. {empty}
-Run `adock -s foo.adoc` to do the same thing as the previous step, but
+. Run `adock -s foo.adoc` to do the same thing as the previous step, but
 this time also running an HTTP server on `0.0.0.0:8080` to preview the
 document.
 Open `++http://127.0.0.1:8080++` in a browser and click on `foo.html` to
@@ -74,19 +71,16 @@ automatically refresh as you make changes to `foo.adoc`.
 When you're done, press kbd:[Ctrl+C] to stop and remove the Docker
 container.
 
-. {empty}
-Run `adock -ds foo.adoc` to do the same thing as the previous step, but
-this time running the Docker container in the background instead of the
-foreground.
+. Run `adock -ds foo.adoc` to do the same thing as the previous step,
+but this time running the Docker container in the background instead of
+the foreground.
 When you're done, run `docker rm -f adock` to stop and remove the Docker
 container.
 
-. {empty}
-Run `adock -u` to pull the latest version of the Docker image and
+. Run `adock -u` to pull the latest version of the Docker image and
 download and replace `adock` itself with the latest version of `adock`.
 
-. {empty}
-For more advanced usage, see the link:{man_page_url}[man page].
+. For more advanced usage, see the link:{man_page_url}[man page].
 
 == Asciidoctor PDF support
 
@@ -112,20 +106,16 @@ codespan:
 
 == Math support
 
-* {empty}
-{x_Asciidoctor_Mathematical} is
-link:src/asciidoctor-mathematical.patch[patched] to improve the size
-of math expressions.
+* {x_Asciidoctor_Mathematical} is
+link:src/asciidoctor-mathematical.patch[patched] to improve the size of
+math expressions.
 
-* {empty}
-{x_Lasem}, which is a dependency of {x_Asciidoctor_Mathematical}, is
+* {x_Lasem}, which is a dependency of {x_Asciidoctor_Mathematical}, is
 link:src/lasem.patch[patched] with the following changes:
 
-** {empty}
-{x_KaTeX} fonts are used instead of generic fonts.
+** {x_KaTeX} fonts are used instead of generic fonts.
 
-** {empty}
-A bug that was preventing `\mathtt` from working is fixed.
+** A bug that was preventing `\mathtt` from working is fixed.
 
 // TODO: Add an example document that displays a bunch of math?
 //       adock -r asciidoctor-pdf -r asciidoctor-mathematical -a stem=latexmath example.adoc
@@ -139,23 +129,18 @@ For example:
 
 The following diagram types are supported:
 
-* {empty}
-link:https://www.bpmn.org/[BPMN,window=_blank]
+* link:https://www.bpmn.org/[BPMN,window=_blank]
 (link:https://quinngrier.github.io/adock/examples/bpmn/[example,window=_blank])
 
-* {empty}
-link:https://graphviz.org/[Graphviz,window=_blank]
+* link:https://graphviz.org/[Graphviz,window=_blank]
 (link:https://quinngrier.github.io/adock/examples/graphviz/[example,window=_blank])
 
-* {empty}
-link:https://pikchr.org/[Pikchr,window=_blank]
+* link:https://pikchr.org/[Pikchr,window=_blank]
 (link:https://quinngrier.github.io/adock/examples/pikchr/[example,window=_blank])
 
-** {empty}
-Pikchr is
-link:src/pikchr.patch[patched]
-to allow `\<` and `\>` escapes to be used in strings, which emit `<` and
-`>` directly into the SVG code instead of `&amp;gt;` and `&amp;lt;`.
+** Pikchr is link:src/pikchr.patch[patched] to allow `\<` and `\>`
+escapes to be used in strings, which emit `<` and `>` directly into the
+SVG code instead of `&amp;gt;` and `&amp;lt;`.
 This allows SVG tags such as `<{x_tspan}>` to be used.
 For example:
 `box "\<{x_tspan} {x_style}=\"{x_fill}: {x_red}\"\>foo\</{x_tspan}\>"`.
