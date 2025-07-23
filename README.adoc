@@ -11,8 +11,8 @@
 = Adock
 :experimental:
 
-:download_url: https://raw.githubusercontent.com/quinngrier/adock/main/adock
-:man_page_url: https://github.com/quinngrier/adock/blob/main/adock.1.adoc
+:x_download_url: https://raw.githubusercontent.com/quinngrier/adock/main/adock
+:x_man_page_url: https://github.com/quinngrier/adock/blob/main/adock.1.adoc
 
 :x_Asciidoctor_Diagram_url: https://github.com/asciidoctor/asciidoctor-diagram
 :x_Asciidoctor_Diagram: link:{x_Asciidoctor_Diagram_url}[Asciidoctor Diagram,window=_blank]
@@ -52,7 +52,7 @@ preview Asciidoctor documents without installing anything but Docker.
 
 Here's how to get started:
 
-. link:{download_url}[Download] the `adock` shell script.
+. link:{x_download_url}[Download] the `adock` shell script.
 The script is portable enough to run on any Unix-like system that has
 Docker installed.
 You can put the script anywhere you like, but the rest of these steps
@@ -80,7 +80,7 @@ container.
 . Run `adock -u` to pull the latest version of the Docker image and
 download and replace `adock` itself with the latest version of `adock`.
 
-. For more advanced usage, see the link:{man_page_url}[man page].
+. For more advanced usage, see the link:{x_man_page_url}[man page].
 
 == Asciidoctor PDF support
 
