@@ -8,9 +8,6 @@
 // <https://creativecommons.org/publicdomain/zero/1.0/>.
 //
 
-:x_subs_normal: attributes,specialchars,quotes,replacements,macros,post_replacements
-:x_subs_source: attributes,specialchars,quotes,macros
-
 ifndef::env-github[]
 ifeval::["{backend}" == "manpage"]
 :x_manpage:
@@ -157,6 +154,9 @@ ifndef::x_manpage[]
 :x_var_DOCKER_RUN_FLAGS: pass:n[``DOCKER_RUN_FLAGS``]
 
 endif::[]
+
+:x_subs_normal: attributes,specialchars,quotes,replacements,macros,post_replacements
+:x_subs_source: attributes,specialchars,quotes,macros
 
 == Name
 
