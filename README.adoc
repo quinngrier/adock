@@ -12,7 +12,7 @@
 :experimental:
 
 :download_url: https://raw.githubusercontent.com/quinngrier/adock/main/adock
-:man_page_url: https://github.com/quinngrier/adock/blob/main/adock.adoc
+:man_page_url: https://github.com/quinngrier/adock/blob/main/adock.1.adoc
 
 :x_Asciidoctor_Diagram_url: https://github.com/asciidoctor/asciidoctor-diagram
 :x_Asciidoctor_Diagram: link:{x_Asciidoctor_Diagram_url}[Asciidoctor Diagram,window=_blank]
