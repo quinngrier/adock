@@ -25,7 +25,6 @@ on:
 
 jobs:
   keepalive:
-    name: keepalive
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
