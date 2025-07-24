@@ -47,16 +47,18 @@
 :x_tspan_url: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan
 :x_tspan: link:{x_tspan_url}[tspan,window=_blank]
 
-Adock is a Dockerized Asciidoctor wrapper that lets you build and live
+Adock is an Asciidoctor CLI wrapper that lets you compile and live
 preview Asciidoctor documents.
 
 Here's how to get started:
 
-. link:{x_download_url}[Download] the `adock` script.
-The script is portable enough to run on any Unix-like system that has
-Docker installed.
-You can put the script anywhere you like, but the rest of these steps
-will assume that you've put it somewhere in your `PATH`.
+. Make sure you have the following tools installed:
+
+.. Docker version 28.2.2 or later.
+You can check this by running `docker --version`.
+
+. link:{x_download_url}[Download] the `adock` script and optionally put
+it in your `PATH`.
 
 . Run `echo 'Hello, world!' >foo.adoc` to create a simple Asciidoctor
 document, then run `adock foo.adoc` to compile it into `foo.html`.
