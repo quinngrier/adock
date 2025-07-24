@@ -47,8 +47,8 @@
 :x_tspan_url: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan
 :x_tspan: link:{x_tspan_url}[tspan,window=_blank]
 
-Adock is a Dockerized version of Asciidoctor that lets you compile and
-preview Asciidoctor documents without installing anything but Docker.
+Adock is a Dockerized Asciidoctor wrapper that lets you build and live
+preview Asciidoctor documents.
 
 Here's how to get started:
 
