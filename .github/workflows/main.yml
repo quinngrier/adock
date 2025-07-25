@@ -38,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: quinngrier/adock:${{ steps.tag.outputs.tag }}-rc
+          tags: docker.io/quinngrier/adock:${{ steps.tag.outputs.tag }}-rc
     outputs:
       tag: ${{ steps.tag.outputs.tag }}
 
@@ -51,8 +51,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the test script
         run: |
+          tag=${{ needs.build_image.outputs.tag }}
           bash examples/build.bash bpmn \
-            quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
+            docker.io/quinngrier/adock:${tag?}-rc \
           || exit $?
       - name: Upload the artifacts
         uses: actions/upload-artifact@v4
@@ -69,8 +70,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the test script
         run: |
+          tag=${{ needs.build_image.outputs.tag }}
           bash examples/build.bash graphviz \
-            quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
+            docker.io/quinngrier/adock:${tag?}-rc \
           || exit $?
       - name: Upload the artifacts
         uses: actions/upload-artifact@v4
@@ -87,8 +89,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the test script
         run: |
+          tag=${{ needs.build_image.outputs.tag }}
           bash examples/build.bash pikchr \
-            quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
+            docker.io/quinngrier/adock:${tag?}-rc \
           || exit $?
       - name: Upload the artifacts
         uses: actions/upload-artifact@v4
@@ -113,26 +116,29 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Pull the candidate image
         run: |
+          tag=${{ needs.build_image.outputs.tag }}
           docker pull \
-            quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
+            docker.io/quinngrier/adock:${tag?}-rc \
           || exit $?
       - name: Tag the final image
         run: |
+          tag=${{ needs.build_image.outputs.tag }}
           docker tag \
-            quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
-            quinngrier/adock:${{ needs.build_image.outputs.tag }} \
+            docker.io/quinngrier/adock:${tag?}-rc \
+            docker.io/quinngrier/adock:${tag?} \
           || exit $?
           docker tag \
-            quinngrier/adock:${{ needs.build_image.outputs.tag }}-rc \
-            quinngrier/adock:latest \
+            docker.io/quinngrier/adock:${tag?}-rc \
+            docker.io/quinngrier/adock:latest \
           || exit $?
       - name: Push the final image
         run: |
+          tag=${{ needs.build_image.outputs.tag }}
           docker push \
-            quinngrier/adock:${{ needs.build_image.outputs.tag }} \
+            docker.io/quinngrier/adock:${tag?} \
           || exit $?
           docker push \
-            quinngrier/adock:latest \
+            docker.io/quinngrier/adock:latest \
           || exit $?
 
   merge_examples:
