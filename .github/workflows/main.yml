@@ -22,7 +22,22 @@ defaults:
 
 jobs:
 
+  # This job prevents Docker Hub from deleting our current image due to
+  # inactivity, in case we keep failing to build and push a new image
+  # for a long time.
+  keepalive_image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull current image
+        id: tag
+        run: |
+          set -E -e -o pipefail -u -x || exit $?
+          trap exit ERR
+          name=docker.io/quinngrier/adock
+          docker pull $name
+
   build_image:
+    needs: keepalive_image
     name: Build image
     runs-on: ubuntu-latest
     steps:
