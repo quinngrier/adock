@@ -31,7 +31,7 @@ jobs:
         run: |
           set -E -e -o pipefail -u -x || exit $?
           trap exit ERR
-          tag=`date '+%Y-%m-%d'`-$GITHUB_RUN_ID
+          tag=$(date '+%Y-%m-%d')-$GITHUB_RUN_ID
           echo tag=$tag >>$GITHUB_OUTPUT
       - name: Checkout the repository
         uses: actions/checkout@v4
@@ -175,7 +175,7 @@ jobs:
         run: |
           set -E -e -o pipefail -u -x || exit $?
           trap exit ERR
-          x=`git ls-files`
+          x=$(git ls-files)
           case $x in ?*)
             git rm "*"
           esac
