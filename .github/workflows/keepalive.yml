@@ -8,19 +8,15 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
 
-#
-# This workflow periodically pushes and deletes a tag to prevent the
-# following behaviors:
-#
-#     * If the repository is inactive for too long, scheduled
-#       GitHub Actions may be disabled.
-#
+# This workflow prevents GitHub from disabling our scheduled workflows
+# due to inactivity, in case we don't touch our repository for a long
+# time.
 
 name: keepalive
 
 on:
   schedule:
-    - cron: 0 0 * * 0
+    - cron: 31 4 4 * *
   workflow_dispatch:
 
 jobs:
