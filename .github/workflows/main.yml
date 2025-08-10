@@ -13,7 +13,7 @@ name: main
 on:
   push:
   schedule:
-    - cron: 0 0 4 * *
+    - cron: 56 20 10 * *
   workflow_dispatch:
 
 jobs:
