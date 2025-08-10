@@ -38,7 +38,6 @@ jobs:
 
   build_image:
     needs: keepalive_image
-    name: Build image
     runs-on: ubuntu-latest
     steps:
       - name: Construct the image tag
@@ -64,7 +63,6 @@ jobs:
       tag: ${{ steps.tag.outputs.tag }}
 
   test_bpmn:
-    name: Test BPMN
     needs: build_image
     runs-on: ubuntu-latest
     steps:
@@ -85,7 +83,6 @@ jobs:
           path: examples*/bpmn/**
 
   test_graphviz:
-    name: Test Graphviz
     needs: build_image
     runs-on: ubuntu-latest
     steps:
@@ -106,7 +103,6 @@ jobs:
           path: examples*/graphviz/**
 
   test_pikchr:
-    name: Test Pikchr
     needs: build_image
     runs-on: ubuntu-latest
     steps:
@@ -128,7 +124,6 @@ jobs:
 
   push_image:
     if: github.ref == 'refs/heads/main'
-    name: Push image
     needs:
       - build_image
       - test_bpmn
@@ -166,7 +161,6 @@ jobs:
           docker push $name:latest
 
   merge_examples:
-    name: Merge examples
     if: github.ref == 'refs/heads/main'
     needs: push_image
     runs-on: ubuntu-latest
@@ -177,7 +171,6 @@ jobs:
           name: examples
 
   update_examples:
-    name: Update examples
     if: github.ref == 'refs/heads/main'
     needs: merge_examples
     runs-on: ubuntu-latest
