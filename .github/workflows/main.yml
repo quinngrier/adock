@@ -16,6 +16,10 @@ on:
     - cron: 56 20 10 * *
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
 
   build_image:
@@ -25,8 +29,10 @@ jobs:
       - name: Construct the image tag
         id: tag
         run: |
-          tag=`date '+%Y-%m-%d'`-${GITHUB_RUN_ID?} || exit $?
-          echo tag=${tag?} >>${GITHUB_OUTPUT?} || exit $?
+          set -E -e -o pipefail -u -x || exit $?
+          trap exit ERR
+          tag=`date '+%Y-%m-%d'`-$GITHUB_RUN_ID
+          echo tag=$tag >>$GITHUB_OUTPUT
       - name: Checkout the repository
         uses: actions/checkout@v4
       - name: Log in to Docker Hub
@@ -51,10 +57,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the test script
         run: |
+          set -E -e -o pipefail -u -x || exit $?
+          trap exit ERR
           name=docker.io/quinngrier/adock
           tag=${{ needs.build_image.outputs.tag }}
-          rc=${name?}:${tag?}-rc
-          bash examples/build.bash bpmn ${rc?} || exit $?
+          rc=$name:$tag-rc
+          bash examples/build.bash bpmn $rc
       - name: Upload the artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -70,10 +78,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the test script
         run: |
+          set -E -e -o pipefail -u -x || exit $?
+          trap exit ERR
           name=docker.io/quinngrier/adock
           tag=${{ needs.build_image.outputs.tag }}
-          rc=${name?}:${tag?}-rc
-          bash examples/build.bash graphviz ${rc?} || exit $?
+          rc=$name:$tag-rc
+          bash examples/build.bash graphviz $rc
       - name: Upload the artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -89,10 +99,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the test script
         run: |
+          set -E -e -o pipefail -u -x || exit $?
+          trap exit ERR
           name=docker.io/quinngrier/adock
           tag=${{ needs.build_image.outputs.tag }}
-          rc=${name?}:${tag?}-rc
-          bash examples/build.bash pikchr ${rc?} || exit $?
+          rc=$name:$tag-rc
+          bash examples/build.bash pikchr $rc
       - name: Upload the artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -116,21 +128,27 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Pull the candidate image
         run: |
+          set -E -e -o pipefail -u -x || exit $?
+          trap exit ERR
           name=docker.io/quinngrier/adock
           tag=${{ needs.build_image.outputs.tag }}
-          docker pull ${name?}:${tag?}-rc || exit $?
+          docker pull $name:$tag-rc
       - name: Tag the final image
         run: |
+          set -E -e -o pipefail -u -x || exit $?
+          trap exit ERR
           name=docker.io/quinngrier/adock
           tag=${{ needs.build_image.outputs.tag }}
-          docker tag ${name?}:${tag?}-rc ${name?}:${tag?} || exit $?
-          docker tag ${name?}:${tag?}-rc ${name?}:latest || exit $?
+          docker tag $name:$tag-rc $name:$tag
+          docker tag $name:$tag-rc $name:latest
       - name: Push the final image
         run: |
+          set -E -e -o pipefail -u -x || exit $?
+          trap exit ERR
           name=docker.io/quinngrier/adock
           tag=${{ needs.build_image.outputs.tag }}
-          docker push ${name?}:${tag?} || exit $?
-          docker push ${name?}:latest || exit $?
+          docker push $name:$tag
+          docker push $name:latest
 
   merge_examples:
     name: Merge examples
@@ -155,8 +173,10 @@ jobs:
           ref: gh-pages
       - name: Remove the old examples
         run: |
-          x=`git ls-files` || exit $?
-          case ${x?} in ?*)
+          set -E -e -o pipefail -u -x || exit $?
+          trap exit ERR
+          x=`git ls-files`
+          case $x in ?*)
             git rm "*"
           esac
       - name: Download the new examples
@@ -167,10 +187,12 @@ jobs:
         run: git add .
       - name: Commit the new examples
         run: |
-          export GIT_AUTHOR_NAME="${GITHUB_ACTOR?}"
+          set -E -e -o pipefail -u -x || exit $?
+          trap exit ERR
+          export GIT_AUTHOR_NAME="$GITHUB_ACTOR"
           export GIT_AUTHOR_EMAIL=
-          export GIT_COMMITTER_NAME="${GITHUB_SERVER_URL?}/${GITHUB_REPOSITORY?}/actions/runs/${GITHUB_RUN_ID?}"
+          export GIT_COMMITTER_NAME="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
           export GIT_COMMITTER_EMAIL=
-          git commit -m "Update the examples" || exit $?
+          git commit -m "Update the examples"
       - name: Push the new examples
         run: git push
