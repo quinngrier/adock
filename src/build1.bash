@@ -1,4 +1,3 @@
-#! /bin/bash -
 #
 # The authors of this file have waived all copyright and
 # related or neighboring rights to the extent permitted by
