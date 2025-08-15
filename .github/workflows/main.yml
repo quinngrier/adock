@@ -12,6 +12,9 @@ name: main
 
 on:
   push:
+    paths:
+      - Dockerfile
+      - src/**
   schedule:
     - cron: 56 20 10 * *
   workflow_dispatch:
