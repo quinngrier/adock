@@ -190,7 +190,7 @@ readonly http_server_pid
 # TODO: Make -w/--wait an adock option.
 
 info "Starting LiveReload server on $live_addr"
-livereload . -w 100 >/dev/null &
+livereload . -b 0.0.0.0 -w 100 >/dev/null &
 livereload_pid=$!
 readonly livereload_pid
 
