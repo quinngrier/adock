@@ -53,18 +53,11 @@ fc-cache -r -v
 # Install Pikchr
 #-----------------------------------------------------------------------
 
-mkdir pikchr
+git clone https://github.com/drhsqlite/pikchr.git
 pushd pikchr >/dev/null
-wget \
-  -O pikchr.tar.gz \
-  https://pikchr.org/home/tarball/trunk/pikchr.tar.gz \
-;
-tar xzf pikchr.tar.gz
-pushd */ >/dev/null
 patch -p1 </src/pikchr.patch
 make CFLAGS='-O3 -s'
 cp pikchr /bin
-popd >/dev/null
 popd >/dev/null
 rm -f -r pikchr
 
