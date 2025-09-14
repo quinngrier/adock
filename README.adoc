@@ -57,7 +57,7 @@ Here's how to get started:
 .. Docker version 28.2.2 or later.
 You can check this by running `docker --version`.
 
-. link:{x_download_url}[Download] the `adock` script and optionally put
+. Download the link:{x_download_url}[`adock`] script and optionally put
 it in your `PATH`.
 
 . Run `echo 'Hello, world!' >foo.adoc` to create a simple Asciidoctor
