@@ -8,9 +8,11 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 #
 
+#
 # This workflow prevents GitHub from disabling our scheduled workflows
 # due to inactivity, in case we don't touch our repository for a long
 # time.
+#
 
 name: keepalive
 
