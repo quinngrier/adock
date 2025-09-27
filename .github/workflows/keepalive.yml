@@ -10,8 +10,7 @@
 
 #
 # This workflow prevents GitHub from disabling our scheduled workflows
-# due to inactivity, in case we don't touch our repository for a long
-# time.
+# due to inactivity, in case we don't touch our repository for a while.
 #
 
 name: keepalive
